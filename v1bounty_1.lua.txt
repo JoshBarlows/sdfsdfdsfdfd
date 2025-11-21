@@ -679,32 +679,32 @@ SkipButton.Parent = SkipImg
 
 
 -- NÚT HOP SERVER – XANH DƯƠNG / TÍM
-local ServerImg = Instance.new("ImageLabel")
-ServerImg.BackgroundColor3 = Color3.fromRGB(30, 32, 70)
-ServerImg.BackgroundTransparency = 0
-ServerImg.BorderSizePixel = 0
-ServerImg.Size = UDim2.new(0, 90, 0, 26)
-ServerImg.Name = "ServerImg"
-ServerImg.ZIndex = 3
-ServerImg.Parent = ButtonsFrame
+-- local ServerImg = Instance.new("ImageLabel")
+-- ServerImg.BackgroundColor3 = Color3.fromRGB(30, 32, 70)
+-- ServerImg.BackgroundTransparency = 0
+-- ServerImg.BorderSizePixel = 0
+-- ServerImg.Size = UDim2.new(0, 90, 0, 26)
+-- ServerImg.Name = "ServerImg"
+-- ServerImg.ZIndex = 3
+-- ServerImg.Parent = ButtonsFrame
 
-local UICorner_Server = Instance.new("UICorner")
-UICorner_Server.CornerRadius = UDim.new(1, 0)
-UICorner_Server.Parent = ServerImg
+-- local UICorner_Server = Instance.new("UICorner")
+-- UICorner_Server.CornerRadius = UDim.new(1, 0)
+-- UICorner_Server.Parent = ServerImg
 
-local Stroke_Server = Instance.new("UIStroke")
-Stroke_Server.Thickness = 1
-Stroke_Server.Color = Color3.fromRGB(120, 180, 255)
-Stroke_Server.Transparency = 0.25
-Stroke_Server.Parent = ServerImg
+-- local Stroke_Server = Instance.new("UIStroke")
+-- Stroke_Server.Thickness = 1
+-- Stroke_Server.Color = Color3.fromRGB(120, 180, 255)
+-- Stroke_Server.Transparency = 0.25
+-- Stroke_Server.Parent = ServerImg
 
-local ServerGradient = Instance.new("UIGradient")
-ServerGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 150, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 60, 150))
-})
-ServerGradient.Rotation = 90
-ServerGradient.Parent = ServerImg
+-- local ServerGradient = Instance.new("UIGradient")
+-- ServerGradient.Color = ColorSequence.new({
+--     ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 150, 255)),
+--     ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 60, 150))
+-- })
+-- ServerGradient.Rotation = 90
+-- ServerGradient.Parent = ServerImg
 
 -- local ServerButton = Instance.new("TextButton")
 -- ServerButton.Font = Enum.Font.GothamBold
@@ -767,24 +767,66 @@ ServerButton.Parent = ServerImg
 --     ButtonsFrame.Visible = UIVisible
 -- end)
 -------------------------------------------------
--- AUTO CHAT “Hello Server” (10–14 giây)
+-- AUTO CHAT "Hello Server" (thử đủ 3 kiểu chat)
 -------------------------------------------------
 
-local function SendChatMessage(msg)
-    local args = {
-        [1] = msg,
-        [2] = "All"
-    }
+local function SafeSendChat(msg)
+    -- 1) TextChatService (chat mới)
+    local textChatService = game:FindService("TextChatService")
+    if textChatService and textChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        local channel = textChatService.TextChannels:FindFirstChild("RBXGeneral")
+                        or textChatService.TextChannels:FindFirstChild("All")
+        if channel then
+            local ok, err = pcall(function()
+                channel:SendAsync(msg)
+            end)
+            if ok then
+                return true
+            end
+        end
+    end
 
-    game:GetService("ReplicatedStorage").SayMessageRequest:FireServer(unpack(args))
+    -- 2) Chat legacy: DefaultChatSystemChatEvents
+    local rep = game:GetService("ReplicatedStorage")
+    local events = rep:FindFirstChild("DefaultChatSystemChatEvents")
+    if events and events:FindFirstChild("SayMessageRequest") then
+        local ok, err = pcall(function()
+            events.SayMessageRequest:FireServer(msg, "All")
+        end)
+        if ok then
+            return true
+        end
+    end
+
+    -- 3) Game custom: ReplicatedStorage.SayMessageRequest
+    local smr = rep:FindFirstChild("SayMessageRequest")
+    if smr then
+        local ok, err = pcall(function()
+            smr:FireServer(msg, "All")
+        end)
+        if ok then
+            return true
+        end
+    end
+
+    -- nếu đến đây vẫn false là game dùng hệ thống chat khác nữa
+    return false
 end
 
 task.spawn(function()
     while true do
-        SendChatMessage("Hello Server")
-        task.wait(10 + math.random(0,4)) -- 10–14s an toàn
+        local ok = SafeSendChat("Hello Server")
+
+        -- nếu gửi không được, dừng lại, tránh spam lỗi
+        if not ok then
+            warn("[AutoChat] Không tìm thấy hệ thống chat phù hợp trong game này.")
+            break
+        end
+
+        task.wait(10 + math.random(0, 4)) -- 10–14s cho đỡ bị flag spam
     end
 end)
+
 
 
 
