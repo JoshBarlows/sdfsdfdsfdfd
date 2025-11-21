@@ -98,9 +98,9 @@ local UICorner_Character = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")--// Services
 local TweenService = game:GetService("TweenService")
 --// SERVICES
-local DiscordLink = "https://discord.gg/your_link"
-local ShopLink    = "https://your-game-shop-link"
-local ZaloLink    = "https://zalo.me/your_link"
+local DiscordLink = "https://discord.gg/tdtfreenokey"
+local ShopLink    = "https://thinhrobloxviet.com/"
+local ZaloLink    = "https://zalo.me/g/qihvbb859"
 local CharacterIcon = Instance.new("ImageLabel")
 local UICorner_Icon = Instance.new("UICorner")
 local BountyEarned = Instance.new("TextLabel")
@@ -637,15 +637,6 @@ layout.VerticalAlignment = Enum.VerticalAlignment.Center
 layout.Padding = UDim.new(0, 8)
 layout.Parent = ButtonsFrame
 
-local SkipImg = Instance.new("ImageLabel")
-SkipImg.Image = "rbxassetid://92006056658480"
-SkipImg.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
-SkipImg.BackgroundTransparency = 0.15
-SkipImg.BorderSizePixel = 0
-SkipImg.Size = UDim2.new(0, 90, 0, 26)
-SkipImg.Name = "SkipImg"
-SkipImg.ZIndex = 3
-SkipImg.Parent = ButtonsFrame
 
 local UICorner_Skip = Instance.new("UICorner")
 UICorner_Skip.CornerRadius = UDim.new(0, 10)
@@ -669,15 +660,86 @@ SkipButton.Name = "SkipButton"
 SkipButton.ZIndex = 4
 SkipButton.Parent = SkipImg
 
+-- NÚT NEXT PLAYER – XANH NEON
+local SkipImg = Instance.new("ImageLabel")
+SkipImg.BackgroundColor3 = Color3.fromRGB(26, 33, 60)
+SkipImg.BackgroundTransparency = 0
+SkipImg.BorderSizePixel = 0
+SkipImg.Size = UDim2.new(0, 90, 0, 26)
+SkipImg.Name = "SkipImg"
+SkipImg.ZIndex = 3
+SkipImg.Parent = ButtonsFrame
+
+local UICorner_Skip = Instance.new("UICorner")
+UICorner_Skip.CornerRadius = UDim.new(1, 0)
+UICorner_Skip.Parent = SkipImg
+
+local Stroke_Skip = Instance.new("UIStroke")
+Stroke_Skip.Thickness = 1
+Stroke_Skip.Color = Color3.fromRGB(120, 230, 170)
+Stroke_Skip.Transparency = 0.2
+Stroke_Skip.Parent = SkipImg
+
+local SkipGradient = Instance.new("UIGradient")
+SkipGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 200, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 100, 80))
+})
+SkipGradient.Rotation = 90
+SkipGradient.Parent = SkipImg
+
+local SkipButton = Instance.new("TextButton")
+SkipButton.Font = Enum.Font.GothamBold
+SkipButton.Text = "Next Player"
+SkipButton.TextColor3 = Color3.fromRGB(235, 255, 245)
+SkipButton.TextSize = 12
+SkipButton.BackgroundTransparency = 1
+SkipButton.BorderSizePixel = 0
+SkipButton.Size = UDim2.new(1, 0, 1, 0)
+SkipButton.Name = "SkipButton"
+SkipButton.ZIndex = 4
+SkipButton.Parent = SkipImg
+
+-- NÚT HOP SERVER – XANH DƯƠNG / TÍM
 local ServerImg = Instance.new("ImageLabel")
-ServerImg.Image = "rbxassetid://71768682149411"
-ServerImg.BackgroundColor3 = Color3.fromRGB(50, 35, 20)
-ServerImg.BackgroundTransparency = 0.15
+ServerImg.BackgroundColor3 = Color3.fromRGB(30, 32, 70)
+ServerImg.BackgroundTransparency = 0
 ServerImg.BorderSizePixel = 0
 ServerImg.Size = UDim2.new(0, 90, 0, 26)
 ServerImg.Name = "ServerImg"
 ServerImg.ZIndex = 3
 ServerImg.Parent = ButtonsFrame
+
+local UICorner_Server = Instance.new("UICorner")
+UICorner_Server.CornerRadius = UDim.new(1, 0)
+UICorner_Server.Parent = ServerImg
+
+local Stroke_Server = Instance.new("UIStroke")
+Stroke_Server.Thickness = 1
+Stroke_Server.Color = Color3.fromRGB(120, 180, 255)
+Stroke_Server.Transparency = 0.25
+Stroke_Server.Parent = ServerImg
+
+local ServerGradient = Instance.new("UIGradient")
+ServerGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 150, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 60, 150))
+})
+ServerGradient.Rotation = 90
+ServerGradient.Parent = ServerImg
+
+local ServerButton = Instance.new("TextButton")
+ServerButton.Font = Enum.Font.GothamBold
+ServerButton.Text = "Hop Server"
+ServerButton.TextColor3 = Color3.fromRGB(235, 245, 255)
+ServerButton.TextSize = 12
+ServerButton.BackgroundTransparency = 1
+ServerButton.BorderSizePixel = 0
+ServerButton.Size = UDim2.new(1, 0, 1, 0)
+ServerButton.Name = "ServerButton"
+ServerButton.ZIndex = 4
+ServerButton.Parent = ServerImg
+
 
 local UICorner_Server = Instance.new("UICorner")
 UICorner_Server.CornerRadius = UDim.new(0, 10)
