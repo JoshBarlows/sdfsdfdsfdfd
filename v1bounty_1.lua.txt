@@ -98,8 +98,6 @@ local UICorner_Character = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")--// Services
 local TweenService = game:GetService("TweenService")
 
---// SERVICES
-local TweenService = game:GetService("TweenService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
