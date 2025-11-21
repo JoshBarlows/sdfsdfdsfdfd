@@ -594,8 +594,8 @@ NotesTitle.TextColor3 = Color3.fromRGB(255, 220, 140)
 NotesTitle.TextSize = 13
 NotesTitle.TextXAlignment = Enum.TextXAlignment.Left
 NotesTitle.BackgroundTransparency = 1
-NotesTitle.Position = UDim2.new(0, 12, 0, InfoStartY + 100)
-NotesTitle.Size = UDim2.new(0, 300, 0, 18)
+NotesTitle.Position = UDim2.new(0, 12, 0, InfoStartY + 88)
+NotesTitle.Size = UDim2.new(0, 300, 0, 16)
 NotesTitle.ZIndex = 2
 NotesTitle.Parent = MainFrame
 
@@ -607,8 +607,8 @@ NotesVN.TextSize = 11
 NotesVN.TextXAlignment = Enum.TextXAlignment.Left
 NotesVN.TextYAlignment = Enum.TextYAlignment.Top
 NotesVN.BackgroundTransparency = 1
-NotesVN.Position = UDim2.new(0, 12, 0, InfoStartY + 118)
-NotesVN.Size = UDim2.new(0, 300, 0, 32)
+NotesVN.Position = UDim2.new(0, 12, 0, InfoStartY + 104)
+NotesVN.Size = UDim2.new(0, 300, 0, 28)
 NotesVN.ZIndex = 2
 NotesVN.Parent = MainFrame
 
@@ -620,8 +620,8 @@ NotesEN.TextSize = 11
 NotesEN.TextXAlignment = Enum.TextXAlignment.Left
 NotesEN.TextYAlignment = Enum.TextYAlignment.Top
 NotesEN.BackgroundTransparency = 1
-NotesEN.Position = UDim2.new(0, 12, 0, InfoStartY + 148)
-NotesEN.Size = UDim2.new(0, 300, 0, 32)
+NotesEN.Position = UDim2.new(0, 12, 0, InfoStartY + 128)
+NotesEN.Size = UDim2.new(0, 300, 0, 28)
 NotesEN.ZIndex = 2
 NotesEN.Parent = MainFrame
 
