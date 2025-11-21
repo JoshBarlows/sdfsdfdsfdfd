@@ -529,8 +529,8 @@ BountyStroke.Parent = CrentBounty
 local BountyEarned = Instance.new("TextLabel")
 BountyEarned.Font = Enum.Font.Gotham
 BountyEarned.Text = "Bounty Earned: 0$"
-BountyEarned.TextColor3 = Color3.fromRGB(255, 255, 255)
-BountyEarned.TextSize = 12
+BountyEarned.TextColor3 = Color3.fromRGB(255, 0, 0)
+BountyEarned.TextSize = 14
 BountyEarned.TextXAlignment = Enum.TextXAlignment.Left
 BountyEarned.BackgroundTransparency = 1
 BountyEarned.Position = UDim2.new(0, 12, 0, InfoStartY + 18)
@@ -552,18 +552,20 @@ TotalBountyEarned.Name = "TotalBountyEarned"
 TotalBountyEarned.ZIndex = 2
 TotalBountyEarned.Parent = MainFrame
 
-local CilentTimeElapsed = Instance.new("TextLabel")
-CilentTimeElapsed.Font = Enum.Font.Gotham
-CilentTimeElapsed.Text = "Client Time Elapsed: 0h:0m:00s"
-CilentTimeElapsed.TextColor3 = Color3.fromRGB(255, 255, 255)
-CilentTimeElapsed.TextSize = 12
-CilentTimeElapsed.TextXAlignment = Enum.TextXAlignment.Left
-CilentTimeElapsed.BackgroundTransparency = 1
-CilentTimeElapsed.Position = UDim2.new(0, 12, 0, InfoStartY + 54)
-CilentTimeElapsed.Size = UDim2.new(0, 190, 0, 16)
-CilentTimeElapsed.Name = "CilentTimeElapsed"
-CilentTimeElapsed.ZIndex = 2
-CilentTimeElapsed.Parent = MainFrame
+-- local CilentTimeElapsed = Instance.new("TextLabel")
+-- CilentTimeElapsed.Font = Enum.Font.Gotham
+-- CilentTimeElapsed.Text = "Client Time Elapsed: 0h:0m:00s"
+-- CilentTimeElapsed.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- CilentTimeElapsed.TextSize = 12
+-- CilentTimeElapsed.TextXAlignment = Enum.TextXAlignment.Left
+-- CilentTimeElapsed.BackgroundTransparency = 1
+-- CilentTimeElapsed.Position = UDim2.new(0, 12, 0, InfoStartY + 54)
+-- CilentTimeElapsed.Size = UDim2.new(0, 190, 0, 16)
+-- CilentTimeElapsed.Name = "CilentTimeElapsed"
+-- CilentTimeElapsed.ZIndex = 2
+-- CilentTimeElapsed.Parent = MainFrame
+
+
 
 local AccoutTimeElapsed = Instance.new("TextLabel")
 AccoutTimeElapsed.Font = Enum.Font.Gotham
@@ -577,6 +579,51 @@ AccoutTimeElapsed.Size = UDim2.new(0, 210, 0, 16)
 AccoutTimeElapsed.Name = "AccoutTimeElapsed"
 AccoutTimeElapsed.ZIndex = 2
 AccoutTimeElapsed.Parent = MainFrame
+
+-- CilentTimeElapsed.Parent = MainFrame
+AccoutTimeElapsed.Parent = MainFrame
+
+-------------------------------------------------
+-- GHI CHÚ (VN + EN)
+-------------------------------------------------
+
+local NotesTitle = Instance.new("TextLabel")
+NotesTitle.Font = Enum.Font.GothamBold
+NotesTitle.Text = "Ghi chú / Notes:"
+NotesTitle.TextColor3 = Color3.fromRGB(255, 220, 140)
+NotesTitle.TextSize = 13
+NotesTitle.TextXAlignment = Enum.TextXAlignment.Left
+NotesTitle.BackgroundTransparency = 1
+NotesTitle.Position = UDim2.new(0, 12, 0, InfoStartY + 100)
+NotesTitle.Size = UDim2.new(0, 300, 0, 18)
+NotesTitle.ZIndex = 2
+NotesTitle.Parent = MainFrame
+
+local NotesVN = Instance.new("TextLabel")
+NotesVN.Font = Enum.Font.Gotham
+NotesVN.Text = "- Đây là hệ thống Auto Bounty của TDT Hub.\n- Tự động tìm, đánh và farm bounty ổn định."
+NotesVN.TextColor3 = Color3.fromRGB(230, 230, 230)
+NotesVN.TextSize = 11
+NotesVN.TextXAlignment = Enum.TextXAlignment.Left
+NotesVN.TextYAlignment = Enum.TextYAlignment.Top
+NotesVN.BackgroundTransparency = 1
+NotesVN.Position = UDim2.new(0, 12, 0, InfoStartY + 118)
+NotesVN.Size = UDim2.new(0, 300, 0, 32)
+NotesVN.ZIndex = 2
+NotesVN.Parent = MainFrame
+
+local NotesEN = Instance.new("TextLabel")
+NotesEN.Font = Enum.Font.Gotham
+NotesEN.Text = "- Auto Bounty system by TDT Hub.\n- Automatically locates targets and farms bounty safely."
+NotesEN.TextColor3 = Color3.fromRGB(220, 220, 220)
+NotesEN.TextSize = 11
+NotesEN.TextXAlignment = Enum.TextXAlignment.Left
+NotesEN.TextYAlignment = Enum.TextYAlignment.Top
+NotesEN.BackgroundTransparency = 1
+NotesEN.Position = UDim2.new(0, 12, 0, InfoStartY + 148)
+NotesEN.Size = UDim2.new(0, 300, 0, 32)
+NotesEN.ZIndex = 2
+NotesEN.Parent = MainFrame
 
 -------------------------------------------------
 -- NÚT HOP SERVER + NEXT PLAYER BÊN DƯỚI
@@ -777,7 +824,7 @@ local function updateUI()
         local bounty = player.leaderstats["Bounty/Honor"] and player.leaderstats["Bounty/Honor"].Value or 0
         CrentBounty.Text = "Current Bounty: " .. tostring(bounty)
     end    
-    CilentTimeElapsed.Text = "Client Time Elapsed: " .. formatTime(clientElapsed)
+   -- CilentTimeElapsed.Text = "Client Time Elapsed: " .. formatTime(clientElapsed)
     AccoutTimeElapsed.Text = "Account Time Elapsed: " .. formatTime(accountElapsed)    
     BountyEarned.Text = "Bounty Earned: " .. tostring(sessionBountyEarned) .. "$"
     TotalBountyEarned.Text = "Total Bounty Earned: " .. tostring(totalBountyEarned) .. "$"
@@ -1839,3 +1886,11 @@ spawn(function()
         end)
     end
 end)
+print("✅ Kill webhook has been activated!")
+print("=== AUTO BOUNTY ĐÃ KHỞI ĐỘNG ===")
+print("✅ Đã xóa toàn bộ click")
+print("✅ Đã xóa tính năng Spectate Player")
+print("✅ Team: " .. getgenv().Setting.Team)
+print("✅ Có thể nhìn thấy người chơi và đảo")
+print("✅ Visual bình thường")
+print("✅ Sẵn sàng farm bounty!")
