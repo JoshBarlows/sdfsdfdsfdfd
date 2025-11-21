@@ -97,6 +97,7 @@ local Character = Instance.new("ImageLabel")
 local UICorner_Character = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")--// Services
 local TweenService = game:GetService("TweenService")
+
 --// SERVICES
 local TweenService = game:GetService("TweenService")
 local TeleportService = game:GetService("TeleportService")
@@ -162,7 +163,6 @@ MainGui.Name = "MainGui"
 MainGui.ResetOnSpawn = false
 MainGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 MainGui.Parent = game:GetService("CoreGui")
-
 -------------------------------------------------
 -- SHADOW PHÍA SAU MAINFRAME
 -------------------------------------------------
@@ -575,7 +575,7 @@ AccoutTimeElapsed.ZIndex = 2
 AccoutTimeElapsed.Parent = MainFrame
 
 -------------------------------------------------
--- GHI CHÚ (VN + EN) DƯỚI ACCOUNT TIME
+-- GHI CHÚ (VN + EN)
 -------------------------------------------------
 local notesBaseY = AccoutTimeElapsed.Position.Y.Offset + 20
 
@@ -618,7 +618,7 @@ NotesEN.ZIndex = 2
 NotesEN.Parent = MainFrame
 
 -------------------------------------------------
--- NÚT HOP SERVER + NEXT PLAYER BÊN DƯỚI
+-- NÚT HOP SERVER + NEXT PLAYER
 -------------------------------------------------
 local ButtonsFrame = Instance.new("Frame")
 ButtonsFrame.Name = "ButtonsFrame"
@@ -700,7 +700,7 @@ ServerButton.Name = "ServerButton"
 ServerButton.ZIndex = 4
 ServerButton.Parent = ServerImg
 
--- COUNTDOWN LABEL UPDATE
+-- COUNTDOWN
 local function UpdateHopLabel()
     ServerButton.Text = string.format("Hop Server (%ds)", remainingTime)
 end
@@ -711,7 +711,6 @@ ServerButton.MouseButton1Click:Connect(function()
     UpdateHopLabel()
 end)
 
--- AUTO HOP 300 GIÂY + ĐẾM NGƯỢC
 task.spawn(function()
     while true do
         while remainingTime > 0 do
@@ -735,7 +734,7 @@ ToggleButton.BorderSizePixel = 0
 ToggleButton.Position = UDim2.new(0.120833337 - 0.10, 0, 0.0952890813 + 0.01, 0)
 ToggleButton.Size = UDim2.new(0, 25, 0, 25)
 ToggleButton.Draggable = true
-ToggleButton.Image = "rbxassetid://100666805146072" -- tự đổi icon nếu muốn
+ToggleButton.Image = "rbxassetid://100666805146072"
 
 local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
