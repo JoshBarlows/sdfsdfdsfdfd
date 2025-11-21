@@ -304,7 +304,8 @@ BtnContainer.Name = "BtnContainer"
 BtnContainer.BackgroundTransparency = 1
 BtnContainer.BorderSizePixel = 0
 BtnContainer.AnchorPoint = Vector2.new(0.5, 0)
-BtnContainer.Position = UDim2.new(0.5, 0, 0, 72)
+BtnContainer.Position = UDim2.new(0.5, 0, 0, 48)
+
 BtnContainer.Size = UDim2.new(1, 0, 1, -72)
 BtnContainer.ZIndex = 4
 BtnContainer.Parent = AdPanel
