@@ -1544,35 +1544,6 @@ spawn(function()
     end
 end)
 
-
---// HOP SERVER
-local TeleportService = game:GetService("TeleportService")
-local Players = game:GetService("Players")
-local HttpService = game:GetService("HttpService")
-
-local function HopServer()
-    -- Lấy list public server khác
-    local success, result = pcall(function()
-        local url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
-        return HttpService:JSONDecode(game:HttpGet(url))
-    end)
-
-    if not success or not result or not result.data then
-        warn("Không lấy được server list để hop.")
-        return
-    end
-
-    for _, server in ipairs(result.data) do
-        if server.playing < server.maxPlayers and server.id ~= game.JobId then
-            TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, Players.LocalPlayer)
-            return
-        end
-    end
-
-    warn("Không tìm được server phù hợp để hop.")
-end
-
-
 local a, b
 local Nguvc = 5
 local helloae = false
