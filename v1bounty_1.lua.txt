@@ -699,19 +699,6 @@ Stroke_Server.Color = Color3.fromRGB(255, 180, 90)
 Stroke_Server.Transparency = 0.4
 Stroke_Server.Parent = ServerImg
 
-
-ServerButton.Font = Enum.Font.GothamBold
-ServerButton.Text = "Hop Server"
-ServerButton.TextColor3 = Color3.fromRGB(255, 230, 150)
-ServerButton.TextSize = 12
-ServerButton.BackgroundTransparency = 1
-ServerButton.BorderSizePixel = 0
-ServerButton.Size = UDim2.new(1, 0, 1, 0)
-ServerButton.Name = "ServerButton"
-ServerButton.ZIndex = 4
-ServerButton.Parent = ServerImg
-
-
 local ServerButton = Instance.new("TextButton")
 ServerButton.Font = Enum.Font.GothamBold
 ServerButton.Text = "Hop Server"
@@ -1571,7 +1558,7 @@ local function HopServer()
     end)
 
     if not success or not result or not result.data then
-        warn("Error Hop Sever.")
+        warn("Không lấy được server list để hop.")
         return
     end
 
@@ -1582,21 +1569,8 @@ local function HopServer()
         end
     end
 
-    warn("Join Discod Report Error Hop.")
+    warn("Không tìm được server phù hợp để hop.")
 end
-
--- Khi bấm nút thì hop ngay
-ServerButton.MouseButton1Click:Connect(function()
-    HopServer()
-end)
-
--- AUTO HOP MỖI 300 GIÂY (5 PHÚT)
-task.spawn(function()
-    while true do
-        task.wait(300) -- 300 giây
-        HopServer()
-    end
-end)
 
 
 local a, b
