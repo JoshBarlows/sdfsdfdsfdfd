@@ -150,6 +150,68 @@ Shadow.ScaleType = Enum.ScaleType.Slice
 Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 Shadow.ZIndex = 0
 Shadow.Parent = MainGui
+-------------------------------------------------
+-- LOGO ĐỎ DẠ QUANG
+-------------------------------------------------
+local Logo = Instance.new("ImageLabel")
+Logo.Name = "Logo"
+Logo.BackgroundTransparency = 1
+Logo.BorderSizePixel = 0
+Logo.Image = "rbxassetid://__YOUR_RED_LOGO_ID__"   -- << ĐỔI ID LOGO ĐỎ CỦA BẠN
+Logo.AnchorPoint = Vector2.new(0.5, 0)
+Logo.Position = UDim2.new(0.5, 0, 0, 4)           -- đẩy lên cao sát mép
+Logo.Size = UDim2.new(0, 60, 0, 60)
+Logo.ZIndex = 5
+Logo.Parent = AdPanel
+
+-- Logo bo tròn
+local LogoCorner = Instance.new("UICorner")
+LogoCorner.CornerRadius = UDim.new(1, 0)
+LogoCorner.Parent = Logo
+
+-- Tạo ánh sáng Glow quanh logo
+local Glow = Instance.new("ImageLabel")
+Glow.Name = "Glow"
+Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Glow.Size = UDim2.new(0, 90, 0, 90)
+Glow.BackgroundTransparency = 1
+Glow.Image = "rbxassetid://4994312770"     -- hiệu ứng glow mềm
+Glow.ImageColor3 = Color3.fromRGB(255, 40, 40)   -- ĐỎ PHÁT SÁNG
+Glow.ImageTransparency = 0.35
+Glow.ZIndex = 4
+Glow.Parent = Logo
+
+-- Tạo lớp highlight khói đỏ nhẹ
+local SmokeGlow = Instance.new("ImageLabel")
+SmokeGlow.Name = "SmokeGlow"
+SmokeGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+SmokeGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+SmokeGlow.Size = UDim2.new(0, 110, 0, 110)
+SmokeGlow.BackgroundTransparency = 1
+SmokeGlow.Image = "rbxassetid://1095708"    -- texture mờ làm ánh sáng loang
+SmokeGlow.ImageColor3 = Color3.fromRGB(255, 70, 70)
+SmokeGlow.ImageTransparency = 0.70
+SmokeGlow.ZIndex = 3
+SmokeGlow.Parent = Logo
+
+-- Animation ánh sáng nhẹ
+task.spawn(function()
+    while true do
+        TweenService:Create(
+            Glow,
+            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+            {ImageTransparency = 0.55}
+        ):Play()
+        task.wait(1.6)
+        TweenService:Create(
+            Glow,
+            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+            {ImageTransparency = 0.35}
+        ):Play()
+        task.wait(1.6)
+    end
+end)
 
 -------------------------------------------------
 -- MAIN CARD
