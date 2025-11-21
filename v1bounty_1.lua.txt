@@ -788,6 +788,20 @@ ServerButton.Parent = ServerImg
 --     Shadow.Visible = UIVisible
 --     ButtonsFrame.Visible = UIVisible
 -- end)
+-------------------------------------------------
+-- AUTO CHAT “Hello Server” (10–14 giây)
+-------------------------------------------------
+
+task.spawn(function()
+    while true do
+        local msg = "Hello Server"
+
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+
+        task.wait(10 + math.random(0,4)) -- delay an toàn
+    end
+end)
+
 
 local UserInputService = game:GetService("UserInputService")
 local dragging
