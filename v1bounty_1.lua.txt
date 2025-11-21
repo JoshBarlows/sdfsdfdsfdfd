@@ -699,6 +699,19 @@ Stroke_Server.Color = Color3.fromRGB(255, 180, 90)
 Stroke_Server.Transparency = 0.4
 Stroke_Server.Parent = ServerImg
 
+
+ServerButton.Font = Enum.Font.GothamBold
+ServerButton.Text = "Hop Server"
+ServerButton.TextColor3 = Color3.fromRGB(255, 230, 150)
+ServerButton.TextSize = 12
+ServerButton.BackgroundTransparency = 1
+ServerButton.BorderSizePixel = 0
+ServerButton.Size = UDim2.new(1, 0, 1, 0)
+ServerButton.Name = "ServerButton"
+ServerButton.ZIndex = 4
+ServerButton.Parent = ServerImg
+
+
 local ServerButton = Instance.new("TextButton")
 ServerButton.Font = Enum.Font.GothamBold
 ServerButton.Text = "Hop Server"
@@ -723,7 +736,7 @@ ToggleButton.BorderSizePixel = 0
 ToggleButton.Position = UDim2.new(0.120833337 - 0.10, 0, 0.0952890813 + 0.01, 0)
 ToggleButton.Size = UDim2.new(0, 25, 0, 25)
 ToggleButton.Draggable = true
-ToggleButton.Image = "rbxassetid://100666805146072"
+ToggleButton.Image = "rbxassetid://"
 
 local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
@@ -1543,6 +1556,48 @@ spawn(function()
         end)
     end
 end)
+
+
+--// HOP SERVER
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+
+local function HopServer()
+    -- Lấy list public server khác
+    local success, result = pcall(function()
+        local url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+        return HttpService:JSONDecode(game:HttpGet(url))
+    end)
+
+    if not success or not result or not result.data then
+        warn("Error Hop Sever.")
+        return
+    end
+
+    for _, server in ipairs(result.data) do
+        if server.playing < server.maxPlayers and server.id ~= game.JobId then
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, Players.LocalPlayer)
+            return
+        end
+    end
+
+    warn("Join Discod Report Error Hop.")
+end
+
+-- Khi bấm nút thì hop ngay
+ServerButton.MouseButton1Click:Connect(function()
+    HopServer()
+end)
+
+-- AUTO HOP MỖI 300 GIÂY (5 PHÚT)
+task.spawn(function()
+    while true do
+        task.wait(300) -- 300 giây
+        HopServer()
+    end
+end)
+
 
 local a, b
 local Nguvc = 5
