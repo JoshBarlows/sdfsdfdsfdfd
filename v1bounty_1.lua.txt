@@ -509,8 +509,8 @@ local InfoStartY = 40
 local CrentBounty = Instance.new("TextLabel")
 CrentBounty.Font = Enum.Font.Gotham
 CrentBounty.Text = "Current Bounty: 0"
-CrentBounty.TextColor3 = Color3.fromRGB(255, 255, 255)
-CrentBounty.TextSize = 12
+CrentBounty.TextColor3 = Color3.fromRGB(255, 220, 120) -- vàng ấm
+CrentBounty.TextSize = 16
 CrentBounty.TextXAlignment = Enum.TextXAlignment.Left
 CrentBounty.BackgroundTransparency = 1
 CrentBounty.Position = UDim2.new(0, 12, 0, InfoStartY)
@@ -518,6 +518,13 @@ CrentBounty.Size = UDim2.new(0, 190, 0, 16)
 CrentBounty.Name = "CrentBounty"
 CrentBounty.ZIndex = 2
 CrentBounty.Parent = MainFrame
+-- Thêm viền sáng quanh chữ
+local BountyStroke = Instance.new("UIStroke")
+BountyStroke.Thickness = 1
+BountyStroke.Color = Color3.fromRGB(0, 0, 0)           -- viền đen mỏng
+BountyStroke.Transparency = 0.2
+BountyStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+BountyStroke.Parent = CrentBounty
 
 local BountyEarned = Instance.new("TextLabel")
 BountyEarned.Font = Enum.Font.Gotham
@@ -1832,11 +1839,3 @@ spawn(function()
         end)
     end
 end)
-print("✅ Kill webhook has been activated!")
-print("=== AUTO BOUNTY ĐÃ KHỞI ĐỘNG ===")
-print("✅ Đã xóa toàn bộ click")
-print("✅ Đã xóa tính năng Spectate Player")
-print("✅ Team: " .. getgenv().Setting.Team)
-print("✅ Có thể nhìn thấy người chơi và đảo")
-print("✅ Visual bình thường")
-print("✅ Sẵn sàng farm bounty!")
