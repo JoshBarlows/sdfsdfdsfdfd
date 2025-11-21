@@ -624,11 +624,12 @@ NotesEN.Parent = MainFrame
 local ButtonsFrame = Instance.new("Frame")
 ButtonsFrame.Name = "ButtonsFrame"
 ButtonsFrame.AnchorPoint = Vector2.new(0.5, 0)
-ButtonsFrame.Size = UDim2.new(0, 190, 0, 28)
-ButtonsFrame.Position = UDim2.new(0.5, 0, 0.5, 110)
+ButtonsFrame.Size = UDim2.new(0, 120, 0, 28)       -- đúng bằng 1 nút
+ButtonsFrame.Position = UDim2.new(0.5, 0, 0.5, 110) -- vẫn nằm dưới UI, ở GIỮA
 ButtonsFrame.BackgroundTransparency = 1
 ButtonsFrame.ZIndex = 3
 ButtonsFrame.Parent = MainGui
+
 
 local layout = Instance.new("UIListLayout")
 layout.FillDirection = Enum.FillDirection.Horizontal
@@ -637,35 +638,11 @@ layout.VerticalAlignment = Enum.VerticalAlignment.Center
 layout.Padding = UDim.new(0, 8)
 layout.Parent = ButtonsFrame
 
-
-local UICorner_Skip = Instance.new("UICorner")
-UICorner_Skip.CornerRadius = UDim.new(0, 10)
-UICorner_Skip.Parent = SkipImg
-
-local Stroke_Skip = Instance.new("UIStroke")
-Stroke_Skip.Thickness = 1
-Stroke_Skip.Color = Color3.fromRGB(150, 220, 90)
-Stroke_Skip.Transparency = 0.35
-Stroke_Skip.Parent = SkipImg
-
-local SkipButton = Instance.new("TextButton")
-SkipButton.Font = Enum.Font.GothamBold
-SkipButton.Text = "Next Player"
-SkipButton.TextColor3 = Color3.fromRGB(210, 245, 120)
-SkipButton.TextSize = 12
-SkipButton.BackgroundTransparency = 1
-SkipButton.BorderSizePixel = 0
-SkipButton.Size = UDim2.new(1, 0, 1, 0)
-SkipButton.Name = "SkipButton"
-SkipButton.ZIndex = 4
-SkipButton.Parent = SkipImg
-
--- NÚT NEXT PLAYER – XANH NEON
 local SkipImg = Instance.new("ImageLabel")
 SkipImg.BackgroundColor3 = Color3.fromRGB(26, 33, 60)
 SkipImg.BackgroundTransparency = 0
 SkipImg.BorderSizePixel = 0
-SkipImg.Size = UDim2.new(0, 90, 0, 26)
+SkipImg.Size = UDim2.new(1, 0, 1, 0)          -- chiếm full ButtonsFrame
 SkipImg.Name = "SkipImg"
 SkipImg.ZIndex = 3
 SkipImg.Parent = ButtonsFrame
@@ -699,6 +676,7 @@ SkipButton.Size = UDim2.new(1, 0, 1, 0)
 SkipButton.Name = "SkipButton"
 SkipButton.ZIndex = 4
 SkipButton.Parent = SkipImg
+
 
 -- NÚT HOP SERVER – XANH DƯƠNG / TÍM
 local ServerImg = Instance.new("ImageLabel")
