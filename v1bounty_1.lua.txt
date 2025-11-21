@@ -728,17 +728,17 @@ ServerGradient.Color = ColorSequence.new({
 ServerGradient.Rotation = 90
 ServerGradient.Parent = ServerImg
 
-local ServerButton = Instance.new("TextButton")
-ServerButton.Font = Enum.Font.GothamBold
-ServerButton.Text = "Hop Server"
-ServerButton.TextColor3 = Color3.fromRGB(235, 245, 255)
-ServerButton.TextSize = 12
-ServerButton.BackgroundTransparency = 1
-ServerButton.BorderSizePixel = 0
-ServerButton.Size = UDim2.new(1, 0, 1, 0)
-ServerButton.Name = "ServerButton"
-ServerButton.ZIndex = 4
-ServerButton.Parent = ServerImg
+-- local ServerButton = Instance.new("TextButton")
+-- ServerButton.Font = Enum.Font.GothamBold
+-- ServerButton.Text = "Hop Server"
+-- ServerButton.TextColor3 = Color3.fromRGB(235, 245, 255)
+-- ServerButton.TextSize = 12
+-- ServerButton.BackgroundTransparency = 1
+-- ServerButton.BorderSizePixel = 0
+-- ServerButton.Size = UDim2.new(1, 0, 1, 0)
+-- ServerButton.Name = "ServerButton"
+-- ServerButton.ZIndex = 4
+-- ServerButton.Parent = ServerImg
 
 
 local UICorner_Server = Instance.new("UICorner")
