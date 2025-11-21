@@ -181,9 +181,9 @@ Gradient.Rotation = 0
 Gradient.Parent = Background
 
 -------------------------------------------------
--- PANEL QUẢNG CÁO BÊN PHẢI (LOGO + DISCORD + SHOP)
+-- PANEL QUẢNG CÁO BÊN PHẢI (LOGO + 3 BUTTON)
 -------------------------------------------------
-Character.Image = "" -- không dùng image trực tiếp nữa
+Character.Image = "" -- không dùng ảnh full nữa
 Character.BackgroundColor3 = Color3.fromRGB(8, 10, 22)
 Character.BackgroundTransparency = 0.08
 Character.BorderSizePixel = 0
@@ -215,12 +215,12 @@ AdGradient.Transparency = NumberSequence.new({
 })
 AdGradient.Parent = Character
 
--- Logo T trắng phía trên
+-- LOGO
 local Logo = Instance.new("ImageLabel")
 Logo.Name = "Logo"
 Logo.BackgroundTransparency = 1
 Logo.BorderSizePixel = 0
-Logo.Image = "rbxassetid://YOUR_LOGO_ID" -- <- ĐỔI ID LOGO Ở ĐÂY
+Logo.Image = "rbxassetid://YOUR_LOGO_ID" -- ĐỔI ID LOGO Ở ĐÂY
 Logo.AnchorPoint = Vector2.new(0.5, 0)
 Logo.Position = UDim2.new(0.5, 0, 0, 8)
 Logo.Size = UDim2.new(0, 54, 0, 54)
@@ -232,26 +232,50 @@ LogoCorner.CornerRadius = UDim.new(1, 0)
 LogoCorner.Parent = Logo
 
 -------------------------------------------------
+-- CONTAINER BUTTON + LAYOUT DỌC
+-------------------------------------------------
+local BtnContainer = Instance.new("Frame")
+BtnContainer.Name = "BtnContainer"
+BtnContainer.BackgroundTransparency = 1
+BtnContainer.BorderSizePixel = 0
+BtnContainer.AnchorPoint = Vector2.new(0.5, 0)
+BtnContainer.Position = UDim2.new(0.5, 0, 0, 72)
+BtnContainer.Size = UDim2.new(1, 0, 1, -72)
+BtnContainer.ZIndex = 4
+BtnContainer.Parent = Character
+
+local BtnLayout = Instance.new("UIListLayout")
+BtnLayout.FillDirection = Enum.FillDirection.Vertical
+BtnLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+BtnLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+BtnLayout.Padding = UDim.new(0, 6)
+BtnLayout.Parent = BtnContainer
+
+local function CreateAdButton(text)
+    local btn = Instance.new("TextButton")
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 60) -- màu sẽ override bên dưới
+    btn.BackgroundTransparency = 0
+    btn.BorderSizePixel = 0
+    btn.Size = UDim2.new(0.85, 0, 0, 26)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 12
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Text = text
+    btn.ZIndex = 4
+    btn.Parent = BtnContainer
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = btn
+
+    return btn
+end
+-------------------------------------------------
 -- BUTTON DISCORD
 -------------------------------------------------
-local DiscordBtn = Instance.new("TextButton")
-DiscordBtn.Name = "DiscordButton"
+local DiscordBtn = CreateAdButton("Discord")
 DiscordBtn.BackgroundColor3 = Color3.fromRGB(40, 50, 130)
-DiscordBtn.BackgroundTransparency = 0
-DiscordBtn.BorderSizePixel = 0
-DiscordBtn.AnchorPoint = Vector2.new(0.5, 0)
-DiscordBtn.Position = UDim2.new(0.5, 0, 0, 80)
-DiscordBtn.Size = UDim2.new(0.8, 0, 0, 28)
-DiscordBtn.Text = "Discord"
-DiscordBtn.Font = Enum.Font.GothamBold
-DiscordBtn.TextSize = 12
-DiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-DiscordBtn.ZIndex = 4
-DiscordBtn.Parent = Character
-
-local DiscordCorner = Instance.new("UICorner")
-DiscordCorner.CornerRadius = UDim.new(0, 8)
-DiscordCorner.Parent = DiscordBtn
+DiscordBtn.TextColor3 = Color3.fromRGB(240, 245, 255)
 
 local DiscordStroke = Instance.new("UIStroke")
 DiscordStroke.Thickness = 1
@@ -267,27 +291,17 @@ DiscordGrad.Color = ColorSequence.new({
 DiscordGrad.Rotation = 90
 DiscordGrad.Parent = DiscordBtn
 
+DiscordBtn.MouseButton1Click:Connect(function()
+    SafeSetClipboard(DiscordLink)
+    ShowCopy("Đã copy link Discord!")
+end)
+
 -------------------------------------------------
 -- BUTTON GAME SHOP
 -------------------------------------------------
-local ShopBtn = Instance.new("TextButton")
-ShopBtn.Name = "ShopButton"
+local ShopBtn = CreateAdButton("Game Shop")
 ShopBtn.BackgroundColor3 = Color3.fromRGB(140, 70, 20)
-ShopBtn.BackgroundTransparency = 0
-ShopBtn.BorderSizePixel = 0
-ShopBtn.AnchorPoint = Vector2.new(0.5, 0)
-ShopBtn.Position = UDim2.new(0.5, 0, 0, 112)
-ShopBtn.Size = UDim2.new(0.8, 0, 0, 28)
-ShopBtn.Text = "Game Shop"
-ShopBtn.Font = Enum.Font.GothamBold
-ShopBtn.TextSize = 12
 ShopBtn.TextColor3 = Color3.fromRGB(255, 240, 200)
-ShopBtn.ZIndex = 4
-ShopBtn.Parent = Character
-
-local ShopCorner = Instance.new("UICorner")
-ShopCorner.CornerRadius = UDim.new(0, 8)
-ShopCorner.Parent = ShopBtn
 
 local ShopStroke = Instance.new("UIStroke")
 ShopStroke.Thickness = 1
@@ -302,6 +316,37 @@ ShopGrad.Color = ColorSequence.new({
 })
 ShopGrad.Rotation = 90
 ShopGrad.Parent = ShopBtn
+
+ShopBtn.MouseButton1Click:Connect(function()
+    SafeSetClipboard(ShopLink)
+    ShowCopy("Đã copy link Shop!")
+end)
+
+-------------------------------------------------
+-- BUTTON ZALO
+-------------------------------------------------
+local ZaloBtn = CreateAdButton("Zalo")
+ZaloBtn.BackgroundColor3 = Color3.fromRGB(20, 110, 200)
+ZaloBtn.TextColor3 = Color3.fromRGB(225, 245, 255)
+
+local ZaloStroke = Instance.new("UIStroke")
+ZaloStroke.Thickness = 1
+ZaloStroke.Color = Color3.fromRGB(150, 230, 255)
+ZaloStroke.Transparency = 0.15
+ZaloStroke.Parent = ZaloBtn
+
+local ZaloGrad = Instance.new("UIGradient")
+ZaloGrad.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 210, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 110, 200))
+})
+ZaloGrad.Rotation = 90
+ZaloGrad.Parent = ZaloBtn
+
+ZaloBtn.MouseButton1Click:Connect(function()
+    SafeSetClipboard(ZaloLink)
+    ShowCopy("Đã copy link Zalo!")
+end)
 
 -------------------------------------------------
 -- TITLE + ICON
