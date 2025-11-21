@@ -114,194 +114,393 @@ local UICorner_Toggle = Instance.new("UICorner")
 MainGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 MainGui.Name = "MainGui"
 MainGui.Parent = game:GetService("CoreGui")
+-------------------------------------------------
+-- SHADOW PHÍA SAU MAINFRAME CHO ĐẸP
+-------------------------------------------------
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.Position = UDim2.new(0.5, 4, 0.5, 6)
+Shadow.Size = UDim2.new(0, 400, 0, 190)
+Shadow.BackgroundTransparency = 1
+Shadow.Image = "rbxassetid://1316045217" -- generic shadow
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.35
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
+Shadow.ZIndex = 0
+Shadow.Parent = MainGui
+
+-------------------------------------------------
+-- MAIN CARD
+-------------------------------------------------
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 22, 36)
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.Size = UDim2.new(0, 380, 0, 180)
 MainFrame.Name = "MainFrame"
+MainFrame.ZIndex = 1
 MainFrame.Parent = MainGui
+
+local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 12)
 UICorner.Parent = MainFrame
-Background.Image = "rbxassetid://128136450619493"
-Background.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-Background.BackgroundTransparency = 1
-Background.BorderColor3 = Color3.fromRGB(0, 0, 0)
+
+-- viền mảnh phát sáng nhẹ
+local Stroke = Instance.new("UIStroke")
+Stroke.Thickness = 1.2
+Stroke.Color = Color3.fromRGB(120, 190, 80)
+Stroke.Transparency = 0.45
+Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+Stroke.Parent = MainFrame
+
+-------------------------------------------------
+-- BACKGROUND IMAGE + GRADIENT TỐI BÊN TRÁI
+-------------------------------------------------
+Background.Image = "rbxassetid://85995292005925"
+Background.BackgroundColor3 = Color3.fromRGB(20, 22, 30)
+Background.BackgroundTransparency = 0
 Background.BorderSizePixel = 0
 Background.Size = UDim2.new(1, 0, 1, 0)
 Background.Name = "Background"
+Background.ZIndex = 1
 Background.Parent = MainFrame
+
+local UICorner_Background = Instance.new("UICorner")
 UICorner_Background.CornerRadius = UDim.new(0, 12)
 UICorner_Background.Parent = Background
-Character.Image = "rbxassetid://95939250980299"
-Character.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Character.BackgroundTransparency = 1
-Character.BorderColor3 = Color3.fromRGB(0, 0, 0)
+
+local Gradient = Instance.new("UIGradient")
+Gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(5, 5, 10)),
+    ColorSequenceKeypoint.new(0.45, Color3.fromRGB(10, 15, 25)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+})
+Gradient.Rotation = 0
+Gradient.Parent = Background
+
+-------------------------------------------------
+-- PANEL QUẢNG CÁO BÊN PHẢI (LOGO + DISCORD + SHOP)
+-------------------------------------------------
+Character.Image = "" -- không dùng image trực tiếp nữa
+Character.BackgroundColor3 = Color3.fromRGB(8, 10, 22)
+Character.BackgroundTransparency = 0.08
 Character.BorderSizePixel = 0
-Character.Position = UDim2.new(0.55, 0, -0.05, 0)
-Character.Size = UDim2.new(0, 160, 0, 180)
-Character.Name = "Character"
+Character.Position = UDim2.new(1, -135, 0.5, -75)
+Character.Size = UDim2.new(0, 120, 0, 150)
+Character.Name = "AdPanel"
+Character.ZIndex = 3
 Character.Parent = MainFrame
-UICorner_Character.CornerRadius = UDim.new(0, 8)
+
+local UICorner_Character = Instance.new("UICorner")
+UICorner_Character.CornerRadius = UDim.new(0, 10)
 UICorner_Character.Parent = Character
+
+local AdStroke = Instance.new("UIStroke")
+AdStroke.Thickness = 1.2
+AdStroke.Color = Color3.fromRGB(255, 255, 255)
+AdStroke.Transparency = 0.35
+AdStroke.Parent = Character
+
+local AdGradient = Instance.new("UIGradient")
+AdGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 60, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(220, 140, 60))
+})
+AdGradient.Rotation = 90
+AdGradient.Transparency = NumberSequence.new({
+    NumberSequenceKeypoint.new(0, 0.15),
+    NumberSequenceKeypoint.new(1, 0.4)
+})
+AdGradient.Parent = Character
+
+-- Logo T trắng phía trên
+local Logo = Instance.new("ImageLabel")
+Logo.Name = "Logo"
+Logo.BackgroundTransparency = 1
+Logo.BorderSizePixel = 0
+Logo.Image = "rbxassetid://YOUR_LOGO_ID" -- <- ĐỔI ID LOGO Ở ĐÂY
+Logo.AnchorPoint = Vector2.new(0.5, 0)
+Logo.Position = UDim2.new(0.5, 0, 0, 8)
+Logo.Size = UDim2.new(0, 54, 0, 54)
+Logo.ZIndex = 4
+Logo.Parent = Character
+
+local LogoCorner = Instance.new("UICorner")
+LogoCorner.CornerRadius = UDim.new(1, 0)
+LogoCorner.Parent = Logo
+
+-------------------------------------------------
+-- BUTTON DISCORD
+-------------------------------------------------
+local DiscordBtn = Instance.new("TextButton")
+DiscordBtn.Name = "DiscordButton"
+DiscordBtn.BackgroundColor3 = Color3.fromRGB(40, 50, 130)
+DiscordBtn.BackgroundTransparency = 0
+DiscordBtn.BorderSizePixel = 0
+DiscordBtn.AnchorPoint = Vector2.new(0.5, 0)
+DiscordBtn.Position = UDim2.new(0.5, 0, 0, 80)
+DiscordBtn.Size = UDim2.new(0.8, 0, 0, 28)
+DiscordBtn.Text = "Discord"
+DiscordBtn.Font = Enum.Font.GothamBold
+DiscordBtn.TextSize = 12
+DiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DiscordBtn.ZIndex = 4
+DiscordBtn.Parent = Character
+
+local DiscordCorner = Instance.new("UICorner")
+DiscordCorner.CornerRadius = UDim.new(0, 8)
+DiscordCorner.Parent = DiscordBtn
+
+local DiscordStroke = Instance.new("UIStroke")
+DiscordStroke.Thickness = 1
+DiscordStroke.Color = Color3.fromRGB(120, 190, 255)
+DiscordStroke.Transparency = 0.15
+DiscordStroke.Parent = DiscordBtn
+
+local DiscordGrad = Instance.new("UIGradient")
+DiscordGrad.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 150, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 70, 160))
+})
+DiscordGrad.Rotation = 90
+DiscordGrad.Parent = DiscordBtn
+
+-------------------------------------------------
+-- BUTTON GAME SHOP
+-------------------------------------------------
+local ShopBtn = Instance.new("TextButton")
+ShopBtn.Name = "ShopButton"
+ShopBtn.BackgroundColor3 = Color3.fromRGB(140, 70, 20)
+ShopBtn.BackgroundTransparency = 0
+ShopBtn.BorderSizePixel = 0
+ShopBtn.AnchorPoint = Vector2.new(0.5, 0)
+ShopBtn.Position = UDim2.new(0.5, 0, 0, 112)
+ShopBtn.Size = UDim2.new(0.8, 0, 0, 28)
+ShopBtn.Text = "Game Shop"
+ShopBtn.Font = Enum.Font.GothamBold
+ShopBtn.TextSize = 12
+ShopBtn.TextColor3 = Color3.fromRGB(255, 240, 200)
+ShopBtn.ZIndex = 4
+ShopBtn.Parent = Character
+
+local ShopCorner = Instance.new("UICorner")
+ShopCorner.CornerRadius = UDim.new(0, 8)
+ShopCorner.Parent = ShopBtn
+
+local ShopStroke = Instance.new("UIStroke")
+ShopStroke.Thickness = 1
+ShopStroke.Color = Color3.fromRGB(255, 190, 110)
+ShopStroke.Transparency = 0.15
+ShopStroke.Parent = ShopBtn
+
+local ShopGrad = Instance.new("UIGradient")
+ShopGrad.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 190, 120)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(170, 80, 40))
+})
+ShopGrad.Rotation = 90
+ShopGrad.Parent = ShopBtn
+
+-------------------------------------------------
+-- TITLE + ICON
+-------------------------------------------------
 TextLabel.Font = Enum.Font.GothamBold
-TextLabel.Text = "Matsune Hub Auto Bounty"
+TextLabel.Text = "TDT Hub Auto Bounty"
 TextLabel.TextColor3 = Color3.fromRGB(125, 194, 14)
-TextLabel.TextSize = 14
+TextLabel.TextSize = 16
 TextLabel.TextTransparency = 0
 TextLabel.TextXAlignment = Enum.TextXAlignment.Left
-TextLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel.BackgroundTransparency = 1
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0, 40, 0, 8)
-TextLabel.Size = UDim2.new(0, 200, 0, 20)
+TextLabel.Position = UDim2.new(0, 42, 0, 10)
+TextLabel.Size = UDim2.new(0, 220, 0, 22)
+TextLabel.ZIndex = 2
 TextLabel.Parent = MainFrame
-CharacterIcon.Image = "rbxassetid://128160729162320"
-CharacterIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+CharacterIcon.Image = "rbxassetid://"
 CharacterIcon.BackgroundTransparency = 1
-CharacterIcon.BorderColor3 = Color3.fromRGB(0, 0, 0)
 CharacterIcon.BorderSizePixel = 0
-CharacterIcon.Position = UDim2.new(0, 10, 0, 8)
+CharacterIcon.Position = UDim2.new(0, 12, 0, 8)
 CharacterIcon.Size = UDim2.new(0, 25, 0, 25)
 CharacterIcon.Name = "CharacterIcon"
+CharacterIcon.ZIndex = 2
 CharacterIcon.Parent = MainFrame
+
+local UICorner_Icon = Instance.new("UICorner")
 UICorner_Icon.CornerRadius = UDim.new(0, 6)
 UICorner_Icon.Parent = CharacterIcon
+
+-------------------------------------------------
+-- TEXT INFO BÊN TRÁI
+-------------------------------------------------
+local InfoStartY = 40
+
 CrentBounty.Font = Enum.Font.Gotham
 CrentBounty.Text = "Current Bounty:"
 CrentBounty.TextColor3 = Color3.fromRGB(255, 255, 255)
 CrentBounty.TextSize = 12
-CrentBounty.TextTransparency = 0
 CrentBounty.TextXAlignment = Enum.TextXAlignment.Left
-CrentBounty.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 CrentBounty.BackgroundTransparency = 1
-CrentBounty.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CrentBounty.BorderSizePixel = 0
-CrentBounty.Position = UDim2.new(0, 12, 0, 40)
-CrentBounty.Size = UDim2.new(0, 180, 0, 16)
+CrentBounty.Position = UDim2.new(0, 12, 0, InfoStartY)
+CrentBounty.Size = UDim2.new(0, 190, 0, 16)
 CrentBounty.Name = "CrentBounty"
+CrentBounty.ZIndex = 2
 CrentBounty.Parent = MainFrame
+
 BountyEarned.Font = Enum.Font.Gotham
-BountyEarned.Text = "Bounty Earned: 0$ "
+BountyEarned.Text = "Bounty Earned: 0$"
 BountyEarned.TextColor3 = Color3.fromRGB(255, 255, 255)
 BountyEarned.TextSize = 12
-BountyEarned.TextTransparency = 0
 BountyEarned.TextXAlignment = Enum.TextXAlignment.Left
-BountyEarned.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 BountyEarned.BackgroundTransparency = 1
-BountyEarned.BorderColor3 = Color3.fromRGB(0, 0, 0)
-BountyEarned.BorderSizePixel = 0
-BountyEarned.Position = UDim2.new(0, 12, 0, 60)
-BountyEarned.Size = UDim2.new(0, 180, 0, 16)
+BountyEarned.Position = UDim2.new(0, 12, 0, InfoStartY + 18)
+BountyEarned.Size = UDim2.new(0, 190, 0, 16)
 BountyEarned.Name = "BountyEarned"
+BountyEarned.ZIndex = 2
 BountyEarned.Parent = MainFrame
+
 TotalBountyEarned.Font = Enum.Font.Gotham
 TotalBountyEarned.Text = "Total Bounty Earned: 0$"
 TotalBountyEarned.TextColor3 = Color3.fromRGB(255, 255, 255)
 TotalBountyEarned.TextSize = 12
-TotalBountyEarned.TextTransparency = 0
 TotalBountyEarned.TextXAlignment = Enum.TextXAlignment.Left
-TotalBountyEarned.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TotalBountyEarned.BackgroundTransparency = 1
-TotalBountyEarned.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TotalBountyEarned.BorderSizePixel = 0
-TotalBountyEarned.Position = UDim2.new(0, 12, 0, 80)
-TotalBountyEarned.Size = UDim2.new(0, 180, 0, 16)
+TotalBountyEarned.Position = UDim2.new(0, 12, 0, InfoStartY + 36)
+TotalBountyEarned.Size = UDim2.new(0, 190, 0, 16)
 TotalBountyEarned.Name = "TotalBountyEarned"
+TotalBountyEarned.ZIndex = 2
 TotalBountyEarned.Parent = MainFrame
+
 CilentTimeElapsed.Font = Enum.Font.Gotham
 CilentTimeElapsed.Text = "Client Time Elapsed: 0h:0m:00s"
 CilentTimeElapsed.TextColor3 = Color3.fromRGB(255, 255, 255)
 CilentTimeElapsed.TextSize = 12
-CilentTimeElapsed.TextTransparency = 0
 CilentTimeElapsed.TextXAlignment = Enum.TextXAlignment.Left
-CilentTimeElapsed.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 CilentTimeElapsed.BackgroundTransparency = 1
-CilentTimeElapsed.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CilentTimeElapsed.BorderSizePixel = 0
-CilentTimeElapsed.Position = UDim2.new(0, 12, 0, 100)
-CilentTimeElapsed.Size = UDim2.new(0, 180, 0, 16)
+CilentTimeElapsed.Position = UDim2.new(0, 12, 0, InfoStartY + 54)
+CilentTimeElapsed.Size = UDim2.new(0, 190, 0, 16)
 CilentTimeElapsed.Name = "CilentTimeElapsed"
+CilentTimeElapsed.ZIndex = 2
 CilentTimeElapsed.Parent = MainFrame
+
 AccoutTimeElapsed.Font = Enum.Font.Gotham
-AccoutTimeElapsed.Text = "Acount Time Elapsed: 0h:0m:00s"
+AccoutTimeElapsed.Text = "Account Time Elapsed: 0h:0m:00s"
 AccoutTimeElapsed.TextColor3 = Color3.fromRGB(255, 255, 255)
 AccoutTimeElapsed.TextSize = 12
-AccoutTimeElapsed.TextTransparency = 0
 AccoutTimeElapsed.TextXAlignment = Enum.TextXAlignment.Left
-AccoutTimeElapsed.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 AccoutTimeElapsed.BackgroundTransparency = 1
-AccoutTimeElapsed.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AccoutTimeElapsed.BorderSizePixel = 0
-AccoutTimeElapsed.Position = UDim2.new(0, 12, 0, 120)
-AccoutTimeElapsed.Size = UDim2.new(0, 180, 0, 16)
+AccoutTimeElapsed.Position = UDim2.new(0, 12, 0, InfoStartY + 72)
+AccoutTimeElapsed.Size = UDim2.new(0, 210, 0, 16)
 AccoutTimeElapsed.Name = "AccoutTimeElapsed"
+AccoutTimeElapsed.ZIndex = 2
 AccoutTimeElapsed.Parent = MainFrame
+
+-------------------------------------------------
+-- NÚT Ở NGOÀI BACKGROUND: FLOATING BÊN DƯỚI
+-------------------------------------------------
+local ButtonsFrame = Instance.new("Frame")
+ButtonsFrame.Name = "ButtonsFrame"
+ButtonsFrame.AnchorPoint = Vector2.new(0.5, 0)
+ButtonsFrame.Size = UDim2.new(0, 190, 0, 28)
+ButtonsFrame.Position = UDim2.new(0.5, 0, 0.5, 110) -- dưới card, giữa màn hình
+ButtonsFrame.BackgroundTransparency = 1
+ButtonsFrame.ZIndex = 3
+ButtonsFrame.Parent = MainGui
+
+local layout = Instance.new("UIListLayout")
+layout.FillDirection = Enum.FillDirection.Horizontal
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.VerticalAlignment = Enum.VerticalAlignment.Center
+layout.Padding = UDim.new(0, 8)
+layout.Parent = ButtonsFrame
+
+-- NEXT PLAYER BUTTON (GLASS)
 SkipImg.Image = "rbxassetid://92006056658480"
-SkipImg.AnchorPoint = Vector2.new(0, 1)
-SkipImg.BackgroundColor3 = Color3.fromRGB(50, 100, 150)
-SkipImg.BackgroundTransparency = 0
-SkipImg.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SkipImg.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+SkipImg.BackgroundTransparency = 0.15
 SkipImg.BorderSizePixel = 0
-SkipImg.Position = UDim2.new(0, 12, 1, -8)
-SkipImg.Size = UDim2.new(0, 80, 0, 25)
+SkipImg.Size = UDim2.new(0, 90, 0, 26)
 SkipImg.Name = "SkipImg"
-SkipImg.Parent = MainFrame
-UICorner_Skip.CornerRadius = UDim.new(0, 8)
+SkipImg.ZIndex = 3
+SkipImg.Parent = ButtonsFrame
+
+local UICorner_Skip = Instance.new("UICorner")
+UICorner_Skip.CornerRadius = UDim.new(0, 10)
 UICorner_Skip.Parent = SkipImg
+
+local Stroke_Skip = Instance.new("UIStroke")
+Stroke_Skip.Thickness = 1
+Stroke_Skip.Color = Color3.fromRGB(150, 220, 90)
+Stroke_Skip.Transparency = 0.35
+Stroke_Skip.Parent = SkipImg
+
 SkipButton.Font = Enum.Font.GothamBold
 SkipButton.Text = "Next Player"
-SkipButton.TextColor3 = Color3.fromRGB(170, 230, 73)
+SkipButton.TextColor3 = Color3.fromRGB(210, 245, 120)
 SkipButton.TextSize = 12
-SkipButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 SkipButton.BackgroundTransparency = 1
-SkipButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 SkipButton.BorderSizePixel = 0
 SkipButton.Size = UDim2.new(1, 0, 1, 0)
 SkipButton.Name = "SkipButton"
+SkipButton.ZIndex = 4
 SkipButton.Parent = SkipImg
+
+-- HOP SERVER BUTTON
 ServerImg.Image = "rbxassetid://71768682149411"
-ServerImg.AnchorPoint = Vector2.new(0, 1)
-ServerImg.BackgroundColor3 = Color3.fromRGB(150, 100, 50)
-ServerImg.BackgroundTransparency = 0
-ServerImg.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ServerImg.BackgroundColor3 = Color3.fromRGB(50, 35, 20)
+ServerImg.BackgroundTransparency = 0.15
 ServerImg.BorderSizePixel = 0
-ServerImg.Position = UDim2.new(0, 99, 1, -8)
-ServerImg.Size = UDim2.new(0, 80, 0, 25)
+ServerImg.Size = UDim2.new(0, 90, 0, 26)
 ServerImg.Name = "ServerImg"
-ServerImg.Parent = MainFrame
-UICorner_Server.CornerRadius = UDim.new(0, 8)
+ServerImg.ZIndex = 3
+ServerImg.Parent = ButtonsFrame
+
+local UICorner_Server = Instance.new("UICorner")
+UICorner_Server.CornerRadius = UDim.new(0, 10)
 UICorner_Server.Parent = ServerImg
+
+local Stroke_Server = Instance.new("UIStroke")
+Stroke_Server.Thickness = 1
+Stroke_Server.Color = Color3.fromRGB(255, 180, 90)
+Stroke_Server.Transparency = 0.4
+Stroke_Server.Parent = ServerImg
+
 ServerButton.Font = Enum.Font.GothamBold
 ServerButton.Text = "Hop Server"
-ServerButton.TextColor3 = Color3.fromRGB(170, 230, 73)
+ServerButton.TextColor3 = Color3.fromRGB(255, 230, 150)
 ServerButton.TextSize = 12
-ServerButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ServerButton.BackgroundTransparency = 1
-ServerButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ServerButton.BorderSizePixel = 0
 ServerButton.Size = UDim2.new(1, 0, 1, 0)
 ServerButton.Name = "ServerButton"
+ServerButton.ZIndex = 4
 ServerButton.Parent = ServerImg
+
+-------------------------------------------------
+-- NÚT TOGGLE UI
+-------------------------------------------------
 ToggleButton.Parent = MainGui
 ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ToggleButton.BorderSizePixel = 0
 ToggleButton.Position = UDim2.new(0.120833337 - 0.10, 0, 0.0952890813 + 0.01, 0)
 ToggleButton.Size = UDim2.new(0, 25, 0, 25)
 ToggleButton.Draggable = true
 ToggleButton.Image = "rbxassetid://100666805146072"
+
+local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
 UICorner_Toggle.Parent = ToggleButton
+
 local UIVisible = true
 ToggleButton.MouseButton1Click:Connect(function()
     UIVisible = not UIVisible
-    MainFrame.Visible = UIVisible    
-    if UIVisible then
-    end
+    MainFrame.Visible = UIVisible
+    Shadow.Visible = UIVisible
+    ButtonsFrame.Visible = UIVisible
 end)
+
 local UserInputService = game:GetService("UserInputService")
 local dragging
 local dragInput
