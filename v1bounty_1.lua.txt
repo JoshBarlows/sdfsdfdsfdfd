@@ -97,11 +97,14 @@ local Character = Instance.new("ImageLabel")
 local UICorner_Character = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")--// Services
 local TweenService = game:GetService("TweenService")
-
---// LINKS CẦN COPY
+--// SERVICES
+local TweenService = game:GetService("TweenService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
 local DiscordLink = "https://discord.gg/your_link"
 local ShopLink    = "https://your-game-shop-link"
-local ZaloLink    = "https://zalo.me/your_link"
+local ZaloLink    = "https://zalo.me/your_lin
 local CharacterIcon = Instance.new("ImageLabel")
 local UICorner_Icon = Instance.new("UICorner")
 local BountyEarned = Instance.new("TextLabel")
@@ -117,7 +120,7 @@ local UICorner_Server = Instance.new("UICorner")
 local ServerButton = Instance.new("TextButton")
 local ToggleButton = Instance.new("ImageButton")
 local UICorner_Toggle = Instance.new("UICorner")
---// HÀM COPY CLIPBOARD (EXECUTOR NÀO CÓ HỖ TRỢ THÌ SẼ HOẠT ĐỘNG)
+--// CLIPBOARD (PHỤ THUỘC EXECUTOR)
 local function SafeSetClipboard(text)
     local ok = false
     if setclipboard then
@@ -128,13 +131,39 @@ local function SafeSetClipboard(text)
     return ok
 end
 
+--// HOP SERVER
+local function HopServer()
+    local success, result = pcall(function()
+        local url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
+        return HttpService:JSONDecode(game:HttpGet(url))
+    end)
+
+    if not success or not result or not result.data then
+        warn("Không lấy được server list để hop.")
+        return
+    end
+
+    for _, server in ipairs(result.data) do
+        if server.playing < server.maxPlayers and server.id ~= game.JobId then
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id, Players.LocalPlayer)
+            return
+        end
+    end
+
+    warn("Không tìm được server phù hợp để hop.")
+end
+
+-- AUTO HOP (300s)
+local AUTO_HOP_INTERVAL = 300
+local remainingTime = AUTO_HOP_INTERVAL
 --// MAIN GUI
 local MainGui = Instance.new("ScreenGui")
 MainGui.Name = "MainGui"
 MainGui.ResetOnSpawn = false
 MainGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 MainGui.Parent = game:GetService("CoreGui")
---------------------------------------------------
+
+-------------------------------------------------
 -- SHADOW PHÍA SAU MAINFRAME
 -------------------------------------------------
 local Shadow = Instance.new("ImageLabel")
@@ -150,68 +179,6 @@ Shadow.ScaleType = Enum.ScaleType.Slice
 Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 Shadow.ZIndex = 0
 Shadow.Parent = MainGui
--------------------------------------------------
--- LOGO ĐỎ DẠ QUANG
--------------------------------------------------
-local Logo = Instance.new("ImageLabel")
-Logo.Name = "Logo"
-Logo.BackgroundTransparency = 1
-Logo.BorderSizePixel = 0
-Logo.Image = "rbxassetid://85995292005925"   -- << ĐỔI ID LOGO ĐỎ CỦA BẠN
-Logo.AnchorPoint = Vector2.new(0.5, 0)
-Logo.Position = UDim2.new(0.5, 0, 0, 4)           -- đẩy lên cao sát mép
-Logo.Size = UDim2.new(0, 60, 0, 60)
-Logo.ZIndex = 5
-Logo.Parent = AdPanel
-
--- Logo bo tròn
-local LogoCorner = Instance.new("UICorner")
-LogoCorner.CornerRadius = UDim.new(1, 0)
-LogoCorner.Parent = Logo
-
--- Tạo ánh sáng Glow quanh logo
-local Glow = Instance.new("ImageLabel")
-Glow.Name = "Glow"
-Glow.AnchorPoint = Vector2.new(0.5, 0.5)
-Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
-Glow.Size = UDim2.new(0, 90, 0, 90)
-Glow.BackgroundTransparency = 1
-Glow.Image = "rbxassetid://4994312770"     -- hiệu ứng glow mềm
-Glow.ImageColor3 = Color3.fromRGB(255, 40, 40)   -- ĐỎ PHÁT SÁNG
-Glow.ImageTransparency = 0.35
-Glow.ZIndex = 4
-Glow.Parent = Logo
-
--- Tạo lớp highlight khói đỏ nhẹ
-local SmokeGlow = Instance.new("ImageLabel")
-SmokeGlow.Name = "SmokeGlow"
-SmokeGlow.AnchorPoint = Vector2.new(0.5, 0.5)
-SmokeGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
-SmokeGlow.Size = UDim2.new(0, 110, 0, 110)
-SmokeGlow.BackgroundTransparency = 1
-SmokeGlow.Image = "rbxassetid://1095708"    -- texture mờ làm ánh sáng loang
-SmokeGlow.ImageColor3 = Color3.fromRGB(255, 70, 70)
-SmokeGlow.ImageTransparency = 0.70
-SmokeGlow.ZIndex = 3
-SmokeGlow.Parent = Logo
-
--- Animation ánh sáng nhẹ
-task.spawn(function()
-    while true do
-        TweenService:Create(
-            Glow,
-            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-            {ImageTransparency = 0.55}
-        ):Play()
-        task.wait(1.6)
-        TweenService:Create(
-            Glow,
-            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
-            {ImageTransparency = 0.35}
-        ):Play()
-        task.wait(1.6)
-    end
-end)
 
 -------------------------------------------------
 -- MAIN CARD
@@ -272,7 +239,7 @@ CopyNotify.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 CopyNotify.BackgroundTransparency = 0.15
 CopyNotify.BorderSizePixel = 0
 CopyNotify.AnchorPoint = Vector2.new(0.5, 1)
-CopyNotify.Position = UDim2.new(0.5, 0, 0, -6) -- ngay phía trên card
+CopyNotify.Position = UDim2.new(0.5, 0, 0, -6)
 CopyNotify.Size = UDim2.new(0, 180, 0, 22)
 CopyNotify.Font = Enum.Font.GothamBold
 CopyNotify.Text = ""
@@ -293,16 +260,18 @@ local function ShowCopy(msg)
     CopyNotify.TextTransparency = 1
     CopyNotify.BackgroundTransparency = 0.6
 
-    TweenService:Create(CopyNotify, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-        TextTransparency = 0,
-        BackgroundTransparency = 0.15
-    }):Play()
+    TweenService:Create(
+        CopyNotify,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {TextTransparency = 0, BackgroundTransparency = 0.15}
+    ):Play()
 
     task.delay(1.2, function()
-        TweenService:Create(CopyNotify, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-            TextTransparency = 1,
-            BackgroundTransparency = 0.6
-        }):Play()
+        TweenService:Create(
+            CopyNotify,
+            TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+            {TextTransparency = 1, BackgroundTransparency = 0.6}
+        ):Play()
         task.delay(0.3, function()
             CopyNotify.Visible = false
         end)
@@ -344,21 +313,62 @@ AdGradient.Transparency = NumberSequence.new({
 })
 AdGradient.Parent = AdPanel
 
--- LOGO
+-- LOGO ĐỎ + GLOW
 local Logo = Instance.new("ImageLabel")
 Logo.Name = "Logo"
 Logo.BackgroundTransparency = 1
 Logo.BorderSizePixel = 0
-Logo.Image = "rbxassetid://YOUR_LOGO_ID" -- ĐỔI ID LOGO Ở ĐÂY
+Logo.Image = "rbxassetid://YOUR_LOGO_ID" -- ĐỔI ID LOGO
 Logo.AnchorPoint = Vector2.new(0.5, 0)
-Logo.Position = UDim2.new(0.5, 0, 0, 8)
-Logo.Size = UDim2.new(0, 54, 0, 54)
-Logo.ZIndex = 4
+Logo.Position = UDim2.new(0.5, 0, 0, 4)
+Logo.Size = UDim2.new(0, 60, 0, 60)
+Logo.ZIndex = 5
 Logo.Parent = AdPanel
 
 local LogoCorner = Instance.new("UICorner")
 LogoCorner.CornerRadius = UDim.new(1, 0)
 LogoCorner.Parent = Logo
+
+local Glow = Instance.new("ImageLabel")
+Glow.Name = "Glow"
+Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Glow.Size = UDim2.new(0, 90, 0, 90)
+Glow.BackgroundTransparency = 1
+Glow.Image = "rbxassetid://4994312770"
+Glow.ImageColor3 = Color3.fromRGB(255, 40, 40)
+Glow.ImageTransparency = 0.35
+Glow.ZIndex = 4
+Glow.Parent = Logo
+
+local SmokeGlow = Instance.new("ImageLabel")
+SmokeGlow.Name = "SmokeGlow"
+SmokeGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+SmokeGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+SmokeGlow.Size = UDim2.new(0, 110, 0, 110)
+SmokeGlow.BackgroundTransparency = 1
+SmokeGlow.Image = "rbxassetid://1095708"
+SmokeGlow.ImageColor3 = Color3.fromRGB(255, 70, 70)
+SmokeGlow.ImageTransparency = 0.70
+SmokeGlow.ZIndex = 3
+SmokeGlow.Parent = Logo
+
+task.spawn(function()
+    while true do
+        TweenService:Create(
+            Glow,
+            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+            {ImageTransparency = 0.55}
+        ):Play()
+        task.wait(1.6)
+        TweenService:Create(
+            Glow,
+            TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+            {ImageTransparency = 0.35}
+        ):Play()
+        task.wait(1.6)
+    end
+end)
 
 -- CONTAINER BUTTON
 local BtnContainer = Instance.new("Frame")
@@ -367,7 +377,6 @@ BtnContainer.BackgroundTransparency = 1
 BtnContainer.BorderSizePixel = 0
 BtnContainer.AnchorPoint = Vector2.new(0.5, 0)
 BtnContainer.Position = UDim2.new(0.5, 0, 0, 48)
-
 BtnContainer.Size = UDim2.new(1, 0, 1, -72)
 BtnContainer.ZIndex = 4
 BtnContainer.Parent = AdPanel
@@ -509,7 +518,7 @@ local InfoStartY = 40
 local CrentBounty = Instance.new("TextLabel")
 CrentBounty.Font = Enum.Font.Gotham
 CrentBounty.Text = "Current Bounty: 0"
-CrentBounty.TextColor3 = Color3.fromRGB(255, 220, 120) -- vàng ấm
+CrentBounty.TextColor3 = Color3.fromRGB(255, 220, 120)
 CrentBounty.TextSize = 16
 CrentBounty.TextXAlignment = Enum.TextXAlignment.Left
 CrentBounty.BackgroundTransparency = 1
@@ -518,10 +527,10 @@ CrentBounty.Size = UDim2.new(0, 190, 0, 16)
 CrentBounty.Name = "CrentBounty"
 CrentBounty.ZIndex = 2
 CrentBounty.Parent = MainFrame
--- Thêm viền sáng quanh chữ
+
 local BountyStroke = Instance.new("UIStroke")
 BountyStroke.Thickness = 1
-BountyStroke.Color = Color3.fromRGB(0, 0, 0)           -- viền đen mỏng
+BountyStroke.Color = Color3.fromRGB(0, 0, 0)
 BountyStroke.Transparency = 0.2
 BountyStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 BountyStroke.Parent = CrentBounty
@@ -552,21 +561,6 @@ TotalBountyEarned.Name = "TotalBountyEarned"
 TotalBountyEarned.ZIndex = 2
 TotalBountyEarned.Parent = MainFrame
 
--- local CilentTimeElapsed = Instance.new("TextLabel")
--- CilentTimeElapsed.Font = Enum.Font.Gotham
--- CilentTimeElapsed.Text = "Client Time Elapsed: 0h:0m:00s"
--- CilentTimeElapsed.TextColor3 = Color3.fromRGB(255, 255, 255)
--- CilentTimeElapsed.TextSize = 12
--- CilentTimeElapsed.TextXAlignment = Enum.TextXAlignment.Left
--- CilentTimeElapsed.BackgroundTransparency = 1
--- CilentTimeElapsed.Position = UDim2.new(0, 12, 0, InfoStartY + 54)
--- CilentTimeElapsed.Size = UDim2.new(0, 190, 0, 16)
--- CilentTimeElapsed.Name = "CilentTimeElapsed"
--- CilentTimeElapsed.ZIndex = 2
--- CilentTimeElapsed.Parent = MainFrame
-
-
-
 local AccoutTimeElapsed = Instance.new("TextLabel")
 AccoutTimeElapsed.Font = Enum.Font.Gotham
 AccoutTimeElapsed.Text = "Account Time Elapsed: 0h:0m:00s"
@@ -580,13 +574,9 @@ AccoutTimeElapsed.Name = "AccoutTimeElapsed"
 AccoutTimeElapsed.ZIndex = 2
 AccoutTimeElapsed.Parent = MainFrame
 
--- CilentTimeElapsed.Parent = MainFrame
-AccoutTimeElapsed.Parent = MainFrame
 -------------------------------------------------
--- GHI CHÚ (VN + EN) BÁM SÁT DƯỚI ACCOUNT TIME
+-- GHI CHÚ (VN + EN) DƯỚI ACCOUNT TIME
 -------------------------------------------------
-
--- Lấy Y hiện tại của dòng "Account Time" rồi cộng thêm offset
 local notesBaseY = AccoutTimeElapsed.Position.Y.Offset + 20
 
 local NotesTitle = Instance.new("TextLabel")
@@ -626,7 +616,6 @@ NotesEN.Position = UDim2.new(0, 12, 0, notesBaseY + 16 + 24)
 NotesEN.Size = UDim2.new(0, 300, 0, 28)
 NotesEN.ZIndex = 2
 NotesEN.Parent = MainFrame
-
 
 -------------------------------------------------
 -- NÚT HOP SERVER + NEXT PLAYER BÊN DƯỚI
@@ -711,7 +700,30 @@ ServerButton.Name = "ServerButton"
 ServerButton.ZIndex = 4
 ServerButton.Parent = ServerImg
 
--- TODO: gắn function cho SkipButton / ServerButton ở đây nếu cần
+-- COUNTDOWN LABEL UPDATE
+local function UpdateHopLabel()
+    ServerButton.Text = string.format("Hop Server (%ds)", remainingTime)
+end
+
+ServerButton.MouseButton1Click:Connect(function()
+    HopServer()
+    remainingTime = AUTO_HOP_INTERVAL
+    UpdateHopLabel()
+end)
+
+-- AUTO HOP 300 GIÂY + ĐẾM NGƯỢC
+task.spawn(function()
+    while true do
+        while remainingTime > 0 do
+            UpdateHopLabel()
+            task.wait(1)
+            remainingTime = remainingTime - 1
+        end
+        HopServer()
+        remainingTime = AUTO_HOP_INTERVAL
+        UpdateHopLabel()
+    end
+end)
 
 -------------------------------------------------
 -- NÚT TOGGLE UI
@@ -723,7 +735,7 @@ ToggleButton.BorderSizePixel = 0
 ToggleButton.Position = UDim2.new(0.120833337 - 0.10, 0, 0.0952890813 + 0.01, 0)
 ToggleButton.Size = UDim2.new(0, 25, 0, 25)
 ToggleButton.Draggable = true
-ToggleButton.Image = "rbxassetid://"
+ToggleButton.Image = "rbxassetid://100666805146072" -- tự đổi icon nếu muốn
 
 local UICorner_Toggle = Instance.new("UICorner")
 UICorner_Toggle.CornerRadius = UDim.new(1, 0)
