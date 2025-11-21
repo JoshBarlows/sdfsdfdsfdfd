@@ -130,11 +130,11 @@ MainGui.Parent = game:GetService("CoreGui")
 local Shadow = Instance.new("ImageLabel")
 Shadow.Name = "Shadow"
 Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
-Shadow.Position = UDim2.new(0.5, 4, 0.5, 6)
+Shadow.Position = UDim2.new(0.5, 4, 0.38, 6)   -- 0.38 trùng với MainFrame.Position.Y.Scale
 Shadow.Size = UDim2.new(0, 400, 0, 190)
 Shadow.BackgroundTransparency = 1
 Shadow.Image = "rbxassetid://1316045217"
-Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageColor3 = Color3.fromRGB(255, 0, 0)
 Shadow.ImageTransparency = 0.35
 Shadow.ScaleType = Enum.ScaleType.Slice
 Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
@@ -792,15 +792,22 @@ ServerButton.Parent = ServerImg
 -- AUTO CHAT “Hello Server” (10–14 giây)
 -------------------------------------------------
 
+local function SendChatMessage(msg)
+    local args = {
+        [1] = msg,
+        [2] = "All"
+    }
+
+    game:GetService("ReplicatedStorage").SayMessageRequest:FireServer(unpack(args))
+end
+
 task.spawn(function()
     while true do
-        local msg = "Hello Server"
-
-        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
-
-        task.wait(10 + math.random(0,4)) -- delay an toàn
+        SendChatMessage("Hello Server")
+        task.wait(10 + math.random(0,4)) -- 10–14s an toàn
     end
 end)
+
 
 
 local UserInputService = game:GetService("UserInputService")
