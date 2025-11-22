@@ -45,7 +45,37 @@ Pirates = function()
     replicated.Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
 end
 
-local TeddyGay = loadstring(game:HttpGet("https://pastefy.app/rZT1K41Z/raw"))()
+local TeddyGay = loadstring(game:HttpGet("https://pastefy.app/IMguyGTs/raw"))()
+
+
+local DoorBySea = {
+
+
+
+     World2  = { 
+
+        CFrame.new(-368.115631, 75.8233261, 156.40126, 0.719358087, 0, 0.694639385, 0, 1, 0, -0.694639385, 0, 0.719358087),
+
+        CFrame.new(-412.784393, 74.4335785, 156.166626, 0, 0, 1, 0, 1, -0, -1, 0, 0),
+
+        CFrame.new(-508.141083, 75.8170013, 155.627289, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+
+    },
+
+
+
+    World3 = { 
+
+        CFrame.new(-12455.3896, 334.499054, -7698.82031, -0.707134247, 0, 0.707079291, 0, 1, 0, -0.707079291, 0, -0.707134247),
+
+        CFrame.new(-12602.584, 334.555939, -7742.83398, -0.939700961, 0, 0.341998369, 0, 1, 0, -0.341998339, 0, -0.939700902),
+
+        CFrame.new(-12753.3633, 334.586975, -7700.92871, 0.173624322, 0, -0.984811783, 0, 1, 0, 0.984811783, 0, 0.173624322)
+
+    }
+
+}
+
 
 if World1 then
     Boss = {
@@ -2438,6 +2468,254 @@ spawn(function()
         end)
     end
 end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+local Doors =World2 and DoorBySea.World2 or DoorBySea.World3
+
+
+local TargetEnemies = {
+
+    ["Gorilla"] = true,
+
+    ["Vampire"] = true,
+
+    ["rip_return"] = true,
+
+    ["Rip Infantry"] = true,
+
+    ["Cursed Skeleton"] = true,
+
+    ["Snowman"] = true,
+
+    ["Oni Soldier"] = true
+
+}
+
+
+
+
+
+local function FarmTargetEnemies()
+
+    pcall(function()
+
+        for i, v in pairs(workspace.Enemies:GetChildren()) do
+
+            if TargetEnemies[v.Name] and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+
+                repeat
+
+                    task.wait()
+
+                    Attack.Kill(v, _G.AutoTrickOrTreat)
+
+                until not _G.AutoTrickOrTreat or not v.Parent or v.Humanoid.Health <= 0
+
+            end
+
+        end
+
+    end)
+
+end
+
+
+
+
+
+local function TeleportToDoor(cf)
+
+    if not Root or not cf then return false end
+
+    _tp(cf)
+
+    repeat
+
+        task.wait()
+
+        
+
+        local hasTargetEnemy = false
+
+        for _, v in pairs(workspace.Enemies:GetChildren()) do
+
+            if TargetEnemies[v.Name] and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+
+                hasTargetEnemy = true
+
+                break
+
+            end
+
+        end
+
+        if hasTargetEnemy then
+
+            return false  
+
+        end
+
+    until not _G.AutoTrickOrTreat or (Root.Position - cf.Position).Magnitude < 10
+
+    task.wait(0.5)
+
+    return true  
+
+end
+
+
+
+
+
+local function TrickAndClaim()
+
+    for _, v in pairs(workspace:GetDescendants()) do
+
+        if v:IsA("ProximityPrompt") then
+
+            local part = v.Parent
+
+            if part and (Root.Position - part.Position).Magnitude < 20 then
+
+                pcall(function()
+
+                    
+
+                    fireproximityprompt(v)
+
+                    task.wait(0.5)
+
+                    
+
+                    HalloweenRemotes.Event:FireServer("ClaimReward")
+
+                end)
+
+            end
+
+        end
+
+    end
+
+end
+
+task.spawn(function()
+
+    while task.wait(0.5) do
+
+        if _G.AutoTrickOrTreat then
+
+            pcall(function()
+
+                
+
+                local hasEnemies = false
+
+                for _, v in pairs(workspace.Enemies:GetChildren()) do
+
+                    if TargetEnemies[v.Name] and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+
+                        hasEnemies = true
+
+                        break
+
+                    end
+
+                end
+
+                
+
+                if hasEnemies then
+
+                    
+
+                    FarmTargetEnemies()
+
+                else
+
+                    
+
+                    for _, cf in ipairs(Doors) do
+
+                        if not _G.AutoTrickOrTreat then break end
+
+                      
+
+                        local arrived = TeleportToDoor(cf)
+
+                        if not arrived then
+
+                            
+
+                            FarmTargetEnemies()
+
+                            break  
+
+                        end
+
+                        
+
+                        if not _G.AutoTrickOrTreat then break end
+
+                        
+
+                        
+
+                        local startTime = tick()
+
+                        while tick() - startTime < 5 and _G.AutoTrickOrTreat do
+
+                            TrickAndClaim()
+
+                            task.wait(0.5)
+
+                        end
+
+                    end
+
+                end
+
+            end)
+
+        end
+
+    end
+
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Main:AddToggle({
 	Title = "Auto Done Bartilo Quest",
