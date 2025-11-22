@@ -1123,8 +1123,8 @@ QuestB = function()
             PosB = CFrame.new(- 6217.2021484375, 28.047645568848, - 5053.1357421875)
         end
     end;
-	elseif World3 then
-		if x == 1500 or x <= 1524 then
+    if World3 then
+        if x == 1500 or x <= 1524 then
 			Mon = "Pirate Millionaire"
 			Qdata = 1
 			Qname = "PiratePortQuest"
@@ -1412,7 +1412,7 @@ QuestB = function()
 			PosQ = CFrame.new(10882.1172, -2086.20386, 10032.3252, 0.53273356, 2.02184136e-08, -0.846283019, 4.89283991e-08, 1, 5.46911778e-08, 0.846283019, -7.05430949e-08, 0.53273356)
 			PosM = CFrame.new(11050.832, -2001.22644, 10142.1963, 0.0107319066, -5.70328353e-08, 0.999942422, -4.57240077e-08, 1, 5.75268544e-08, -0.999942422, -4.63387479e-08, 0.0107319066)
 		end
-	end
+    end
 end
 QuestBeta = function()
     local Neta = QuestB()
@@ -1803,296 +1803,268 @@ QuestCheck = function()
             PosQ = CFrame.new(- 3054.44458, 235.544281, - 10142.8193, 0.990270376, - 0, - 0.13915664, 0, 1, - 0, 0.13915664, 0, 0.990270376)
             PosM = CFrame.new(- 3352.9013671875, 285.01556396484375, - 10534.841796875)
         end
-	elseif World3 then
-		if x == 1500 or x <= 1524 then
-			Mon = "Pirate Millionaire"
-			Qdata = 1
-			Qname = "PiratePortQuest"
-			NameMon = "Pirate Millionaire"
-			PosQ = CFrame["new"](-712.82727050781, 98.577049255371, 5711.9541015625)
-			PosM = CFrame["new"](-712.82727050781, 98.577049255371, 5711.9541015625)
-		elseif x == 1525 or x <= 1574 then
-			Mon = "Pistol Billionaire"
-			Qdata = 2
-			Qname = "PiratePortQuest"
-			NameMon = "Pistol Billionaire"
-			PosQ = CFrame["new"](-723.43316650391, 147.42906188965, 5931.9931640625)
-			PosM = CFrame["new"](-723.43316650391, 147.42906188965, 5931.9931640625)
-		elseif x == 1575 or x <= 1599 then
-			Mon = "Dragon Crew Warrior"
-			Qdata = 1
-			Qname = "AmazonQuest"
-			NameMon = "Dragon Crew Warrior"
-			PosQ = CFrame["new"](6779.0327148438, 111.16865539551, -801.21307373047)
-			PosM = CFrame["new"](6779.0327148438, 111.16865539551, -801.21307373047)
-		elseif x == 1600 or x <= 1624 then
-			Mon = "Dragon Crew Archer"
-			Qname = "AmazonQuest"
-			Qdata = 2
-			NameMon = "Dragon Crew Archer"
-			PosQ = CFrame["new"](6955.8974609375, 546.66589355469, 309.04013061523)
-			PosM = CFrame["new"](6955.8974609375, 546.66589355469, 309.04013061523)
-		elseif x == 1625 or x <= 1649 then
-			Mon = "Hydra Enforcer"
-			Qname = "VenomCrewQuest"
-			Qdata = 1
-			NameMon = "Hydra Enforcer"
-			PosQ = CFrame["new"](4620.6157226562, 1002.2954711914, 399.08688354492)
-			PosM = CFrame["new"](4620.6157226562, 1002.2954711914, 399.08688354492)
-		elseif x == 1650 or x <= 1699 then
-			Mon = "Venomous Assailant"
-			Qname = "VenomCrewQuest"
-			Qdata = 2
-			NameMon = "Venomous Assailant"
-			PosQ = CFrame["new"](4697.5918, 1100.65137, 946.401978, .579397917, -4.19689783e-010, .81504482, -1.49287818e-010, 1, 6.21053986e-010, -0.81504482, -4.81513662e-010, .579397917)
-			PosM = CFrame["new"](4697.5918, 1100.65137, 946.401978, .579397917, -4.19689783e-010, .81504482, -1.49287818e-010, 1, 6.21053986e-010, -0.81504482, -4.81513662e-010, .579397917)
-		elseif x == 1700 or x <= 1724 then
-			Mon = "Marine Commodore"
-			Qdata = 1
-			Qname = "MarineTreeIsland"
-			NameMon = "Marine Commodore"
-			PosQ = CFrame["new"](2180.54126, 27.8156815, -6741.5498, -0.965929747, 0, .258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
-			PosM = CFrame["new"](2286.0078125, 73.133918762207, -7159.8090820312)
-		elseif x == 1725 or x <= 1774 then
-			Mon = "Marine Rear Admiral"
-			NameMon = "Marine Rear Admiral"
-			Qname = "MarineTreeIsland"
-			Qdata = 2
-			PosQ = CFrame["new"](2179.98828125, 28.731239318848, -6740.0551757813)
-			PosM = CFrame["new"](3656.7736816406, 160.52406311035, -7001.5986328125)
-		elseif x == 1775 or x <= 1799 then
-			Mon = "Fishman Raider"
-			Qdata = 1
-			Qname = "DeepForestIsland3"
-			NameMon = "Fishman Raider"
-			PosQ = CFrame["new"](-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, .469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
-			PosM = CFrame["new"](-10407.526367188, 331.76263427734, -8368.5166015625)
-		elseif x == 1800 or x <= 1824 then
-			Mon = "Fishman Captain"
-			Qdata = 2
-			Qname = "DeepForestIsland3"
-			NameMon = "Fishman Captain"
-			PosQ = CFrame["new"](-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, .469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
-			PosM = CFrame["new"](-10994.701171875, 352.38140869141, -9002.1103515625)
-		elseif x == 1825 or x <= 1849 then
-			Mon = "Forest Pirate"
-			Qdata = 1
-			Qname = "DeepForestIsland"
-			NameMon = "Forest Pirate"
-			PosQ = CFrame["new"](-13234.04, 331.488495, -7625.40137, .707134247, 0, -0.707079291, 0, 1, 0, .707079291, 0, .707134247)
-			PosM = CFrame["new"](-13274.478515625, 332.37814331055, -7769.5805664062)
-		elseif x == 1850 or x <= 1899 then
-			Mon = "Mythological Pirate"
-			Qdata = 2
-			Qname = "DeepForestIsland"
-			NameMon = "Mythological Pirate"
-			PosQ = CFrame["new"](-13234.04, 331.488495, -7625.40137, .707134247, 0, -0.707079291, 0, 1, 0, .707079291, 0, .707134247)
-			PosM = CFrame["new"](-13680.607421875, 501.08154296875, -6991.189453125)
-		elseif x == 1900 or x <= 1924 then
-			Mon = "Jungle Pirate"
-			Qdata = 1
-			Qname = "DeepForestIsland2"
-			NameMon = "Jungle Pirate"
-			PosQ = CFrame["new"](-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, .996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
-			PosM = CFrame["new"](-12256.16015625, 331.73828125, -10485.836914062)
-		elseif x == 1925 or x <= 1974 then
-			Mon = "Musketeer Pirate"
-			Qdata = 2
-			Qname = "DeepForestIsland2"
-			NameMon = "Musketeer Pirate"
-			PosQ = CFrame["new"](-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, .996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
-			PosM = CFrame["new"](-13457.904296875, 391.54565429688, -9859.177734375)
-		elseif x == 1975 or x <= 1999 then
-			Mon = "Reborn Skeleton"
-			Qdata = 1
-			Qname = "HauntedQuest1"
-			NameMon = "Reborn Skeleton"
-			PosQ = CFrame["new"](-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, 0, -1, 0, 0)
-			PosM = CFrame["new"](-8763.7236328125, 165.72299194336, 6159.8618164062)
-		elseif x == 2000 or x <= 2024 then
-			Mon = "Living Zombie"
-			Qdata = 2
-			Qname = "HauntedQuest1"
-			NameMon = "Living Zombie"
-			PosQ = CFrame["new"](-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, 0, -1, 0, 0)
-			PosM = CFrame["new"](-10144.131835938, 138.6266784668, 5838.0888671875)
-		elseif x == 2025 or x <= 2049 then
-			Mon = "Demonic Soul"
-			Qdata = 1
-			Qname = "HauntedQuest2"
-			NameMon = "Demonic Soul"
-			PosQ = CFrame["new"](-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-9505.8720703125, 172.10482788086, 6158.9931640625)
-		elseif x == 2050 or x <= 2074 then
-			Mon = "Posessed Mummy"
-			Qdata = 2
-			Qname = "HauntedQuest2"
-			NameMon = "Posessed Mummy"
-			PosQ = CFrame["new"](-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-9582.0224609375, 6.2515273094177, 6205.478515625)
-		elseif x == 2075 or x <= 2099 then
-			Mon = "Peanut Scout"
-			Qdata = 1
-			Qname = "NutsIslandQuest"
-			NameMon = "Peanut Scout"
-			PosQ = CFrame["new"](-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-2143.2419433594, 47.721984863281, -10029.995117188)
-		elseif x == 2100 or x <= 2124 then
-			Mon = "Peanut President"
-			Qdata = 2
-			Qname = "NutsIslandQuest"
-			NameMon = "Peanut President"
-			PosQ = CFrame["new"](-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-1859.3540039062, 38.103168487549, -10422.4296875)
-		elseif x == 2125 or x <= 2149 then
-			Mon = "Ice Cream Chef"
-			Qdata = 1
-			Qname = "IceCreamIslandQuest"
-			NameMon = "Ice Cream Chef"
-			PosQ = CFrame["new"](-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-872.24658203125, 65.81957244873, -10919.95703125)
-		elseif x == 2150 or x <= 2199 then
-			Mon = "Ice Cream Commander"
-			Qdata = 2
-			Qname = "IceCreamIslandQuest"
-			NameMon = "Ice Cream Commander"
-			PosQ = CFrame["new"](-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			PosM = CFrame["new"](-558.06103515625, 112.04895782471, -11290.774414062)
-		elseif x == 2200 or x <= 2224 then
-			Mon = "Cookie Crafter"
-			Qdata = 1
-			Qname = "CakeQuest1"
-			NameMon = "Cookie Crafter"
-			PosQ = CFrame["new"](-2021.32007, 37.7982254, -12028.7295, .957576931, -8.80302053e-008, .288177818, 6.9301187e-008, 1, 7.51931211e-008, -0.288177818, -5.2032135e-008, .957576931)
-			PosM = CFrame["new"](-2374.13671875, 37.798263549805, -12125.30859375)
-		elseif x == 2225 or x <= 2249 then
-			Mon = "Cake Guard"
-			Qdata = 2
-			Qname = "CakeQuest1"
-			NameMon = "Cake Guard"
-			PosQ = CFrame["new"](-2021.32007, 37.7982254, -12028.7295, .957576931, -8.80302053e-008, .288177818, 6.9301187e-008, 1, 7.51931211e-008, -0.288177818, -5.2032135e-008, .957576931)
-			PosM = CFrame["new"](-1598.3070068359, 43.773197174072, -12244.581054688)
-		elseif x == 2250 or x <= 2274 then
-			Mon = "Baking Staff"
-			Qdata = 1
-			Qname = "CakeQuest2"
-			NameMon = "Baking Staff"
-			PosQ = CFrame["new"](-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-008, .250778586, 4.74911062e-008, 1, 1.49904711e-008, -0.250778586, 2.64211941e-008, -0.96804446)
-			PosM = CFrame["new"](-1887.8099365234, 77.618507385254, -12998.350585938)
-		elseif x == 2275 or x <= 2299 then
-			Mon = "Head Baker"
-			Qdata = 2
-			Qname = "CakeQuest2"
-			NameMon = "Head Baker"
-			PosQ = CFrame["new"](-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-008, .250778586, 4.74911062e-008, 1, 1.49904711e-008, -0.250778586, 2.64211941e-008, -0.96804446)
-			PosM = CFrame["new"](-2216.1882324219, 82.884521484375, -12869.293945312)
-		elseif x == 2300 or x <= 2324 then
-			Mon = "Cocoa Warrior"
-			Qdata = 1
-			Qname = "ChocQuest1"
-			NameMon = "Cocoa Warrior"
-			PosQ = CFrame["new"](233.22836303711, 29.876001358032, -12201.233398438)
-			PosM = CFrame["new"](-21.553283691406, 80.574996948242, -12352.387695312)
-		elseif x == 2325 or x <= 2349 then
-			Mon = "Chocolate Bar Battler"
-			Qdata = 2
-			Qname = "ChocQuest1"
-			NameMon = "Chocolate Bar Battler"
-			PosQ = CFrame["new"](233.22836303711, 29.876001358032, -12201.233398438)
-			PosM = CFrame["new"](582.59057617188, 77.188095092773, -12463.162109375)
-		elseif x == 2350 or x <= 2374 then
-			Mon = "Sweet Thief"
-			Qdata = 1
-			Qname = "ChocQuest2"
-			NameMon = "Sweet Thief"
-			PosQ = CFrame["new"](150.50663757324, 30.693693161011, -12774.502929688)
-			PosM = CFrame["new"](165.1884765625, 76.058853149414, -12600.836914062)
-		elseif x == 2375 or x <= 2399 then
-			Mon = "Candy Rebel"
-			Qdata = 2
-			Qname = "ChocQuest2"
-			NameMon = "Candy Rebel"
-			PosQ = CFrame["new"](150.50663757324, 30.693693161011, -12774.502929688)
-			PosM = CFrame["new"](134.86563110352, 77.247680664062, -12876.547851562)
-		elseif x == 2400 or x <= 2449 then
-			Mon = "Candy Pirate"
-			Qdata = 1
-			Qname = "CandyQuest1"
-			NameMon = "Candy Pirate"
-			PosQ = CFrame["new"](-1150.0400390625, 20.378934860229, -14446.334960938)
-			PosM = CFrame["new"](-1310.5003662109, 26.016523361206, -14562.404296875)
-		elseif x == 2450 or x <= 2474 then
-			Mon = "Isle Outlaw"
-			Qdata = 1
-			Qname = "TikiQuest1"
-			NameMon = "Isle Outlaw"
-			PosQ = CFrame["new"](-16548.8164, 55.6059914, -172.8125, .213092566, 0, -0.977032006, 0, 1, 0, .977032006, 0, .213092566)
-			PosM = CFrame["new"](-16479.900390625, 226.6117401123, -300.31143188477)
-		elseif x == 2475 or x <= 2499 then
-			Mon = "Island Boy"
-			Qdata = 2
-			Qname = "TikiQuest1"
-			NameMon = "Island Boy"
-			PosQ = CFrame["new"](-16548.8164, 55.6059914, -172.8125, .213092566, 0, -0.977032006, 0, 1, 0, .977032006, 0, .213092566)
-			PosM = CFrame["new"](-16849.396484375, 192.86505126953, -150.78532409668)
-		elseif x == 2500 or x <= 2524 then
-			Mon = "Sun-kissed Warrior"
-			Qdata = 1
-			Qname = "TikiQuest2"
-			NameMon = "kissed Warrior"
-			PosM = CFrame["new"](-16347, 64, 984)
-			PosQ = CFrame["new"](-16538, 55, 1049)
-		elseif x == 2525 or x <= 2550 then
-			Mon = "Isle Champion"
-			Qdata = 2
-			Qname = "TikiQuest2"
-			NameMon = "Isle Champion"
-			PosQ = CFrame["new"](-16541.0215, 57.3082275, 1051.46118, .0410757065, 0, -0.999156058, 0, 1, 0, .999156058, 0, .0410757065)
-			PosM = CFrame["new"](-16602.1015625, 130.38734436035, 1087.2456054688)
-		elseif x == 2551 or x <= 2574 then
-			Mon = "Serpent Hunter"
-			Qdata = 1
-			Qname = "TikiQuest3"
-			NameMon = "Serpent Hunter"
-			PosQ = CFrame["new"](-16679.478515625, 176.74737548828, 1474.3995361328)
-			PosM = CFrame["new"](-16679.478515625, 176.74737548828, 1474.3995361328)
-		elseif x >= 2575 and x < 2600 then
-			Mon = "Skull Slayer"
-			Qdata = 2
-			Qname = "TikiQuest3"
-			NameMon = "Skull Slayer"
-			PosQ = CFrame["new"](-16759.58984375, 71.283767700195, 1595.3399658203)
-			PosM = CFrame["new"](-16759.58984375, 71.283767700195, 1595.3399658203)
-		elseif x >= 2600 and x < 2625 then
-			Mon = "Reef Bandit"
-			Qdata = 1
-			Qname = "SubmergedQuest1"
-			NameMon = "Reef Bandit"
-			PosQ = CFrame.new(10781.0195, -2087.72705, 9265.71875, 0.974086046, 1.08580174e-07, 0.226177856, -1.03227848e-07, 1, -3.54914214e-08, -0.226177856, 1.12238459e-08, 0.974086046)
-			PosM = CFrame.new(10951.0312, -2159.48706, 9150.90137, -0.670042992, -1.77859043e-08, -0.742322326, 5.36638112e-08, 1, -7.23984215e-08, 0.742322326, -8.83458995e-08, -0.670042992)
-		elseif x >= 2625 and x < 2650 then
-			Mon = "Coral Pirate"
-			Qdata = 2
-			Qname = "SubmergedQuest1"
-			NameMon = "Coral Pirate"
-			PosQ = CFrame.new(10781.0195, -2087.72705, 9265.71875, 0.974086046, 1.08580174e-07, 0.226177856, -1.03227848e-07, 1, -3.54914214e-08, -0.226177856, 1.12238459e-08, 0.974086046)
-			PosM = CFrame.new(10744.9004, -2087.72729, 9343.34375, 0.798003972, -4.88583822e-08, 0.602652192, -1.01649866e-09, 1, 8.24182678e-08, -0.602652192, -6.63827038e-08, 0.798003972)
-		elseif  x >= 2650 and x < 2675 then
-			Mon = "Sea Chanter"
-			Qdata = 1
-			Qname = "SubmergedQuest2"
-			NameMon = "Sea Chanter"
-			PosQ = CFrame.new(10882.1172, -2086.20386, 10032.3252, 0.53273356, 2.02184136e-08, -0.846283019, 4.89283991e-08, 1, 5.46911778e-08, 0.846283019, -7.05430949e-08, 0.53273356)
-			PosM = CFrame.new(10661.252, -2087.72754, 10088.877, 0.230214745, 1.44061332e-08, 0.973139822, -2.87148127e-09, 1, -1.41244607e-08, -0.973139822, 4.57306304e-10, 0.230214745)
-		else
-			Mon = "Ocean Prophet"
-			Qdata = 2
-			Qname = "SubmergedQuest2"
-			NameMon = "Ocean Prophet"
-			PosQ = CFrame.new(10882.1172, -2086.20386, 10032.3252, 0.53273356, 2.02184136e-08, -0.846283019, 4.89283991e-08, 1, 5.46911778e-08, 0.846283019, -7.05430949e-08, 0.53273356)
-			PosM = CFrame.new(11050.832, -2001.22644, 10142.1963, 0.0107319066, -5.70328353e-08, 0.999942422, -4.57240077e-08, 1, 5.75268544e-08, -0.999942422, -4.63387479e-08, 0.0107319066)
-		end
-	end
+    elseif World3 then
+        if a == 1500 or a <= 1524 then
+            Mon = "Pirate Millionaire"
+            Qdata = 1;
+            Qname = "PiratePortQuest"
+            NameMon = "Pirate Millionaire"
+            PosQ = CFrame.new(- 712.8272705078125, 98.5770492553711, 5711.9541015625)
+            PosM = CFrame.new(- 712.8272705078125, 98.5770492553711, 5711.9541015625)
+        elseif a == 1525 or a <= 1574 then
+            Mon = "Pistol Billionaire"
+            Qdata = 2;
+            Qname = "PiratePortQuest"
+            NameMon = "Pistol Billionaire"
+            PosQ = CFrame.new(- 723.4331665039062, 147.42906188964844, 5931.9931640625)
+            PosM = CFrame.new(- 723.4331665039062, 147.42906188964844, 5931.9931640625)
+        elseif a == 1575 or a <= 1599 then
+            Mon = "Dragon Crew Warrior"
+            Qdata = 1;
+            Qname = "AmazonQuest"
+            NameMon = "Dragon Crew Warrior"
+            PosQ = CFrame.new(6779.03271484375, 111.16865539550781, - 801.2130737304688)
+            PosM = CFrame.new(6779.03271484375, 111.16865539550781, - 801.2130737304688)
+        elseif a == 1600 or a <= 1624 then
+            Mon = "Dragon Crew Archer"
+            Qname = "AmazonQuest"
+            Qdata = 2;
+            NameMon = "Dragon Crew Archer"
+            PosQ = CFrame.new(6955.8974609375, 546.6658935546875, 309.0401306152344)
+            PosM = CFrame.new(6955.8974609375, 546.6658935546875, 309.0401306152344)
+        elseif a == 1625 or a <= 1649 then
+            Mon = "Hydra Enforcer"
+            Qname = "VenomCrewQuest"
+            Qdata = 1;
+            NameMon = "Hydra Enforcer"
+            PosQ = CFrame.new(4620.61572265625, 1002.2954711914062, 399.0868835449219)
+            PosM = CFrame.new(4620.61572265625, 1002.2954711914062, 399.0868835449219)
+        elseif a == 1650 or a <= 1699 then
+            Mon = "Venomous Assailant"
+            Qname = "VenomCrewQuest"
+            Qdata = 2;
+            NameMon = "Venomous Assailant"
+            PosQ = CFrame.new(4697.5918, 1100.65137, 946.401978, 0.579397917, - 4.19689783e-10, 0.81504482, - 1.49287818e-10, 1, 6.21053986e-10, - 0.81504482, - 4.81513662e-10, 0.579397917)
+            PosM = CFrame.new(4697.5918, 1100.65137, 946.401978, 0.579397917, - 4.19689783e-10, 0.81504482, - 1.49287818e-10, 1, 6.21053986e-10, - 0.81504482, - 4.81513662e-10, 0.579397917)
+        elseif a == 1700 or a <= 1724 then
+            Mon = "Marine Commodore"
+            Qdata = 1;
+            Qname = "MarineTreeIsland"
+            NameMon = "Marine Commodore"
+            PosQ = CFrame.new(2180.54126, 27.8156815, - 6741.5498, - 0.965929747, 0, 0.258804798, 0, 1, 0, - 0.258804798, 0, - 0.965929747)
+            PosM = CFrame.new(2286.0078125, 73.13391876220703, - 7159.80908203125)
+        elseif a == 1725 or a <= 1774 then
+            Mon = "Marine Rear Admiral"
+            NameMon = "Marine Rear Admiral"
+            Qname = "MarineTreeIsland"
+            Qdata = 2;
+            PosQ = CFrame.new(2179.98828125, 28.731239318848, - 6740.0551757813)
+            PosM = CFrame.new(3656.773681640625, 160.52406311035156, - 7001.5986328125)
+        elseif a == 1775 or a <= 1799 then
+            Mon = "Fishman Raider"
+            Qdata = 1;
+            Qname = "DeepForestIsland3"
+            NameMon = "Fishman Raider"
+            PosQ = CFrame.new(- 10581.6563, 330.872955, - 8761.18652, - 0.882952213, 0, 0.469463557, 0, 1, 0, - 0.469463557, 0, - 0.882952213)
+            PosM = CFrame.new(- 10407.5263671875, 331.76263427734375, - 8368.5166015625)
+        elseif a == 1800 or a <= 1824 then
+            Mon = "Fishman Captain"
+            Qdata = 2;
+            Qname = "DeepForestIsland3"
+            NameMon = "Fishman Captain"
+            PosQ = CFrame.new(- 10581.6563, 330.872955, - 8761.18652, - 0.882952213, 0, 0.469463557, 0, 1, 0, - 0.469463557, 0, - 0.882952213)
+            PosM = CFrame.new(- 10994.701171875, 352.38140869140625, - 9002.1103515625)
+        elseif a == 1825 or a <= 1849 then
+            Mon = "Forest Pirate"
+            Qdata = 1;
+            Qname = "DeepForestIsland"
+            NameMon = "Forest Pirate"
+            PosQ = CFrame.new(- 13234.04, 331.488495, - 7625.40137, 0.707134247, - 0, - 0.707079291, 0, 1, - 0, 0.707079291, 0, 0.707134247)
+            PosM = CFrame.new(- 13274.478515625, 332.3781433105469, - 7769.58056640625)
+        elseif a == 1850 or a <= 1899 then
+            Mon = "Mythological Pirate"
+            Qdata = 2;
+            Qname = "DeepForestIsland"
+            NameMon = "Mythological Pirate"
+            PosQ = CFrame.new(- 13234.04, 331.488495, - 7625.40137, 0.707134247, - 0, - 0.707079291, 0, 1, - 0, 0.707079291, 0, 0.707134247)
+            PosM = CFrame.new(- 13680.607421875, 501.08154296875, - 6991.189453125)
+        elseif a == 1900 or a <= 1924 then
+            Mon = "Jungle Pirate"
+            Qdata = 1;
+            Qname = "DeepForestIsland2"
+            NameMon = "Jungle Pirate"
+            PosQ = CFrame.new(- 12680.3818, 389.971039, - 9902.01953, - 0.0871315002, 0, 0.996196866, 0, 1, 0, - 0.996196866, 0, - 0.0871315002)
+            PosM = CFrame.new(- 12256.16015625, 331.73828125, - 10485.8369140625)
+        elseif a == 1925 or a <= 1974 then
+            Mon = "Musketeer Pirate"
+            Qdata = 2;
+            Qname = "DeepForestIsland2"
+            NameMon = "Musketeer Pirate"
+            PosQ = CFrame.new(- 12680.3818, 389.971039, - 9902.01953, - 0.0871315002, 0, 0.996196866, 0, 1, 0, - 0.996196866, 0, - 0.0871315002)
+            PosM = CFrame.new(- 13457.904296875, 391.545654296875, - 9859.177734375)
+        elseif a == 1975 or a <= 1999 then
+            Mon = "Reborn Skeleton"
+            Qdata = 1;
+            Qname = "HauntedQuest1"
+            NameMon = "Reborn Skeleton"
+            PosQ = CFrame.new(- 9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, - 0, - 1, 0, 0)
+            PosM = CFrame.new(- 8763.7236328125, 165.72299194335938, 6159.86181640625)
+        elseif a == 2000 or a <= 2024 then
+            Mon = "Living Zombie"
+            Qdata = 2;
+            Qname = "HauntedQuest1"
+            NameMon = "Living Zombie"
+            PosQ = CFrame.new(- 9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, - 0, - 1, 0, 0)
+            PosM = CFrame.new(- 10144.1318359375, 138.62667846679688, 5838.0888671875)
+        elseif a == 2025 or a <= 2049 then
+            Mon = "Demonic Soul"
+            Qdata = 1;
+            Qname = "HauntedQuest2"
+            NameMon = "Demonic Soul"
+            PosQ = CFrame.new(- 9516.99316, 172.017181, 6078.46533, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 9505.8720703125, 172.10482788085938, 6158.9931640625)
+        elseif a == 2050 or a <= 2074 then
+            Mon = "Posessed Mummy"
+            Qdata = 2;
+            Qname = "HauntedQuest2"
+            NameMon = "Posessed Mummy"
+            PosQ = CFrame.new(- 9516.99316, 172.017181, 6078.46533, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 9582.0224609375, 6.251527309417725, 6205.478515625)
+        elseif a == 2075 or a <= 2099 then
+            Mon = "Peanut Scout"
+            Qdata = 1;
+            Qname = "NutsIslandQuest"
+            NameMon = "Peanut Scout"
+            PosQ = CFrame.new(- 2104.3908691406, 38.104167938232, - 10194.21875, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 2143.241943359375, 47.72198486328125, - 10029.9951171875)
+        elseif a == 2100 or a <= 2124 then
+            Mon = "Peanut President"
+            Qdata = 2;
+            Qname = "NutsIslandQuest"
+            NameMon = "Peanut President"
+            PosQ = CFrame.new(- 2104.3908691406, 38.104167938232, - 10194.21875, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 1859.35400390625, 38.10316848754883, - 10422.4296875)
+        elseif a == 2125 or a <= 2149 then
+            Mon = "Ice Cream Chef"
+            Qdata = 1;
+            Qname = "IceCreamIslandQuest"
+            NameMon = "Ice Cream Chef"
+            PosQ = CFrame.new(- 820.64825439453, 65.819526672363, - 10965.795898438, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 872.24658203125, 65.81957244873047, - 10919.95703125)
+        elseif a == 2150 or a <= 2199 then
+            Mon = "Ice Cream Commander"
+            Qdata = 2;
+            Qname = "IceCreamIslandQuest"
+            NameMon = "Ice Cream Commander"
+            PosQ = CFrame.new(- 820.64825439453, 65.819526672363, - 10965.795898438, 0, 0, - 1, 0, 1, 0, 1, 0, 0)
+            PosM = CFrame.new(- 558.06103515625, 112.04895782470703, - 11290.7744140625)
+        elseif a == 2200 or a <= 2224 then
+            Mon = "Cookie Crafter"
+            Qdata = 1;
+            Qname = "CakeQuest1"
+            NameMon = "Cookie Crafter"
+            PosQ = CFrame.new(- 2021.32007, 37.7982254, - 12028.7295, 0.957576931, - 8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, - 0.288177818, - 5.2032135e-08, 0.957576931)
+            PosM = CFrame.new(- 2374.13671875, 37.79826354980469, - 12125.30859375)
+        elseif a == 2225 or a <= 2249 then
+            Mon = "Cake Guard"
+            Qdata = 2;
+            Qname = "CakeQuest1"
+            NameMon = "Cake Guard"
+            PosQ = CFrame.new(- 2021.32007, 37.7982254, - 12028.7295, 0.957576931, - 8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, - 0.288177818, - 5.2032135e-08, 0.957576931)
+            PosM = CFrame.new(- 1598.3070068359375, 43.773197174072266, - 12244.5810546875)
+        elseif a == 2250 or a <= 2274 then
+            Mon = "Baking Staff"
+            Qdata = 1;
+            Qname = "CakeQuest2"
+            NameMon = "Baking Staff"
+            PosQ = CFrame.new(- 1927.91602, 37.7981339, - 12842.5391, - 0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, - 0.250778586, 2.64211941e-08, - 0.96804446)
+            PosM = CFrame.new(- 1887.8099365234375, 77.6185073852539, - 12998.3505859375)
+        elseif a == 2275 or a <= 2299 then
+            Mon = "Head Baker"
+            Qdata = 2;
+            Qname = "CakeQuest2"
+            NameMon = "Head Baker"
+            PosQ = CFrame.new(- 1927.91602, 37.7981339, - 12842.5391, - 0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, - 0.250778586, 2.64211941e-08, - 0.96804446)
+            PosM = CFrame.new(- 2216.188232421875, 82.884521484375, - 12869.2939453125)
+        elseif a == 2300 or a <= 2324 then
+            Mon = "Cocoa Warrior"
+            Qdata = 1;
+            Qname = "ChocQuest1"
+            NameMon = "Cocoa Warrior"
+            PosQ = CFrame.new(233.22836303710938, 29.876001358032227, - 12201.2333984375)
+            PosM = CFrame.new(- 21.55328369140625, 80.57499694824219, - 12352.3876953125)
+        elseif a == 2325 or a <= 2349 then
+            Mon = "Chocolate Bar Battler"
+            Qdata = 2;
+            Qname = "ChocQuest1"
+            NameMon = "Chocolate Bar Battler"
+            PosQ = CFrame.new(233.22836303710938, 29.876001358032227, - 12201.2333984375)
+            PosM = CFrame.new(582.590576171875, 77.18809509277344, - 12463.162109375)
+        elseif a == 2350 or a <= 2374 then
+            Mon = "Sweet Thief"
+            Qdata = 1;
+            Qname = "ChocQuest2"
+            NameMon = "Sweet Thief"
+            PosQ = CFrame.new(150.5066375732422, 30.693693161010742, - 12774.5029296875)
+            PosM = CFrame.new(165.1884765625, 76.05885314941406, - 12600.8369140625)
+        elseif a == 2375 or a <= 2399 then
+            Mon = "Candy Rebel"
+            Qdata = 2;
+            Qname = "ChocQuest2"
+            NameMon = "Candy Rebel"
+            PosQ = CFrame.new(150.5066375732422, 30.693693161010742, - 12774.5029296875)
+            PosM = CFrame.new(134.86563110351562, 77.2476806640625, - 12876.5478515625)
+        elseif a == 2400 or a <= 2449 then
+            Mon = "Candy Pirate"
+            Qdata = 1;
+            Qname = "CandyQuest1"
+            NameMon = "Candy Pirate"
+            PosQ = CFrame.new(- 1150.0400390625, 20.378934860229492, - 14446.3349609375)
+            PosM = CFrame.new(- 1310.5003662109375, 26.016523361206055, - 14562.404296875)
+        elseif a == 2450 or a <= 2474 then
+            Mon = "Isle Outlaw"
+            Qdata = 1;
+            Qname = "TikiQuest1"
+            NameMon = "Isle Outlaw"
+            PosQ = CFrame.new(- 16548.8164, 55.6059914, - 172.8125, 0.213092566, - 0, - 0.977032006, 0, 1, - 0, 0.977032006, 0, 0.213092566)
+            PosM = CFrame.new(- 16479.900390625, 226.6117401123047, - 300.3114318847656)
+        elseif a == 2475 or a <= 2499 then
+            Mon = "Island Boy"
+            Qdata = 2;
+            Qname = "TikiQuest1"
+            NameMon = "Island Boy"
+            PosQ = CFrame.new(- 16548.8164, 55.6059914, - 172.8125, 0.213092566, - 0, - 0.977032006, 0, 1, - 0, 0.977032006, 0, 0.213092566)
+            PosM = CFrame.new(- 16849.396484375, 192.86505126953125, - 150.7853240966797)
+        elseif a == 2500 or a <= 2524 then
+            Mon = "Sun-kissed Warrior"
+            Qdata = 1;
+            Qname = "TikiQuest2"
+            NameMon = "kissed Warrior"
+            PosM = CFrame.new(- 16347, 64, 984)
+            PosQ = CFrame.new(- 16538, 55, 1049)
+        elseif a == 2525 or a <= 2550 then
+            Mon = "Isle Champion"
+            Qdata = 2;
+            Qname = "TikiQuest2"
+            NameMon = "Isle Champion"
+            PosQ = CFrame.new(- 16541.0215, 57.3082275, 1051.46118, 0.0410757065, - 0, - 0.999156058, 0, 1, - 0, 0.999156058, 0, 0.0410757065)
+            PosM = CFrame.new(- 16602.1015625, 130.38734436035156, 1087.24560546875)
+        elseif a == 2551 or a <= 2574 then
+            Mon = "Serpent Hunter"
+            Qdata = 1;
+            Qname = "TikiQuest3"
+            NameMon = "Serpent Hunter"
+            PosQ = CFrame.new(- 16679.478515625, 176.74737548828125, 1474.3995361328125)
+            PosM = CFrame.new(- 16679.478515625, 176.74737548828125, 1474.3995361328125)
+        elseif a >= 2575 then
+            Mon = "Skull Slayer"
+            Qdata = 2;
+            Qname = "TikiQuest3"
+            NameMon = "Skull Slayer"
+            PosQ = CFrame.new(- 16759.58984375, 71.28376770019531, 1595.3399658203125)
+            PosM = CFrame.new(- 16759.58984375, 71.28376770019531, 1595.3399658203125)
+        end
+    end
 end
 MaterialMon = function()
     local a = game.Players.LocalPlayer;
