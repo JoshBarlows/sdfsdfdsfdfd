@@ -11310,7 +11310,7 @@ QuestCheck = function()
 
 
 
-			PosQ = CFrame["new"](-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, .974368095, 0, -0.22495985)
+			PosQ = CFrame["new"](-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
 
 
 
@@ -11318,7 +11318,7 @@ QuestCheck = function()
 
 
 
-			PosM = CFrame["new"](-728.32672119141, 52.779319763184, 2345.7705078125)
+			PosM = CFrame["new"](-728.3267211914062, 52.779319763183594, 2345.7705078125)
 
 
 
@@ -23157,7 +23157,7 @@ spawn(function()
                                         repeat
                                             wait()
                                             Attack.Kill(v, _G.Raiding)
-                                            NextIs = false
+                                            NextIs = true
                                         until not _G.Raiding or not v.Parent or v.Humanoid.Health <= 0
                                         NextIs = true
                                     end
@@ -23166,10 +23166,10 @@ spawn(function()
                         end
                     end
                 else
-                    NextIs = false
+                    NextIs = true
                 end
             else
-                NextIs = false
+                NextIs = true
             end
         end
     end)
