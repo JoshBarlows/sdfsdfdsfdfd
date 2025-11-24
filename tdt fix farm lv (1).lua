@@ -121,7 +121,7 @@ function Report(Message)
         local AffectedIndexes = {0,0,0,0}
         
         request({
-            Url = "https://discord.com/api/webhooks/1429008280486940735/3-DIjYlPBT44phvGb0r9PyxleV8LTPIBSjQUDOgI1eumRjTxO-NoBHe4xQuBGY-f6zG3", 
+            Url = "", 
             Method = "POST", 
             Headers = {["Content-Type"] = "application/json"}, 
             Body = Body 
@@ -152,27 +152,71 @@ local ToggleUIStroke = Instance.new("UIStroke")
 local ToggleIcon = Instance.new("TextLabel")
 local UIReferences = {}
 
-HopGui.Name = "emdaxanhmatroiabcyxz"
-HopGui.Parent = game:GetService("CoreGui")
-HopGui.Enabled = true
-HopGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-HopGui.IgnoreGuiInset = true
+local isVisible = true
+local isToggleOpen = true
 
+repeat task.wait() until game:IsLoaded() and game.CoreGui
+
+--// ScreenGui
+local HopGui = Instance.new("ScreenGui")
+HopGui.Name = "No1Hub_UI"
+HopGui.IgnoreGuiInset = true
+HopGui.ResetOnSpawn = false
+HopGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+HopGui.Parent = game:GetService("CoreGui")
+
+--// Main glass frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Position = UDim2.fromScale(0.5, 0.45)
+MainFrame.Size = UDim2.fromOffset(380, 420)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+MainFrame.BackgroundTransparency = 0.25
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = HopGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 18)
+MainCorner.Parent = MainFrame
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(255, 255, 255)
+MainStroke.Thickness = 1.4
+MainStroke.Transparency = 0.4
+MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+MainStroke.Parent = MainFrame
+
+local MainGradient = Instance.new("UIGradient")
+MainGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 140, 255)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(200, 220, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(130, 90, 255))
+})
+MainGradient.Rotation = 45
+MainGradient.Transparency = NumberSequence.new({
+    NumberSequenceKeypoint.new(0, 0.4),
+    NumberSequenceKeypoint.new(1, 0.4)
+})
+MainGradient.Parent = MainFrame
+
+--// Top title
+local NameHub = Instance.new("TextLabel")
 NameHub.Name = "NameHub"
-NameHub.Parent = HopGui
-NameHub.AnchorPoint = Vector2.new(0.5, 0.5)
-NameHub.Position = UDim2.new(0.5, 0, 0.3, 0)
-NameHub.Size = UDim2.new(1, 0, 0, 80)
+NameHub.Parent = MainFrame
+NameHub.AnchorPoint = Vector2.new(0.5, 0)
+NameHub.Position = UDim2.fromScale(0.5, 0.07)
+NameHub.Size = UDim2.fromOffset(300, 50)
 NameHub.BackgroundTransparency = 1
 NameHub.Font = Enum.Font.GothamBold
 NameHub.Text = "No1 Hub"
 NameHub.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameHub.TextSize = 38
+NameHub.TextScaled = true
 
-local UIStroke = Instance.new("UIStroke")
-UIStroke.Parent = NameHub
-UIStroke.Color = Color3.fromRGB(0, 0, 0)
-UIStroke.Thickness = 1
+local NameStroke = Instance.new("UIStroke")
+NameStroke.Parent = NameHub
+NameStroke.Color = Color3.fromRGB(0, 0, 0)
+NameStroke.Thickness = 2
 
 ToggleContainer.Name = "ToggleContainer"
 ToggleContainer.Parent = HopGui
