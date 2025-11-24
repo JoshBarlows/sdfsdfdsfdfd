@@ -165,7 +165,7 @@ NameHub.Position = UDim2.new(0.5, 0, 0.3, 0)
 NameHub.Size = UDim2.new(1, 0, 0, 80)
 NameHub.BackgroundTransparency = 1
 NameHub.Font = Enum.Font.GothamBold
-NameHub.Text = "No1 Hub"
+NameHub.Text = "TDT KaiTun Blox Fruit"
 NameHub.TextColor3 = Color3.fromRGB(255, 255, 255)
 NameHub.TextSize = 38
 
