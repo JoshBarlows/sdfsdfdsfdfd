@@ -150,6 +150,7 @@ local ToggleButton = Instance.new("ImageButton")
 local ToggleContainer = Instance.new("Frame")
 local ToggleUIStroke = Instance.new("UIStroke")
 local ToggleIcon = Instance.new("TextLabel")
+local TweenService = game:GetService("TweenService")
 local UIReferences = {}
 
 local isVisible = true
@@ -157,66 +158,172 @@ local isToggleOpen = true
 
 repeat task.wait() until game:IsLoaded() and game.CoreGui
 
---// ScreenGui
+
 local HopGui = Instance.new("ScreenGui")
 HopGui.Name = "No1Hub_UI"
+HopGui.Parent = game.CoreGui
 HopGui.IgnoreGuiInset = true
 HopGui.ResetOnSpawn = false
 HopGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-HopGui.Parent = game:GetService("CoreGui")
 
---// Main glass frame
-local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Position = UDim2.fromScale(0.5, 0.45)
-MainFrame.Size = UDim2.fromOffset(380, 420)
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
-MainFrame.BackgroundTransparency = 0.25
-MainFrame.BorderSizePixel = 0
-MainFrame.Parent = HopGui
+--// Nền mờ tổng
+local Background = Instance.new("Frame")
+Background.Parent = HopGui
+Background.AnchorPoint = Vector2.new(0.5, 0.5)
+Background.Position = UDim2.fromScale(0.5, 0.45)
+Background.Size = UDim2.fromOffset(520, 420)
+Background.BackgroundColor3 = Color3.fromRGB(10, 10, 18)
+Background.BackgroundTransparency = 0.35
+Background.BorderSizePixel = 0
 
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 18)
-MainCorner.Parent = MainFrame
+local BgCorner = Instance.new("UICorner")
+BgCorner.CornerRadius = UDim.new(0, 24)
+BgCorner.Parent = Background
 
-local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(255, 255, 255)
-MainStroke.Thickness = 1.4
-MainStroke.Transparency = 0.4
-MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-MainStroke.Parent = MainFrame
+local BgStroke = Instance.new("UIStroke")
+BgStroke.Parent = Background
+BgStroke.Color = Color3.fromRGB(220, 220, 240)
+BgStroke.Thickness = 1.2
+BgStroke.Transparency = 0.65
 
-local MainGradient = Instance.new("UIGradient")
-MainGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 140, 255)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(200, 220, 255)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(130, 90, 255))
-})
-MainGradient.Rotation = 45
-MainGradient.Transparency = NumberSequence.new({
-    NumberSequenceKeypoint.new(0, 0.4),
-    NumberSequenceKeypoint.new(1, 0.4)
-})
-MainGradient.Parent = MainFrame
+local BgGradient = Instance.new("UIGradient")
+BgGradient.Parent = Background
+BgGradient.Color = ColorSequence.new(
+    Color3.fromRGB(40, 60, 120),
+    Color3.fromRGB(20, 20, 40)
+)
+BgGradient.Rotation = 35
+BgGradient.Transparency = NumberSequence.new(0.35)
 
---// Top title
+--// Header "No1 Hub"
 local NameHub = Instance.new("TextLabel")
 NameHub.Name = "NameHub"
-NameHub.Parent = MainFrame
+NameHub.Parent = Background
 NameHub.AnchorPoint = Vector2.new(0.5, 0)
-NameHub.Position = UDim2.fromScale(0.5, 0.07)
-NameHub.Size = UDim2.fromOffset(300, 50)
+NameHub.Position = UDim2.fromScale(0.5, 0.06)
+NameHub.Size = UDim2.fromOffset(360, 48)
 NameHub.BackgroundTransparency = 1
-NameHub.Font = Enum.Font.GothamBold
+NameHub.Font = Enum.Font.GothamBlack
 NameHub.Text = "No1 Hub"
 NameHub.TextColor3 = Color3.fromRGB(255, 255, 255)
 NameHub.TextScaled = true
 
 local NameStroke = Instance.new("UIStroke")
 NameStroke.Parent = NameHub
-NameStroke.Color = Color3.fromRGB(0, 0, 0)
 NameStroke.Thickness = 2
+NameStroke.Color = Color3.fromRGB(0, 0, 0)
+
+-- glow nhẹ
+local NameGlow = Instance.new("TextLabel")
+NameGlow.Parent = Background
+NameGlow.AnchorPoint = NameHub.AnchorPoint
+NameGlow.Position = NameHub.Position
+NameGlow.Size = NameHub.Size
+NameGlow.BackgroundTransparency = 1
+NameGlow.Font = NameHub.Font
+NameGlow.Text = NameHub.Text
+NameGlow.TextColor3 = Color3.fromRGB(140, 180, 255)
+NameGlow.TextTransparency = 0.6
+NameGlow.TextScaled = true
+
+--// Container cho các card
+local CardsHolder = Instance.new("Frame")
+CardsHolder.Parent = Background
+CardsHolder.AnchorPoint = Vector2.new(0.5, 0)
+CardsHolder.Position = UDim2.fromScale(0.5, 0.23)
+CardsHolder.Size = UDim2.fromScale(0.9, 0.7)
+CardsHolder.BackgroundTransparency = 1
+
+local HolderLayout = Instance.new("UIListLayout")
+HolderLayout.Parent = CardsHolder
+HolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
+HolderLayout.Padding = UDim.new(0, 10)
+
+-- Hàm tạo 1 card
+local function CreateCard(titleText, contentText)
+    local Card = Instance.new("Frame")
+    Card.Parent = CardsHolder
+    Card.Size = UDim2.new(1, 0, 0, 60)
+    Card.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+    Card.BackgroundTransparency = 0.1
+    Card.BorderSizePixel = 0
+
+    local CardCorner = Instance.new("UICorner")
+    CardCorner.CornerRadius = UDim.new(0, 12)
+    CardCorner.Parent = Card
+
+    local CardStroke = Instance.new("UIStroke")
+    CardStroke.Parent = Card
+    CardStroke.Thickness = 1.2
+    CardStroke.Color = Color3.fromRGB(120, 150, 255)
+    CardStroke.Transparency = 0.45
+
+    local CardGradient = Instance.new("UIGradient")
+    CardGradient.Parent = Card
+    CardGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 40, 80)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 20)),
+    })
+    CardGradient.Rotation = 35
+    CardGradient.Transparency = NumberSequence.new(0.15)
+
+    -- tiêu đề nhỏ ở trên
+    local Title = Instance.new("TextLabel")
+    Title.Parent = Card
+    Title.AnchorPoint = Vector2.new(0, 0)
+    Title.Position = UDim2.fromScale(0.05, 0.05)
+    Title.Size = UDim2.new(0.9, 0, 0.35, 0)
+    Title.BackgroundTransparency = 1
+    Title.Font = Enum.Font.GothamSemibold
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+    Title.Text = titleText
+    Title.TextScaled = true
+    Title.TextColor3 = Color3.fromRGB(185, 200, 255)
+
+    -- nội dung chính
+    local Content = Instance.new("TextLabel")
+    Content.Parent = Card
+    Content.AnchorPoint = Vector2.new(0, 1)
+    Content.Position = UDim2.fromScale(0.05, 0.95)
+    Content.Size = UDim2.new(0.9, 0, 0.5, 0)
+    Content.BackgroundTransparency = 1
+    Content.Font = Enum.Font.Gotham
+    Content.TextXAlignment = Enum.TextXAlignment.Left
+    Content.Text = contentText
+    Content.TextScaled = true
+    Content.TextColor3 = Color3.fromRGB(235, 238, 255)
+
+    return Card, Title, Content
+end
+
+--// Các card cụ thể
+local DiscordCard, DiscordTitle, DiscordContent = CreateCard(
+    "Discord",
+    "discord.gg/fshzCuJ5tV"
+)
+
+local MainTaskCard, MainTitle, MainContent = CreateCard(
+    "Main Task",
+    "Farming Level • Skip Mode 1"
+)
+
+local SubTaskCard, SubTitle, SubContent = CreateCard(
+    "Sub Task",
+    "Farm until 150000 Beli for Black Leg"
+)
+
+local CombatCard, CombatTitle, CombatContent = CreateCard(
+    "Combat",
+    "Combat : 1"
+)
+
+local LevelCard, LevelTitle, LevelContent = CreateCard(
+    "Level Farm",
+    "LevelFarm"
+)
+
+-- ví dụ: sau này muốn update text từ script khác:
+-- MainContent.Text = "Farming New World Quests"
 
 ToggleContainer.Name = "ToggleContainer"
 ToggleContainer.Parent = HopGui
