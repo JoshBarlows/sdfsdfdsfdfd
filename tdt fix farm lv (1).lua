@@ -76,7 +76,7 @@ function Build(Error)
             {
               name = "Script Details",
               value = GetCurrentDateTime() .. " | ".. DispTime(os.time() - StartTime, true)
-               .." after execution\nMain task: " .. (  ScriptStorage.Task. Start or "n/a" )  .. " ( " .. (  ScriptStorage.Task[" Start-d"] and  DispTime(os.time() -  ScriptStorage.Task[" Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
+               .." after execution\nMain Ngu: " .. (  ScriptStorage.Ngu.MainNgu or "n/a" )  .. " ( " .. (  ScriptStorage.Ngu["MainNgu-d"] and  DispTime(os.time() -  ScriptStorage.Ngu["MainNgu-d"], true) or "n/a" ) .. " ) \nSub Ngu: " .. (  ScriptStorage.Ngu.SubNgu or "n/a" ) .. " ( " .. (  ScriptStorage.Ngu["SubNgu-d"] and DispTime(os.time() -  ScriptStorage.Ngu["SubNgu-d"], true) or "n/a") .. " )"
             },
             {
               name = "Traceback",
@@ -132,14 +132,14 @@ end
 function mmb() 
     
 
-local Orders = {"Task1", "Task2", "Melees", "DebugLine"}
+local Orders = {"", "", "Melees", "DebugLine"}
 local Interface = {Instances = {}}
 
 local isVisible = true
 local isToggleOpen = false
 local player = game.Players.LocalPlayer
 
-repeat task.wait() until game.CoreGui
+repeat Ngu.wait() until game.CoreGui
 
 local HopGui = Instance.new("ScreenGui")
 local NameHub = Instance.new("TextLabel")
@@ -238,7 +238,7 @@ MainTextLabel = createTextLabel("Status", UDim2.new(0.5, 0, 0.4, 0))
 Interface.Instances.MainTextLabel = MainTextLabel
 
 for Index, OrderName in pairs(Orders) do
-    Interface.Instances[OrderName] = createTextLabel("Task", UDim2.new(0.5, 0, 0.45 + (.05 * Index), 0))
+    Interface.Instances[OrderName] = createTextLabel("", UDim2.new(0.5, 0, 0.45 + (.05 * Index), 0))
 end
 
 local BlurManager = {}
@@ -298,7 +298,7 @@ end
 local blurEffect = BlurManager:Create()
 
 function SetText(Name, Text)
-    task.spawn(function()
+    Ngu.spawn(function()
         local TextIns = Interface.Instances[Name]
         if not TextIns then return end
 
@@ -504,7 +504,7 @@ Interface.BlurManager = blurEffect
                          tonumber(readfile(".tdif-" .. game.Players.LocalPlayer.Name)) or 0
     
     repeat
-        task.wait()
+        Ngu.wait()
         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("SetTeam", Config.Team)
     
     until game.Players.LocalPlayer.Character
@@ -517,7 +517,7 @@ Interface.BlurManager = blurEffect
     
     StartTick = tick()
     repeat
-        task.wait()
+        Ngu.wait()
     until SetText
     alert("load data")
     SetText("MainTextLabel", "Initalizing Script...")
@@ -538,9 +538,9 @@ Interface.BlurManager = blurEffect
         Connections = {
             LocalPlayer = {}
         },
-        Task = {},
+        Ngu = {},
         Tracebacks = {},
-        TaskController = {},
+        NguController = {},
         TracebackUpdater = {},
         Interface = Interface,
         NPCs = {}
@@ -589,14 +589,14 @@ Interface.BlurManager = blurEffect
                 " | " .. Value))
     end
     
-    function SetTask(Index, Value)
+    function SetNgu(Index, Value)
     
-        if ScriptStorage.Task[Index] == Value then
+        if ScriptStorage.Ngu[Index] == Value then
             return
         end
         local Parser = {
-             Start = "Task1",
-            SubTask = "Task2"
+            MainNgu = "Ngu1",
+            SubNgu = "Ngu2"
         }
         if Parser[Index] then
             if SetText then
@@ -604,8 +604,8 @@ Interface.BlurManager = blurEffect
             end
     
         end
-        ScriptStorage.Task[Index] = Value
-        ScriptStorage.Task[Index .. "-d"] = os.time()
+        ScriptStorage.Ngu[Index] = Value
+        ScriptStorage.Ngu[Index .. "-d"] = os.time()
     
     end
     
@@ -630,17 +630,17 @@ Interface.BlurManager = blurEffect
         end
     })
     
-    Tasks = {}
+    Ngus = {}
     
     function AwaitUntilPlayerLoaded(Player, Timeout)
         repeat
-            task.wait()
+            Ngu.wait()
         until Player.Character
     
         Player.Character:WaitForChild("Humanoid")
     
         repeat
-            task.wait()
+            Ngu.wait()
         until Player.Character.Humanoid.Health > 0
     end
     
@@ -720,7 +720,7 @@ Interface.BlurManager = blurEffect
             if ScriptStorage.Connections.BurstCheck then
     
                 ScriptStorage.Connections.BurstCheck:Disconnect()
-                task.wait(1)
+                Ngu.wait(1)
             end
             print("[ Debug ] Registering burst", Child)
             ScriptStorage.Connections.BurstCheck = Child.Cooldown:GetPropertyChangedSignal("AbsoluteSize"):Connect(
@@ -732,7 +732,7 @@ Interface.BlurManager = blurEffect
                     if Value < 3 then
                         EnablingBurstDebounce = os.time()
     
-                        task.wait(5)
+                        Ngu.wait(5)
                         SendKey("V", 0)
                     end
                 end)
@@ -769,7 +769,7 @@ Interface.BlurManager = blurEffect
         if Child and typeof(Child) == "Instance" and Child:IsA("Tool") then
             if Child.ToolTip == "Melee" then
     
-                -- task.spawn(function() 
+                -- Ngu.spawn(function() 
                 --   CheckMeleeBurstMove(Child)
                 -- end) 
     
@@ -792,7 +792,7 @@ Interface.BlurManager = blurEffect
                 RefreshMelees()
     
             elseif string.find(tostring(Child), "Fruit") then
-                task.spawn(function()
+                Ngu.spawn(function()
     
                     if table.find(ScriptStorage.IgnoreStoreFruits, Child:GetAttribute("OriginalName")) then
                         return
@@ -811,8 +811,8 @@ Interface.BlurManager = blurEffect
     
     function RegisterLocalPlayerEventsConnection()
     
-        task.spawn(function()
-            task.wait(6)
+        Ngu.spawn(function()
+            Ngu.wait(6)
             if LocalPlayer.Character:FindFirstChild("HasBuso") then
                 return
             end
@@ -874,8 +874,8 @@ Interface.BlurManager = blurEffect
     
     end)
     
-    task.spawn(function()
-        task.wait(3)
+    Ngu.spawn(function()
+        Ngu.wait(3)
         if LocalPlayer.Character:FindFirstChild("HasBuso") then
             return
         end
@@ -1133,12 +1133,12 @@ GodhumanMaterials = {
 
 SeaIndexes = {"Main", "Dressrosa", "Zou"}
 
-TasksOrder = 
+NgusOrder = 
 {
     "Tushita", 
     "CursedDualKatana",
     "SoulGuitar",
-    "SpecialBossesTask",
+    "SpecialBossesNgu",
     "RaidController",
     "Trevor",
     "UtillyItemsActivitation",
@@ -1152,7 +1152,7 @@ TasksOrder =
     "SecondSeaPuzzle",
     "ThirdSeaPuzzle",
     "CollectDrops",
-    "BossesTask", 
+    "BossesNgu", 
     "ExpRedeem",
     "LevelFarm"
 }
@@ -1404,9 +1404,9 @@ function BuyMeleeTween(MeleeName, Npc, IsDragonClaw)
 
     TweenController.Create(CFrame.new(pos + Vector3.new(0, 3, 3)))
 
-    repeat task.wait() until CaculateDistance(pos) <= 10
+    repeat Ngu.wait() until CaculateDistance(pos) <= 10
 
-    task.wait(1)
+    Ngu.wait(1)
 
     if IsDragonClaw then
         replicated.Remotes.CommF_:InvokeServer("BlackbeardReward","DragonClaw","2")
@@ -1414,7 +1414,7 @@ function BuyMeleeTween(MeleeName, Npc, IsDragonClaw)
         Remotes.CommF_:InvokeServer("Buy" .. MeleeName)
     end
 
-    task.wait(0.5)
+    Ngu.wait(0.5)
     _G.BuyingMelee = false
 end
 
@@ -1422,7 +1422,7 @@ function SendKey(key, hold)
     (
         function()
             game:GetService("VirtualInputManager"):SendKeyEvent(true, key, false, game)
-            task.wait(hold)
+            Ngu.wait(hold)
             game:GetService("VirtualInputManager"):SendKeyEvent(false, key, false, game)
         end
     )()
@@ -1504,7 +1504,7 @@ function QuestManager.RefreshQuest(Self)
     
     local LastQuest = CurrentQuestData[#CurrentQuestData] 
     
-    for _, Count in LastQuest.Task do 
+    for _, Count in LastQuest.Ngu do 
         if Count == 1 then 
             table.remove(CurrentQuestData, #CurrentQuestData)
         end 
@@ -1530,7 +1530,7 @@ function QuestManager.GetCurrentQuest(Self)
     
    --print(Self.CurrentQuests[QuestIndex], Self.CurrentQuests[QuestIndex].NameMon)
    
-    for Name in Self.CurrentQuests[QuestIndex].Task do 
+    for Name in Self.CurrentQuests[QuestIndex].Ngu do 
         
         return Name, Self.CurrentNpc, Self.CurrentQuestId, QuestIndex, Self.CurrentQuests[QuestIndex].Name
     end 
@@ -1619,7 +1619,7 @@ function GetPortal(Position)
     
     if Current then 
         Remotes.CommF_:InvokeServer("requestEntrance", Current)
-        return task.wait()
+        return Ngu.wait()
     end 
 end 
 
@@ -1828,7 +1828,7 @@ function FastAttack:ShootInTarget(TargetPosition)
         self.ShootDebounce = tick()
     else
         VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 1)
-        task.wait(0.05)
+        Ngu.wait(0.05)
         VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 1)
         self.ShootDebounce = tick()
     end
@@ -1995,7 +1995,7 @@ function Funcs:Attack()
 end
 
 spawn(function() 
-    while task.wait() do 
+    while Ngu.wait() do 
         if _G.FastAttack then 
             pcall(function() 
                 Funcs:Attack() 
@@ -2178,7 +2178,7 @@ end
             LastFound = os.time()
             local Count, Debounce = 0, os.time()
             local Count2, Debounce = 0, os.time()
-            while task.wait() do
+            while Ngu.wait() do
                 if _G.Stop then return end
                 
                 
@@ -2212,7 +2212,7 @@ end
                     CombatController.Grab(Child or "")
                     if MonResult.Name ~= "Core" then 
                         if ScriptStorage.PlayerData.Level > 100 and Count2 >= CombatController.MAX_ATTACK_DURATION_2 and MobHumanoid.Health - MobHumanoid.MaxHealth == 0 then 
-                            SetTask("SubTask", "Hop Server - Mob Health Unchanged ( " .. MobHumanoid.Health .. " / " .. MobHumanoid.MaxHealth .. ")")
+                            SetNgu("SubNgu", "Hop Server - Mob Health Unchanged ( " .. MobHumanoid.Health .. " / " .. MobHumanoid.MaxHealth .. ")")
                             alert("Stuck", "Mob health unchanged")
                             _G.Stop = true
                             ScriptStorage.Hop("Mob Health Stuck")
@@ -2231,11 +2231,11 @@ end
                                 MonResult:SetAttribute("IgnoreGrab", true)
                                 MonResult:SetAttribute("FailureCount", (MonResult:GetAttribute("FailureCount") or 0) + 1)
                                 alert("Returning mob ( #" .. MonResult:GetAttribute("FailureCount") .. " )")
-                                while CaculateDistance(MonResult.HumanoidRootPart.CFrame,OldPosition) > 6 and task.wait() do 
+                                while CaculateDistance(MonResult.HumanoidRootPart.CFrame,OldPosition) > 6 and Ngu.wait() do 
                                     MonResult.HumanoidRootPart.CFrame = (CFrame.new(OldPosition)) 
                                 end 
                                 
-                                task.wait()
+                                Ngu.wait()
                                 
                                 return 
                             end 
@@ -2298,13 +2298,13 @@ end
                 
         
         TweenController.Create(CurrentPosition+Vector3.new(0,35,35))
-        task.wait()
+        Ngu.wait()
         if CaculateDistance(CurrentPosition+ Vector3.new(0,35,35)) < 15 then
             
                 CombatController.CurrentIndex = CombatController.CurrentIndex + 1
             end
     
-            task.wait()
+            Ngu.wait()
         end
     end 
 end 
@@ -2414,7 +2414,7 @@ function FunctionsHandler.SynchorizeUntilModuleLoaded(Self, Timeout)
     local StartTime = os.time() 
     
     while not Self.Initalized do 
-        task.wait() 
+        Ngu.wait() 
         local Difference = os.time() - StartTime 
         
         assert(not ( Timeout and Difference > Timeout ), "timed out")
@@ -2506,10 +2506,10 @@ FunctionsHandler.ElectricClaw:Register()
 FunctionsHandler.DragonTalon:Register()
 FunctionsHandler.Godhuman:Register()
 
--- Functions / Boss Task 
+-- Functions / Boss Ngu 
 
-FunctionsHandler.BossesTask:Register() 
-FunctionsHandler.SpecialBossesTask:Register() 
+FunctionsHandler.BossesNgu:Register() 
+FunctionsHandler.SpecialBossesNgu:Register() 
 -- Functions / CollectDrops
 FunctionsHandler.CollectDrops:Register() 
 
@@ -2573,14 +2573,14 @@ FunctionsHandler.ExpRedeem:RegisterMethod("Start", function()
     
     for Index, Promo in Code do
         
-        SetTask(" Start", "Code Redemption | " .. Promo .. " | Redeeming...")
+        SetNgu("MainNgu", "Code Redemption | " .. Promo .. " | Redeeming...")
         local Response = (Remotes.Redeem:InvokeServer(Promo))
-        task.wait() 
-        SetTask(" Start", "Code Redemption | " .. Promo .. " | " .. (Response or "Failed"))
+        Ngu.wait() 
+        SetNgu("MainNgu", "Code Redemption | " .. Promo .. " | " .. (Response or "Failed"))
         if getsenv(game.ReplicatedStorage.GuideModule)._G.ServerData.ExpBoost == 0 then 
             
             if Response and string.find(Response, "SUCC") then 
-                return SetTask(" Start", "Code Redemption | X2 Exp Boost Activated!") and task.wait(1)
+                return SetNgu("MainNgu", "Code Redemption | X2 Exp Boost Activated!") and Ngu.wait(1)
             end 
             else 
                 return  
@@ -2645,13 +2645,13 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
         if Material then
             if SeaIndex ~= MaterialData[2] then 
                 alert("Material - " .. Material, "Travelling sea " .. MaterialData[2])
-                SetTask(" Start", "Sea Travel | Godhuman Materials | Travelling to Sea " .. MaterialData[2])
+                SetNgu("MainNgu", "Sea Travel | Godhuman Materials | Travelling to Sea " .. MaterialData[2])
                 
                 Remotes.CommF_:InvokeServer("Travel" .. SeaIndexes[MaterialData[2]]) 
                 return 
             end 
             
-            SetTask(" Start", "Farming Material For GodHuman " .. Material .. " | In Progress")
+            SetNgu("MainNgu", "Farming Material For GodHuman " .. Material .. " | In Progress")
             
             if PlayerLevel >= MaterialData[4][3] then 
                 local QuestAvailable, CurrentClaimQuest = GetCurrentClaimQuest() 
@@ -2671,7 +2671,7 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
                     if NpcPosition1 then
                         TweenController.Create(NpcPosition1 + Vector3.new(0,5,3)) 
                         if CaculateDistance(NpcPosition1) < 10 then 
-                            task.wait(1) 
+                            Ngu.wait(1) 
                         else 
                             return 
                         end
@@ -2701,17 +2701,17 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
             if Config.Settings.WaitToGetDarkFrament and not ScriptStorage.Backpack["Dark Fragment"] then 
             elseif not Services.Workspace.Map.IceCastle.Hall.LibraryDoor:FindFirstChild("PhoeyuDoor") then 
                 Remotes.CommF_:InvokeServer("TravelZou")
-                SetTask(" Start", "Sea Travel | Teleporting to Third Sea")
+                SetNgu("MainNgu", "Sea Travel | Teleporting to Third Sea")
             end 
         elseif PlayerLevel >= 700 and SeaIndex == 1 then 
-                SetTask(" Start", "Sea Travel | Teleporting to Second Sea")
+                SetNgu("MainNgu", "Sea Travel | Teleporting to Second Sea")
                 Remotes.CommF_:InvokeServer("TravelDressrosa")
         end
     end 
     
     if ScriptStorage.Tools["God's Chalice"] and not ScriptStorage.Tools["Mirror Fractal"] then 
         if (ScriptStorage.Backpack["Conjured Cocoa"] or {Count = 0}).Count < 10 then 
-            SetTask(" Start", "Material Farming | Conjured Cocoa | Need 10x | Farming...")
+            SetNgu("MainNgu", "Material Farming | Conjured Cocoa | Need 10x | Farming...")
             CombatController.Attack({"Cocoa Warrior", "Chocolate Bar Battler"}) 
             return 
         end
@@ -2721,12 +2721,12 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
     if ScriptStorage.Tools["Sweet Chalice"] or ( PlayerLevel == MaxLevel and ( ScriptStorage.Backpack.Bones or {Count = 0}).Count >= 500 ) then 
         
         
-        SetTask(" Start", "Fragments Farming | Cake Prince | Dough King")
+        SetNgu("MainNgu", "Fragments Farming | Cake Prince | Dough King")
         
         
         if (ScriptStorage.Tools["Sweet Chalice"]) and ( not SpawnReflect or os.time() - SpawnReflect > 10 ) then 
             spawn(function() 
-                while not ScriptStorage.Enemies["Dough King"] and task.wait() and ScriptStorage.Tools["Sweet Chalice"] do 
+                while not ScriptStorage.Enemies["Dough King"] and Ngu.wait() and ScriptStorage.Tools["Sweet Chalice"] do 
                     SpawnReflect = os.time() 
                     Remotes.CommF_:InvokeServer("CakePrinceSpawner")
                 end 
@@ -2763,7 +2763,7 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
                 if NpcPosition1 then
                     TweenController.Create(NpcPosition1 + Vector3.new(0,5,3)) 
                     if CaculateDistance(NpcPosition1) < 10 then 
-                        task.wait(1) 
+                        Ngu.wait(1) 
                     else 
                         return 
                     end
@@ -2786,7 +2786,7 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
 end
     if PlayerLevel >= 2025 and (getsenv(game.ReplicatedStorage.GuideModule)._G.ServerData.ExpBoost == 0 or PlayerLevel == MaxLevel ) and ( ScriptStorage.Backpack.Bones or { Count = 0 } ).Count < 500 then 
         
-        SetTask(" Start", "Farming Bones get x2 exp")
+        SetNgu("MainNgu", "Farming Bones get x2 exp")
 
         CurrentClaimQuest3 = GetCurrentClaimQuest(true) 
         
@@ -2812,7 +2812,7 @@ end
             if NpcPosition1 then
                 TweenController.Create(NpcPosition1 + Vector3.new(0,5,3))
                 if CaculateDistance(NpcPosition1) < 20 then 
-                    task.wait(1) 
+                    Ngu.wait(1) 
                 else 
                     return 
                 end
@@ -2830,14 +2830,14 @@ if _G.BuyingMelee then
     return 
 end
     if Level == 1 then 
-        SetTask(" Start", "Farming Level Skip Mode " .. Level)    
+        SetNgu("MainNgu", "Farming Level Skip Mode " .. Level)    
         CombatController.Attack("Sky Bandit")
     elseif Level == 2 then 
-        SetTask(" Start", "Farming Level Skip Mode " .. Level)
+        SetNgu("MainNgu", "Farming Level Skip Mode " .. Level)
         CombatController.Attack("God's Guard")
         
     elseif Level == 3 then 
-        SetTask(" Start", "Farming Level Skip Mode " .. Level)
+        SetNgu("MainNgu", "Farming Level Skip Mode " .. Level)
         CombatController.Attack({"God's Guard", "Shanda", "Royal Soldier", "Royal Squad"})
     elseif Level == 4 then
         local MonName, NpcPosition, QuestId, QuestIndex, QuestTitle = QuestManager:GetCurrentQuest() 
@@ -2858,18 +2858,18 @@ end
                 return QuestManager:RefreshQuest() and Report("failed to get npc position quest 528")                
             end       
             TweenController.Create(NpcPosition + Vector3.new(0,5,3)) 
-            SetTask(" Start", "Farming Level " .. MonName .. " | Claiming Quest")
+            SetNgu("MainNgu", "Farming Level " .. MonName .. " | Claiming Quest")
             if CaculateDistance(NpcPosition) > 10 then 
                 return 
             end 
             
-            task.wait(2)
+            Ngu.wait(2)
             LevelFarmTTL = 0 
             QuestManager.StartQuest(QuestId, QuestIndex)
-            task.wait(1)
+            Ngu.wait(1)
         end 
 
-        SetTask(" Start", "Farming Level" .. MonName .. "Killing Mob...")
+        SetNgu("MainNgu", "Farming Level" .. MonName .. "Killing Mob...")
         local AttackTime1 = os.time()
         CombatController.Attack(MonName)
         LevelFarmTTL = LevelFarmTTL + os.time() - AttackTime1 
@@ -2944,8 +2944,8 @@ FunctionsHandler.Saber:RegisterMethod("Refresh", function()
     end 
     
     
-    local Tasks = Remotes.CommF_:InvokeServer("ProQuestProgress") 
-    for _, Value in Tasks.Plates do
+    local Ngus = Remotes.CommF_:InvokeServer("ProQuestProgress") 
+    for _, Value in Ngus.Plates do
         if Value == false then
             Result = 1
             
@@ -2953,23 +2953,23 @@ FunctionsHandler.Saber:RegisterMethod("Refresh", function()
     end
     
     if not Result then 
-        if not Tasks.UsedTorch then
+        if not Ngus.UsedTorch then
         Result = 2
             
-        elseif not Tasks.UsedCup then
+        elseif not Ngus.UsedCup then
             Result = 3
             
-        elseif not Tasks.TalkedSon then
+        elseif not Ngus.TalkedSon then
             Result = 4
             
-        elseif not Tasks.KilledMob then
+        elseif not Ngus.KilledMob then
             Result = 5
             
-        elseif not Tasks.UsedRelic then
+        elseif not Ngus.UsedRelic then
             Result = 6
             
         elseif
-            not Tasks.KilledShanks
+            not Ngus.KilledShanks
             and ScriptStorage.Enemies["Saber Expert"]
         then
             Result = 7
@@ -3033,48 +3033,48 @@ FunctionsHandler.Saber:RegisterMethod("Start", function()
             local Questplates = FunctionsHandler.Saber.Methods.GetQuestplates:Call()
             
             for Index, Questplate in Questplates do  
-                SetTask(" Start", "Saber Quest Touching " .. Index .. "/5")
+                SetNgu("MainNgu", "Saber Quest Touching " .. Index .. "/5")
                 while CaculateDistance(Questplate.Button.CFrame) > 20 do 
-                    task.wait() 
+                    Ngu.wait() 
                     TweenController.Create(Questplate.Button.CFrame)
                 end
-                task.wait(1)
+                Ngu.wait(1)
             end
         
         elseif Progress == 2 then 
-            SetTask(" Start", "Saber Quest Using Torch")
+            SetNgu("MainNgu", "Saber Quest Using Torch")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "GetTorch")
-            task.wait(1) 
+            Ngu.wait(1) 
             Remotes.CommF_:InvokeServer("ProQuestProgress", "DestroyTorch")
             
         elseif Progress == 3 then  
-            SetTask(" Start", "Saber Quest Helping with Cup")
+            SetNgu("MainNgu", "Saber Quest Helping with Cup")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "GetCup")
             
             if ScriptStorage.Tools.Cup then 
                 FunctionsHandler.LocalPlayerController.Methods.EquipTool:Call("Cup") 
-                task.wait(1)
+                Ngu.wait(1)
                 Remotes.CommF_:InvokeServer( "ProQuestProgress", "FillCup", LocalPlayer.Character.Cup)
             end
             
             Remotes.CommF_:InvokeServer("ProQuestProgress", "SickMan")
             
         elseif Progress == 4 then 
-            SetTask(" Start", "Saber Quest Getting Information")
+            SetNgu("MainNgu", "Saber Quest Getting Information")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "RichSon")
             
             
         elseif Progress == 5 then 
-            SetTask(" Start", "Saber Quest Defeating Boss")
+            SetNgu("MainNgu", "Saber Quest Defeating Boss")
             CombatController.Attack("Mob Leader")
             
         elseif Progress == 6 then 
-            SetTask(" Start", "Saber Quest Placing at Location")
+            SetNgu("MainNgu", "Saber Quest Placing at Location")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "RichSon")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "PlaceRelic")
         
         elseif Progress == 7 then 
-            SetTask(" Start", "Saber Quest: Getting Saber")
+            SetNgu("MainNgu", "Saber Quest: Getting Saber")
             CombatController.Attack("Saber Expert")
             
         end
@@ -3159,14 +3159,14 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
                                     
                             if not ScriptStorage.Melees[Melee] then 
                                 MSet = true
-                                SetTask("SubTask", "Farming Until Enough " .. Index .. " ( ".. Value .. " ) For " .. Melee)
+                                SetNgu("SubNgu", "Farming Until Enough " .. Index .. " ( ".. Value .. " ) For " .. Melee)
                             end
                         return
                     end
                 end 
                 
                 if not MSet and ScriptStorage.Melees[Melee] and ScriptStorage.Melees[Melee] < Data.NextLevelRequirement then 
-                    SetTask("SubTask", "Farming Enough Mastery For " .. Melee .. " ( " .. ScriptStorage.Melees[Melee] .. " / " .. Data.NextLevelRequirement .. " ).") 
+                    SetNgu("SubNgu", "Farming Enough Mastery For " .. Melee .. " ( " .. ScriptStorage.Melees[Melee] .. " / " .. Data.NextLevelRequirement .. " ).") 
                     if not ScriptStorage.Tools[Melee] then 
                         print("no m1 found, buy")
                         Data.Buy() 
@@ -3179,7 +3179,7 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
                 if ValuementPassed and Data.Requirements() and not ScriptStorage.Tools[Melee] then
                     if Melee == "Dragon Talon" and not IsFireEssenceGave then 
                         alert("IsFireEssenceGave", tostring(IsFireEssenceGave))
-                        return SetTask("SubTask", "Waiting until have fire essence for dragon talon.")
+                        return SetNgu("SubNgu", "Waiting until have fire essence for dragon talon.")
                     end 
                     
                     Data.Buy() 
@@ -3190,7 +3190,7 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
                     if not ScriptStorage.Tools[Melee] then
                         
                         
-                        task.wait()
+                        Ngu.wait()
                         if not ScriptStorage.Tools[Melee] then 
                             if ( Melee == "Death Step" or Melee == "Sharkman Karate" ) and SeaIndex ~= 2 then
                             
@@ -3234,7 +3234,7 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
         end 
     end 
     if FarmingItem then 
-        SetTask('SubTask', 'Farming mastery for ' .. FarmingItem[1] .. ' ( ' .. FarmingItem[2] .. ' / ' .. FarmingItem[3] .. ' )')
+        SetNgu('SubNgu', 'Farming mastery for ' .. FarmingItem[1] .. ' ( ' .. FarmingItem[2] .. ' / ' .. FarmingItem[3] .. ' )')
         if not ScriptStorage.Tools[FarmingItem[1]] then 
             Remotes.CommF_:InvokeServer("LoadItem", FarmingItem[1])
         end 
@@ -3273,21 +3273,21 @@ FunctionsHandler.SecondSeaPuzzle:RegisterMethod("Start", function()
         FunctionsHandler.SecondSeaPuzzle.Methods.Refresh:Call()
         return FunctionsHandler.SecondSeaPuzzle.Methods.Start:Call()
     elseif Progress == 1 then 
-        SetTask(" Start", "Auto Second Sea - Talk To Detective")
+        SetNgu("MainNgu", "Auto Second Sea - Talk To Detective")
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
 
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
 
-        task.wait(1)
+        Ngu.wait(1)
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "UseKey")
     elseif Progress == 2 then 
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
 
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
 
-        task.wait(1)
+        Ngu.wait(1)
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "UseKey")
-        SetTask(" Start", "Auto Second Sea - Defeating Ice Admiral")
+        SetNgu("MainNgu", "Auto Second Sea - Defeating Ice Admiral")
         CombatController.Attack("Ice Admiral") 
         Remotes.CommF_:InvokeServer("TravelDressrosa")
     end 
@@ -3327,7 +3327,7 @@ FunctionsHandler.ColosseumPuzzle:RegisterMethod("Start", function()
         FunctionsHandler.ColosseumPuzzle.Methods.Refresh:Call()
         return FunctionsHandler.ColosseumPuzzle.Methods.Start:Call()
     elseif Progress == 1 then 
-        SetTask(" Start", "Auto Bartilo Quest - Defeating 50x Swan Pirate")
+        SetNgu("MainNgu", "Auto Bartilo Quest - Defeating 50x Swan Pirate")
         local CurrentQuest, RawText = QuestManager:GetCurrentClaimQuest() 
         
         if CurrentQuest then 
@@ -3343,10 +3343,10 @@ FunctionsHandler.ColosseumPuzzle:RegisterMethod("Start", function()
         
         
     elseif Progress == 2 then 
-        SetTask(" Start", "Auto Bartilo Quest - Defeating Jeremy")
+        SetNgu("MainNgu", "Auto Bartilo Quest - Defeating Jeremy")
         CombatController.Attack("Jeremy")
     elseif Progress == 3 then 
-        SetTask(" Start", "Auto Bartilo Quest - Doing Puzzle")
+        SetNgu("MainNgu", "Auto Bartilo Quest - Doing Puzzle")
         if CaculateDistance(CFrame.new(
         -1837.46155, 44.2921753, 1656.1987, 
         0.999881566, -1.03885048e-22, -0.0153914848,
@@ -3366,27 +3366,27 @@ FunctionsHandler.ColosseumPuzzle:RegisterMethod("Start", function()
         LocalPlayer = game.Players.LocalPlayer
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1836, 11, 1714)
         alert("1")
-        task.wait(.5)
+        Ngu.wait(.5)
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1850.49329, 13.1789551, 1750.89685)
         alert("2")
-        task.wait(1)
+        Ngu.wait(1)
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1858.87305, 19.3777466, 1712.01807)
         alert("3")
-        task.wait(1)
+        Ngu.wait(1)
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1803.94324, 16.5789185, 1750.89685)
-        task.wait(1)
+        Ngu.wait(1)
         alert("4")
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1858.55835, 16.8604317, 1724.79541)
-        task.wait(1)
+        Ngu.wait(1)
         alert("5")
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1869.54224, 15.987854, 1681.00659)
-        task.wait(1)
+        Ngu.wait(1)
         alert("6")
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1800.0979, 16.4978027, 1684.52368)
-        task.wait(1)
+        Ngu.wait(1)
         alert("7")
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1819.26343, 14.795166, 1717.90625)
-        task.wait(1)
+        Ngu.wait(1)
         alert("8")
         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1813.51843, 14.8604736, 1724.79541)
     end
@@ -3417,9 +3417,9 @@ FunctionsHandler.EvoRace:RegisterMethod("Start", function()
         
             if Check2 and Check2.Transparency == 0 then 
             
-                SetTask(" Start", "Auto Race V2 - Collecting Flower " .. i)
+                SetNgu("MainNgu", "Auto Race V2 - Collecting Flower " .. i)
                 while not ScriptStorage.Tools["Flower " .. i] do 
-                    task.wait() 
+                    Ngu.wait() 
                     TweenController.Create(Check2.CFrame + Vector3.new(0, math.random(-1,2), 0)) 
                 end
             end
@@ -3427,12 +3427,12 @@ FunctionsHandler.EvoRace:RegisterMethod("Start", function()
     end 
     
     if not ScriptStorage.Tools["Flower 3"] then 
-        SetTask(" Start", "Auto Race V2 - Collecting Flower " .. 3)
+        SetNgu("MainNgu", "Auto Race V2 - Collecting Flower " .. 3)
         CombatController.Attack("Swan Pirate")
         
     else 
         
-        SetTask(" Start", "Auto Race V2 - Idling")
+        SetNgu("MainNgu", "Auto Race V2 - Idling")
         if LocalPlayer.Character.HumanoidRootPart.CFrame.Y < 50000 then 
             TweenController.Create(LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 50, 0)) 
         end 
@@ -3442,10 +3442,10 @@ FunctionsHandler.EvoRace:RegisterMethod("Start", function()
     end
 end) 
 
--- BossesTask 
+-- BossesNgu 
 
 
-FunctionsHandler.BossesTask:RegisterMethod("Refresh", function() 
+FunctionsHandler.BossesNgu:RegisterMethod("Refresh", function() 
     if _G.BuyingMelee then 
     return 
 end
@@ -3471,12 +3471,12 @@ end
 end)
 
 
-FunctionsHandler.BossesTask:RegisterMethod("Start", function(Boss) 
+FunctionsHandler.BossesNgu:RegisterMethod("Start", function(Boss) 
     if _G.BuyingMelee then 
     return 
 end
     if Boss then
-        SetTask(" Start", "Killing Boss: " .. Boss.Name)
+        SetNgu("MainNgu", "Killing Boss: " .. Boss.Name)
 
         CombatController.Attack(
             tostring(Boss),
@@ -3484,7 +3484,7 @@ end
             nil,
             function()
                 SpecialItems = nil
-                SetTask(" Start", "Idle")
+                SetNgu("MainNgu", "Idle")
             end
         )
 
@@ -3493,7 +3493,7 @@ end
 end)
 
 
-FunctionsHandler.SpecialBossesTask:RegisterMethod("Refresh", function() 
+FunctionsHandler.SpecialBossesNgu:RegisterMethod("Refresh", function() 
 
     local Boss2
 if _G.BuyingMelee then 
@@ -3517,7 +3517,7 @@ end
 end)
 
 
-FunctionsHandler.SpecialBossesTask:RegisterMethod("Start", function(Boss)
+FunctionsHandler.SpecialBossesNgu:RegisterMethod("Start", function(Boss)
 
     if FunctionsHandler.RaidController.Methods.GetCurrentRaidIsland:Call() then
         pcall(function()
@@ -3528,14 +3528,14 @@ if _G.BuyingMelee then
     return 
 end
     if Boss then
-        SetTask(" Start", "Killing Boss: " .. Boss.Name)
+        SetNgu("MainNgu", "Killing Boss: " .. Boss.Name)
 
         CombatController.Attack(
             tostring(Boss),
             nil,
             nil,
             function()
-                SetTask(" Start", "Idle")
+                SetNgu("MainNgu", "Idle")
             end
         )
     end
@@ -3631,7 +3631,7 @@ FunctionsHandler.RaidController:RegisterMethod("Start", function()
     if not CurrentIsland then 
         
         
-        SetTask(" Start", "Raid For Fragment..." .. FunctionsHandler.RaidController:Get("CurrentChip")) 
+        SetNgu("MainNgu", "Raid For Fragment..." .. FunctionsHandler.RaidController:Get("CurrentChip")) 
         
         if not ScriptStorage.Tools["Special Microchip"] then 
             local cRaidFruit = FunctionsHandler.RaidController.Methods.GetRaidableFruit:Call()  
@@ -3647,26 +3647,26 @@ FunctionsHandler.RaidController:RegisterMethod("Start", function()
         local chip = LocalPlayer.Backpack:FindFirstChild("Special Microchip")       
         fireclickdetector(workspace.Map[RootRaidIsland].RaidSummon2.Button.Main.ClickDetector) 
         local RaidStartSenque = os.time() 
-        SetTask(" Start", "Waiting Raid Start") 
-        repeat task.wait() until os.time() - ( LastRaidAlert2 or 0 ) < 20 or os.time() - RaidStartSenque > 30 
+        SetNgu("MainNgu", "Waiting Raid Start") 
+        repeat Ngu.wait() until os.time() - ( LastRaidAlert2 or 0 ) < 20 or os.time() - RaidStartSenque > 30 
         TweenController.Create(LocalPlayer.Character.HumanoidRootPart.CFrame)
-        repeat task.wait() until os.time() - ( LastRaidAlert or 0 ) < 20  or os.time() - RaidStartSenque > 30 
+        repeat Ngu.wait() until os.time() - ( LastRaidAlert or 0 ) < 20  or os.time() - RaidStartSenque > 30 
         alert("God", "Tween Paused")
-        task.wait(.5)
+        Ngu.wait(.5)
         if os.time() - RaidStartSenque > 30  then 
-            SetTask(" Start", "Raid Not Starting...try again")
+            SetNgu("MainNgu", "Raid Not Starting...try again")
             Report("[ Raid Error ] Time Limit Reached")
         end 
         
         LastRaidAlert = 0 
     else 
         
-        SetTask(" Start", "Raid (Killing Mob) " .. CurrentIsland.Name .. " / 5")
+        SetNgu("MainNgu", "Raid (Killing Mob) " .. CurrentIsland.Name .. " / 5")
         local Found = false 
         for _, Mon in GetMonAsSortedRange() do 
             
             local StartTick1 = os.time()
-            while Mon and Mon:FindFirstChild("HumanoidRootPart") and Mon.Humanoid.Health > 0 and CaculateDistance(Mon.HumanoidRootPart.Position) < 1000 and os.time() - StartTick1 < 60 and task.wait(.05) do 
+            while Mon and Mon:FindFirstChild("HumanoidRootPart") and Mon.Humanoid.Health > 0 and CaculateDistance(Mon.HumanoidRootPart.Position) < 1000 and os.time() - StartTick1 < 60 and Ngu.wait(.05) do 
                 Found = true 
                 if string.find(Mon.Name, "Master") or true then 
                     CombatController.Attack(Mon.Name)
@@ -3719,7 +3719,7 @@ end
     local Fruit = FunctionsHandler.CollectDrops:Get("CurrentProgressLevel")
     FunctionsHandler.CollectDrops:Set("CurrentProgressLevel", nil) 
     if Fruit then 
-        SetTask(" Start", "Collecting Fruit " .. tostring(Fruit)) 
+        SetNgu("MainNgu", "Collecting Fruit " .. tostring(Fruit)) 
         TweenController.Create(Fruit:GetModelCFrame()) 
     end 
 end)
@@ -3873,9 +3873,9 @@ end
         ScriptStorage.Tools["Red Key"]:Destroy()
     elseif Type == "Previous Hero" then 
         Remotes.CommF_:InvokeServer("BuyElectricClaw", "Start")
-        task.wait(3)
+        Ngu.wait(3)
         repeat
-            task.wait()
+            Ngu.wait()
             TweenController.Create(CFrame.new(-12548, 332.378 + math.random(-2, 2), -7617))
         until CaculateDistance(CFrame.new(-12548, 332.378, -7617)) < 30
         
@@ -3948,7 +3948,7 @@ FunctionsHandler.Trevor:RegisterMethod("Start", function()
     FunctionsHandler.Trevor:Set("Fruit", nil) 
     table.insert(ScriptStorage.IgnoreStoreFruits, Fruit.Name) 
     Remotes.CommF_:InvokeServer("LoadFruit", Fruit.Name)
-    task.wait()
+    Ngu.wait()
     FunctionsHandler.LocalPlayerController.Methods.EquipTool:Call(FruitIdToName(Fruit.Name))
     
     Remotes.CommF_:InvokeServer("TalkTrevor", "1")
@@ -3957,7 +3957,7 @@ FunctionsHandler.Trevor:RegisterMethod("Start", function()
 
     Remotes.CommF_:InvokeServer("TalkTrevor", "3")
     
-    task.wait(1)
+    Ngu.wait(1)
     FunctionsHandler.Trevor:Set("IsCompleted", true) 
 end)
 
@@ -3987,19 +3987,19 @@ FunctionsHandler.ThirdSeaPuzzle:RegisterMethod("Start", function()
     alert("1093", "start")
     if State then 
         alert("1095", "case test")
-        repeat task.wait(1) 
+        repeat Ngu.wait(1) 
             alert("1096", "fire")
             print("StartResponse", Remotes.CommF_:InvokeServer("ZQuestProgress", "Begin")) 
         until CaculateDistance(Vector3.new(0,0,0)) > 20000 
         
         spawn(function() 
             alert("1102", "rejoin")
-            task.wait(30)
+            Ngu.wait(30)
             ScriptStorage.Hop("Rejoin")
         end) 
         
         alert("attack")
-        while task.wait() do 
+        while Ngu.wait() do 
             CombatController.Attack("rip_indra")
         end 
         
@@ -4022,7 +4022,7 @@ FunctionsHandler.Yama:RegisterMethod("Refresh", function()
 end)
 
 FunctionsHandler.Yama:RegisterMethod("Start", function() 
-    repeat task.wait() 
+    repeat Ngu.wait() 
         TweenController.Create(workspace.Map.Waterfall:GetModelCFrame()) 
     until workspace.Map.Waterfall:FindFirstChild("SealedKatana") 
     
@@ -4095,7 +4095,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Refresh", function()
     if not SoulGuitarProcess then  
       Remotes.CommF_:InvokeServer("gravestoneEvent", 2)
         if not CheckFullMoon() then 
-            SetTask(" Start", "Hopping for full moon ( soul guitar )") 
+            SetNgu("MainNgu", "Hopping for full moon ( soul guitar )") 
             local Response = Services.HttpService:JSONDecode(game:HttpGet"http://api.visionx.x10.mx:20064/finder?type=BLOX_FRUITS&api_key=PLUTO_S5Z3UMjV3g") 
             
             for _, Server in Response.all_data do 
@@ -4131,17 +4131,17 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
     if State == 7 then 
         while CaculateDistance(CFrame.new(-8654, 140, 6167)) > 5 do
 
-            task.wait()
+            Ngu.wait()
 
             TweenController.Create(CFrame.new(-8654, 140, 6167))
         end
         SoulGuitarProcess = Remotes.CommF_:InvokeServer("gravestoneEvent", 2, true)
     elseif State == 1 then 
         if SeaIndex ~= 2 then 
-            SetTask(" Start", "Teleport to second sea to farm ectoplasm")
+            SetNgu("MainNgu", "Teleport to second sea to farm ectoplasm")
             return Remotes.CommF_:InvokeServer("TravelDressrosa")
         else 
-            SetTask(" Start", "Farming ectoplasms for soul guitar")
+            SetNgu("MainNgu", "Farming ectoplasms for soul guitar")
             CombatController.Attack({"Ship Deckhand","Ship Engineer", "Ship Steward","Ship Officer"})
             return
         end 
@@ -4166,15 +4166,15 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
         end 
         
         if #Objects < 6 then 
-            SetTask(' Start', "Soul Guitar task 1 / 5: waiting until entity spawn") 
+            SetNgu('MainNgu', "Soul Guitar Ngu 1 / 5: waiting until entity spawn") 
             TweenController.Create(ScriptStorage.MobRegions["Living Zombie"][1] + Vector3.new(0,30,0))
             
         else 
             
             local StartTime19 = os.time()
             for Idx, Object in Objects do 
-                while task.wait() and Object.Humanoid.Health > 7000 do
-                    SetTask(' Start', "Soul Guitar task 1 / 5: Hit mob " .. Idx .. " / 6" ) 
+                while Ngu.wait() and Object.Humanoid.Health > 7000 do
+                    SetNgu('MainNgu', "Soul Guitar Ngu 1 / 5: Hit mob " .. Idx .. " / 6" ) 
                     FunctionsHandler.LocalPlayerController.Methods.EquipTool:Call("Melee")
                     if os.time() - StartTime19 > 60 then 
                         ScriptStorage.Hop("So long nerds")
@@ -4184,8 +4184,8 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
                     AttackController:Attack() 
                 end 
             end
-            SetTask(' Start', "Soul Guitar task 1 / 5: Attack") 
-            while workspace.Enemies:FindFirstChild("Living Zombie") and task.wait() do 
+            SetNgu('MainNgu', "Soul Guitar Ngu 1 / 5: Attack") 
+            while workspace.Enemies:FindFirstChild("Living Zombie") and Ngu.wait() do 
                  if os.time() - StartTime19 > 60 then 
                         ScriptStorage.Hop("So long nerds")
                     end 
@@ -4196,8 +4196,8 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
     elseif State == 3 then 
         local HauntedIsland = workspace.Map["Haunted Castle"] 
         while CaculateDistance(CFrame.new(-8800, 178, 6033)) > 10 do
-            task.wait()
-            SetTask(" Start", "Soul Guitar task 2 / 5: completing placards")
+            Ngu.wait()
+            SetNgu("MainNgu", "Soul Guitar Ngu 2 / 5: completing placards")
             TweenController.Create(CFrame.new(-8800, 178, 6033))
         end
         
@@ -4225,7 +4225,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
                 local x = DepTraiv4[v]
                 if x.Line.Rotation.Z ~= 0 then
                     repeat
-                        task.wait()
+                        Ngu.wait()
                         fireclickdetector(x.ClickDetector)
                     until x.Line.Rotation.Z == 0
                 end
@@ -4240,7 +4240,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
                 end
                 if not string.find(tostring(DepTraiv4[i].Line.Rotation.Z), c) then
                     repeat
-                        task.wait()
+                        Ngu.wait()
                         fireclickdetector(DepTraiv4[i].ClickDetector)
                     until string.find(tostring(DepTraiv4[i].Line.Rotation.Z), c)
                 end
@@ -4255,7 +4255,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
                     local x = workspace.Map["Haunted Castle"]["Lab Puzzle"].ColorFloor.Model[i]
                     if x.BrickColor.Name ~= v then
                         repeat
-                            task.wait()
+                            Ngu.wait()
                             fireclickdetector(x.ClickDetector)
                         until x.BrickColor.Name == v
                     end
@@ -4311,7 +4311,7 @@ FunctionsHandler.Tushita:RegisterMethod("Start", function(State)
             if TurtleMap:FindFirstChild("Torch" .. TorchIndex) then
 
                 repeat
-                    task.wait()
+                    Ngu.wait()
                     TweenController.Create(TurtleMap:FindFirstChild("Torch" .. TorchIndex).CFrame)
                 until TurtleMap:FindFirstChild("Torch" .. TorchIndex).Particles.Main.Enabled
             end
@@ -4395,7 +4395,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Refresh", function()
                             " " .. tostring(Index)
                 )
                 Remotes.CommF_:InvokeServer("CDKQuest", "StartTrial", Index)
-                SetTask(" Start", "Cursed Dual Katana - " .. tostring(ScrollSides[Index]) ..
+                SetNgu("MainNgu", "Cursed Dual Katana - " .. tostring(ScrollSides[Index]) ..
                             " " .. tostring(Index)
                 )
                 return false 
@@ -4417,11 +4417,11 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Refresh", function()
         end 
     elseif Name == "Good" then 
         if Level == 2 then 
-            SetTask("SubTask", "CDK Quest / Waiting until pirate raid started")
+            SetNgu("SubNgu", "CDK Quest / Waiting until pirate raid started")
             return 
         elseif Level == 3 and not ScriptStorage.Enemies["Cake Queen"] then 
             ScriptStorage.Hop("Cake Queen Find")
-            SetTask("SubTask", "CDK Quest / Waiting until Cake Queen boss spawned") 
+            SetNgu("SubNgu", "CDK Quest / Waiting until Cake Queen boss spawned") 
             return 
         end 
     end
@@ -4444,14 +4444,14 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("DoDimension", function(Dimensi
     local DimensionId = string.gsub(DimensionName, " ", "") 
     
     local VaiCaNgu1234 = os.time()
-    repeat task.wait()
+    repeat Ngu.wait()
         TweenController.Create(LocalPlayer.Character.HumanoidRootPart.CFrame)
         if os.time() - VaiCaNgu1234 > 60 then 
             return 
         end 
     until os.time() - TorchEnabledTime < 10 
     
-    repeat task.wait() 
+    repeat Ngu.wait() 
         local OriginalIsland = workspace.Map:WaitForChild(DimensionId, 10)
         if OriginalIsland then 
             
@@ -4460,7 +4460,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("DoDimension", function(Dimensi
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Torch.CFrame 
                     
                     Torch.ProximityPrompt.HoldDuration = 0
-                    task.wait(1)
+                    Ngu.wait(1)
                     local vim = game:GetService("VirtualInputManager")
                     vim:SendKeyEvent(true, "E", 0, game)    -- e vã lắm r T_T
                     vim:SendKeyEvent(false, "E", 0, game)    -- e vã lắm r T_T
@@ -4493,7 +4493,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("DoDimension", function(Dimensi
     print("leave")
     while os.time() - DoneCdkTick > 15 do 
         TweenController.Create(ExitDoor.CFrame + Vector3.new(0, math.random(1,5), 0)) 
-        task.wait() 
+        Ngu.wait() 
     end 
     
     ScriptStorage.Hop("Rejoin")
@@ -4512,20 +4512,20 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Start", function(CachedData)
     if CachedData[1] == "burn 2" then
         if workspace.Map.Turtle.Cursed.Pedestal3.ProximityPrompt.Enabled then 
             fireproximityprompt(workspace.Map.Turtle.Cursed.Pedestal3.ProximityPrompt)
-            task.wait(1) 
+            Ngu.wait(1) 
             pcall(function() 
                 LocalPlayer.Character.Humanoid.Health = 0
             end)
-            task.wait(10)
+            Ngu.wait(10)
         else
             CDKAttempts = ( CDKAttempts or 0 ) + 1
             TweenController.Create(CFrame.new(-12341.66796875, 603.3455810546875, -6550.6064453125)) 
-            task.wait(5) 
+            Ngu.wait(5) 
             
             pcall(function() 
                 LocalPlayer.Character.Humanoid.Health = 0
             end)
-            task.wait(5)
+            Ngu.wait(5)
             if CDKAttempts > 5 then 
                 ScriptStorage.Hop("CDK Stuck")
             end
@@ -4537,12 +4537,12 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Start", function(CachedData)
             local Pedestal = workspace.Map.Turtle.Cursed:FindFirstChild("Pedestal" .. Index) 
             
             if workspace.Map.Turtle.Cursed:FindFirstChild("Pedestal" .. Index) .ProximityPrompt.Enabled then 
-                repeat task.wait() 
+                repeat Ngu.wait() 
                     TweenController.Create(workspace.Map.Turtle.Cursed:FindFirstChild("Pedestal" .. Index) .CFrame) 
                 until CaculateDistance(workspace.Map.Turtle.Cursed:FindFirstChild("Pedestal" .. Index) .CFrame) < 5
                 
                 fireproximityprompt(workspace.Map.Turtle.Cursed:FindFirstChild("Pedestal" .. Index) .ProximityPrompt) -- địt mẹ delta
-                task.wait(3) 
+                Ngu.wait(3) 
                 pcall(function() 
                     LocalPlayer.Character.Humanoid.Health = 0
                 end) 
@@ -4563,7 +4563,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Start", function(CachedData)
             Report("found cdk yama 3")
             while not ( os.time() - TorchEnabledTime < 100 or not ScriptStorage.Enemies["Soul Reaper"] )  do
                 print("tweening to soul reaper ")
-                task.wait()
+                Ngu.wait()
                             
                 if FunctionsHandler.RaidController.Methods.GetCurrentRaidIsland:Call() then 
                     pcall(function() 
@@ -4581,7 +4581,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Start", function(CachedData)
         if CachedData[2] == 1 then 
             for _, NPC in game.ReplicatedStorage.NPCs:GetChildren() do 
                 if NPC.Name == "Luxury Boat Dealer" then 
-                    repeat task.wait() 
+                    repeat Ngu.wait() 
                          if os.time() - DoneCdkTick < 15 then return end
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = (NPC:GetModelCFrame()) 
                         RealNPC = nil
@@ -4598,7 +4598,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Start", function(CachedData)
             end
             CdkProgess = nil  
         elseif CachedData[2] == 3 then 
-            repeat task.wait() 
+            repeat Ngu.wait() 
                 print("attacking cake queen")
                 CombatController.Attack("Cake Queen")
             until os.time() - TorchEnabledTime < 10 or not ScriptStorage.Enemies["Cake Queen"]
@@ -4671,7 +4671,7 @@ end)
 
 Hooks:RegisterNotifyListener("quest completed", function() 
      QuestManager:RefreshQuest()
-    task.wait()
+    Ngu.wait()
     if not  QuestManager:GetCurrentClaimQuest() then 
         
          QuestManager:MarkAsCompleted()
@@ -4749,13 +4749,13 @@ Hop = function(Reason, PlayerLimit)
         for a, b in game.ReplicatedStorage.__ServerBrowser:InvokeServer(i) do
             if a ~= game.JobId and b.Count < (PlayerLimit or 9) then
                 
-                task.wait(1)
+                Ngu.wait(1)
                 
-                SetTask(" Start", "Hop Server - Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
+                SetNgu("MainNgu", "Hop Server - Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
                 alert("Hop Server", "Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
                 
                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, a, game.Players.LocalPlayer)
-                task.wait(2)
+                Ngu.wait(2)
             end
         end
     end
@@ -4821,24 +4821,24 @@ end)
     end
     
     local LogCache = {}
-    SetTask(" Start", "n/a")
-    SetTask("SubTask", "n/a")
+    SetNgu("MainNgu", "n/a")
+    SetNgu("SubNgu", "n/a")
     ParsingTimes = 0
-    function RefreshTasksData()
+    function RefreshNgusData()
         if _G.Stop then
             return
         end
-        for _, TaskName in TasksOrder do
-            local Task = FunctionsHandler[TaskName]
-            if not Task.Initalized then
-                if not LogCache[TaskName] then
-                    print("[ Debug ] Task", Name, "is not registered yet")
-                    LogCache[TaskName] = true
+        for _, NguName in NgusOrder do
+            local Ngu = FunctionsHandler[NguName]
+            if not Ngu.Initalized then
+                if not LogCache[NguName] then
+                    print("[ Debug ] Ngu", Name, "is not registered yet")
+                    LogCache[NguName] = true
                 end
             else
     
-                local Refresh = Task.Methods.Refresh
-                local Start = Task.Methods.Start
+                local Refresh = Ngu.Methods.Refresh
+                local Start = Ngu.Methods.Start
     
                 if Refresh then
     
@@ -4847,10 +4847,10 @@ end)
                     ParsingTimes = ParsingTimes + 1
                     if RefreshValue and ParsingTimes > 100 then
     
-                        CurrentTask = CurrentTask ~= TaskName
+                        CurrentNgu = CurrentNgu ~= NguName
     
-                        CurrentTask = TaskName
-                        ScriptStorage.Interface.SetText("DebugLine", TaskName)
+                        CurrentNgu = NguName
+                        ScriptStorage.Interface.SetText("DebugLine", NguName)
                         Start:Call(RefreshValue)
                         return
                     end
@@ -4905,7 +4905,7 @@ end)
                     if os.time() - NearbyRange > 30 then
                         if CaculateDistance(Position) < 100 then
                             ScriptStorage.Hop("Nearby plr");
-                            task.wait(5)
+                            Ngu.wait(5)
     
                         else
                             QueueList[Player.Name] = nil
@@ -4917,8 +4917,8 @@ end)
     end
     
     
-    task.spawn(function()
-        while task.wait() do
+    Ngu.spawn(function()
+        while Ngu.wait() do
             if not _G.Stop then
                 NearbyHopHandler()
                 if LocalPlayer.Character:FindFirstChild("Humanoid") and LocalPlayer.Character.Humanoid.Sit then
@@ -5023,12 +5023,12 @@ end)
     game.Players.PlayerAdded:Connect(PlayerAdded)
     
     spawn(function()
-        task.wait(Config.Configuration.AutoHopDelay)
+        Ngu.wait(Config.Configuration.AutoHopDelay)
         if not Config.Configuration.AutoHop then
             ScriptStorage.Hop("Autohop")
         end
     end)
-    while task.wait() do
+    while Ngu.wait() do
         --[[
         if not SendDataDelay or os.time() - SendDataDelay > Config.Authorize.SendDelay then 
             SendDataDelay = os.time() 
@@ -5036,9 +5036,9 @@ end)
         end ]]
     
         if Config.Configuration.HopWhenIdle and LastIdling and os.time() - LastIdling > 60 * 5 then
-            SetTask(" Start", "Rejoinjng due idle in 10 min!")
-            task.wait(1)
-            while task.wait() do
+            SetNgu("MainNgu", "Rejoinjng due idle in 10 min!")
+            Ngu.wait(1)
+            while Ngu.wait() do
                 game:GetService("TeleportService"):Teleport(game.PlaceId)
             end
         end
@@ -5047,7 +5047,7 @@ end)
             AnimationDelay = os.time()
             LocalPlayer.Character:WaitForChild('Humanoid'):LoadAnimation(Animation):Play()
         end
-        local success, response = xpcall(RefreshTasksData, debug.traceback)
+        local success, response = xpcall(RefreshNgusData, debug.traceback)
         if not success then
             Report(response)
         end
