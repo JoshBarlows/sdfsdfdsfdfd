@@ -76,7 +76,7 @@ function Build(Error)
             {
               name = "Script Details",
               value = GetCurrentDateTime() .. " | ".. DispTime(os.time() - StartTime, true)
-               .." after execution\nMain task: " .. (  ScriptStorage.Task.MainTask or "n/a" )  .. " ( " .. (  ScriptStorage.Task["Start-d"] and  DispTime(os.time() -  ScriptStorage.Task["Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
+               .." after execution\nMain task: " .. (  ScriptStorage.Task.Start or "n/a" )  .. " ( " .. (  ScriptStorage.Task["Start-d"] and  DispTime(os.time() -  ScriptStorage.Task["Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
             },
             {
               name = "Traceback",
@@ -595,7 +595,7 @@ Interface.BlurManager = blurEffect
             return
         end
         local Parser = {
-            MainTask = "Task1",
+            Start = "Task1",
             SubTask = "Task2"
         }
         if Parser[Index] then
