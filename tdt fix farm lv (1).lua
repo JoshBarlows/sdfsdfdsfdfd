@@ -76,7 +76,7 @@ function Build(Error)
             {
               name = "Script Details",
               value = GetCurrentDateTime() .. " | ".. DispTime(os.time() - StartTime, true)
-               .." after execution\nMain task: " .. (  ScriptStorage.Task.Start or "n/a" )  .. " ( " .. (  ScriptStorage.Task["Start-d"] and  DispTime(os.time() -  ScriptStorage.Task["Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
+               .." after execution\nMain task: " .. (  ScriptStorage.Task.Start or "n/a" )  .. " ( " .. (  ScriptStorage.Task["Start-d"] and  DispTime(os.time() -  ScriptStorage.Task["Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.  or "n/a" ) .. " ( " .. (  ScriptStorage.Task[" -d"] and DispTime(os.time() -  ScriptStorage.Task[" -d"], true) or "n/a") .. " )"
             },
             {
               name = "Traceback",
@@ -596,7 +596,7 @@ Interface.BlurManager = blurEffect
         end
         local Parser = {
             Start = "Task1",
-            SubTask = "Task2"
+              = "Task2"
         }
         if Parser[Index] then
             if SetText then
@@ -2212,7 +2212,7 @@ end
                     CombatController.Grab(Child or "")
                     if MonResult.Name ~= "Core" then 
                         if ScriptStorage.PlayerData.Level > 100 and Count2 >= CombatController.MAX_ATTACK_DURATION_2 and MobHumanoid.Health - MobHumanoid.MaxHealth == 0 then 
-                            SetTask("SubTask", "Hop Server - Mob Health Unchanged ( " .. MobHumanoid.Health .. " / " .. MobHumanoid.MaxHealth .. ")")
+                            SetTask(" ", "Hop Server - Mob Health Unchanged ( " .. MobHumanoid.Health .. " / " .. MobHumanoid.MaxHealth .. ")")
                             alert("Stuck", "Mob health unchanged")
                             _G.Stop = true
                             ScriptStorage.Hop("Mob Health Stuck")
@@ -3159,14 +3159,14 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
                                     
                             if not ScriptStorage.Melees[Melee] then 
                                 MSet = true
-                                SetTask("SubTask", "Farming Until Enough " .. Index .. " ( ".. Value .. " ) For " .. Melee)
+                                SetTask(" ", "Farming Until Enough " .. Index .. " ( ".. Value .. " ) For " .. Melee)
                             end
                         return
                     end
                 end 
                 
                 if not MSet and ScriptStorage.Melees[Melee] and ScriptStorage.Melees[Melee] < Data.NextLevelRequirement then 
-                    SetTask("SubTask", "Farming Enough Mastery For " .. Melee .. " ( " .. ScriptStorage.Melees[Melee] .. " / " .. Data.NextLevelRequirement .. " ).") 
+                    SetTask(" ", "Farming Enough Mastery For " .. Melee .. " ( " .. ScriptStorage.Melees[Melee] .. " / " .. Data.NextLevelRequirement .. " ).") 
                     if not ScriptStorage.Tools[Melee] then 
                         print("no m1 found, buy")
                         Data.Buy() 
@@ -3179,7 +3179,7 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
                 if ValuementPassed and Data.Requirements() and not ScriptStorage.Tools[Melee] then
                     if Melee == "Dragon Talon" and not IsFireEssenceGave then 
                         alert("IsFireEssenceGave", tostring(IsFireEssenceGave))
-                        return SetTask("SubTask", "Waiting until have fire essence for dragon talon.")
+                        return SetTask(" ", "Waiting until have fire essence for dragon talon.")
                     end 
                     
                     Data.Buy() 
@@ -3234,7 +3234,7 @@ FunctionsHandler.MeleesController:RegisterMethod("Start", function()
         end 
     end 
     if FarmingItem then 
-        SetTask('SubTask', 'Farming mastery for ' .. FarmingItem[1] .. ' ( ' .. FarmingItem[2] .. ' / ' .. FarmingItem[3] .. ' )')
+        SetTask(' ', 'Farming mastery for ' .. FarmingItem[1] .. ' ( ' .. FarmingItem[2] .. ' / ' .. FarmingItem[3] .. ' )')
         if not ScriptStorage.Tools[FarmingItem[1]] then 
             Remotes.CommF_:InvokeServer("LoadItem", FarmingItem[1])
         end 
@@ -4417,11 +4417,11 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Refresh", function()
         end 
     elseif Name == "Good" then 
         if Level == 2 then 
-            SetTask("SubTask", "CDK Quest / Waiting until pirate raid started")
+            SetTask(" ", "CDK Quest / Waiting until pirate raid started")
             return 
         elseif Level == 3 and not ScriptStorage.Enemies["Cake Queen"] then 
             ScriptStorage.Hop("Cake Queen Find")
-            SetTask("SubTask", "CDK Quest / Waiting until Cake Queen boss spawned") 
+            SetTask(" ", "CDK Quest / Waiting until Cake Queen boss spawned") 
             return 
         end 
     end
@@ -4822,7 +4822,7 @@ end)
     
     local LogCache = {}
     SetTask("Start", "n/a")
-    SetTask("SubTask", "n/a")
+    SetTask(" ", "n/a")
     ParsingTimes = 0
     function RefreshTasksData()
         if _G.Stop then
