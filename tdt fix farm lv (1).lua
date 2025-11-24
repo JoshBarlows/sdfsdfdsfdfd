@@ -76,7 +76,7 @@ function Build(Error)
             {
               name = "Script Details",
               value = GetCurrentDateTime() .. " | ".. DispTime(os.time() - StartTime, true)
-               .." after execution\nMain task: " .. (  ScriptStorage.Task.MainTask or "n/a" )  .. " ( " .. (  ScriptStorage.Task["MainTask-d"] and  DispTime(os.time() -  ScriptStorage.Task["MainTask-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
+               .." after execution\nMain task: " .. (  ScriptStorage.Task.MainTask or "n/a" )  .. " ( " .. (  ScriptStorage.Task["Start-d"] and  DispTime(os.time() -  ScriptStorage.Task["Start-d"], true) or "n/a" ) .. " ) \nSub task: " .. (  ScriptStorage.Task.SubTask or "n/a" ) .. " ( " .. (  ScriptStorage.Task["SubTask-d"] and DispTime(os.time() -  ScriptStorage.Task["SubTask-d"], true) or "n/a") .. " )"
             },
             {
               name = "Traceback",
@@ -2573,14 +2573,14 @@ FunctionsHandler.ExpRedeem:RegisterMethod("Start", function()
     
     for Index, Promo in Code do
         
-        SetTask("MainTask", "Code Redemption | " .. Promo .. " | Redeeming...")
+        SetTask("Start", "Code Redemption | " .. Promo .. " | Redeeming...")
         local Response = (Remotes.Redeem:InvokeServer(Promo))
         task.wait() 
-        SetTask("MainTask", "Code Redemption | " .. Promo .. " | " .. (Response or "Failed"))
+        SetTask("Start", "Code Redemption | " .. Promo .. " | " .. (Response or "Failed"))
         if getsenv(game.ReplicatedStorage.GuideModule)._G.ServerData.ExpBoost == 0 then 
             
             if Response and string.find(Response, "SUCC") then 
-                return SetTask("MainTask", "Code Redemption | X2 Exp Boost Activated!") and task.wait(1)
+                return SetTask("Start", "Code Redemption | X2 Exp Boost Activated!") and task.wait(1)
             end 
             else 
                 return  
@@ -2645,13 +2645,13 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
         if Material then
             if SeaIndex ~= MaterialData[2] then 
                 alert("Material - " .. Material, "Travelling sea " .. MaterialData[2])
-                SetTask("MainTask", "Sea Travel | Godhuman Materials | Travelling to Sea " .. MaterialData[2])
+                SetTask("Start", "Sea Travel | Godhuman Materials | Travelling to Sea " .. MaterialData[2])
                 
                 Remotes.CommF_:InvokeServer("Travel" .. SeaIndexes[MaterialData[2]]) 
                 return 
             end 
             
-            SetTask("MainTask", "Farming Material For GodHuman " .. Material .. " | In Progress")
+            SetTask("Start", "Farming Material For GodHuman " .. Material .. " | In Progress")
             
             if PlayerLevel >= MaterialData[4][3] then 
                 local QuestAvailable, CurrentClaimQuest = GetCurrentClaimQuest() 
@@ -2701,17 +2701,17 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
             if Config.Settings.WaitToGetDarkFrament and not ScriptStorage.Backpack["Dark Fragment"] then 
             elseif not Services.Workspace.Map.IceCastle.Hall.LibraryDoor:FindFirstChild("PhoeyuDoor") then 
                 Remotes.CommF_:InvokeServer("TravelZou")
-                SetTask("MainTask", "Sea Travel | Teleporting to Third Sea")
+                SetTask("Start", "Sea Travel | Teleporting to Third Sea")
             end 
         elseif PlayerLevel >= 700 and SeaIndex == 1 then 
-                SetTask("MainTask", "Sea Travel | Teleporting to Second Sea")
+                SetTask("Start", "Sea Travel | Teleporting to Second Sea")
                 Remotes.CommF_:InvokeServer("TravelDressrosa")
         end
     end 
     
     if ScriptStorage.Tools["God's Chalice"] and not ScriptStorage.Tools["Mirror Fractal"] then 
         if (ScriptStorage.Backpack["Conjured Cocoa"] or {Count = 0}).Count < 10 then 
-            SetTask("MainTask", "Material Farming | Conjured Cocoa | Need 10x | Farming...")
+            SetTask("Start", "Material Farming | Conjured Cocoa | Need 10x | Farming...")
             CombatController.Attack({"Cocoa Warrior", "Chocolate Bar Battler"}) 
             return 
         end
@@ -2721,7 +2721,7 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
     if ScriptStorage.Tools["Sweet Chalice"] or ( PlayerLevel == MaxLevel and ( ScriptStorage.Backpack.Bones or {Count = 0}).Count >= 500 ) then 
         
         
-        SetTask("MainTask", "Fragments Farming | Cake Prince | Dough King")
+        SetTask("Start", "Fragments Farming | Cake Prince | Dough King")
         
         
         if (ScriptStorage.Tools["Sweet Chalice"]) and ( not SpawnReflect or os.time() - SpawnReflect > 10 ) then 
@@ -2786,7 +2786,7 @@ FunctionsHandler.LevelFarm:RegisterMethod("Start", function(Level)
 end
     if PlayerLevel >= 2025 and (getsenv(game.ReplicatedStorage.GuideModule)._G.ServerData.ExpBoost == 0 or PlayerLevel == MaxLevel ) and ( ScriptStorage.Backpack.Bones or { Count = 0 } ).Count < 500 then 
         
-        SetTask("MainTask", "Farming Bones get x2 exp")
+        SetTask("Start", "Farming Bones get x2 exp")
 
         CurrentClaimQuest3 = GetCurrentClaimQuest(true) 
         
@@ -2830,14 +2830,14 @@ if _G.BuyingMelee then
     return 
 end
     if Level == 1 then 
-        SetTask("MainTask", "Farming Level Skip Mode " .. Level)    
+        SetTask("Start", "Farming Level Skip Mode " .. Level)    
         CombatController.Attack("Sky Bandit")
     elseif Level == 2 then 
-        SetTask("MainTask", "Farming Level Skip Mode " .. Level)
+        SetTask("Start", "Farming Level Skip Mode " .. Level)
         CombatController.Attack("God's Guard")
         
     elseif Level == 3 then 
-        SetTask("MainTask", "Farming Level Skip Mode " .. Level)
+        SetTask("Start", "Farming Level Skip Mode " .. Level)
         CombatController.Attack({"God's Guard", "Shanda", "Royal Soldier", "Royal Squad"})
     elseif Level == 4 then
         local MonName, NpcPosition, QuestId, QuestIndex, QuestTitle = QuestManager:GetCurrentQuest() 
@@ -2858,7 +2858,7 @@ end
                 return QuestManager:RefreshQuest() and Report("failed to get npc position quest 528")                
             end       
             TweenController.Create(NpcPosition + Vector3.new(0,5,3)) 
-            SetTask("MainTask", "Farming Level " .. MonName .. " | Claiming Quest")
+            SetTask("Start", "Farming Level " .. MonName .. " | Claiming Quest")
             if CaculateDistance(NpcPosition) > 10 then 
                 return 
             end 
@@ -2869,7 +2869,7 @@ end
             task.wait(1)
         end 
 
-        SetTask("MainTask", "Farming Level" .. MonName .. "Killing Mob...")
+        SetTask("Start", "Farming Level" .. MonName .. "Killing Mob...")
         local AttackTime1 = os.time()
         CombatController.Attack(MonName)
         LevelFarmTTL = LevelFarmTTL + os.time() - AttackTime1 
@@ -3033,7 +3033,7 @@ FunctionsHandler.Saber:RegisterMethod("Start", function()
             local Questplates = FunctionsHandler.Saber.Methods.GetQuestplates:Call()
             
             for Index, Questplate in Questplates do  
-                SetTask("MainTask", "Saber Quest Touching " .. Index .. "/5")
+                SetTask("Start", "Saber Quest Touching " .. Index .. "/5")
                 while CaculateDistance(Questplate.Button.CFrame) > 20 do 
                     task.wait() 
                     TweenController.Create(Questplate.Button.CFrame)
@@ -3042,13 +3042,13 @@ FunctionsHandler.Saber:RegisterMethod("Start", function()
             end
         
         elseif Progress == 2 then 
-            SetTask("MainTask", "Saber Quest Using Torch")
+            SetTask("Start", "Saber Quest Using Torch")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "GetTorch")
             task.wait(1) 
             Remotes.CommF_:InvokeServer("ProQuestProgress", "DestroyTorch")
             
         elseif Progress == 3 then  
-            SetTask("MainTask", "Saber Quest Helping with Cup")
+            SetTask("Start", "Saber Quest Helping with Cup")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "GetCup")
             
             if ScriptStorage.Tools.Cup then 
@@ -3060,21 +3060,21 @@ FunctionsHandler.Saber:RegisterMethod("Start", function()
             Remotes.CommF_:InvokeServer("ProQuestProgress", "SickMan")
             
         elseif Progress == 4 then 
-            SetTask("MainTask", "Saber Quest Getting Information")
+            SetTask("Start", "Saber Quest Getting Information")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "RichSon")
             
             
         elseif Progress == 5 then 
-            SetTask("MainTask", "Saber Quest Defeating Boss")
+            SetTask("Start", "Saber Quest Defeating Boss")
             CombatController.Attack("Mob Leader")
             
         elseif Progress == 6 then 
-            SetTask("MainTask", "Saber Quest Placing at Location")
+            SetTask("Start", "Saber Quest Placing at Location")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "RichSon")
             Remotes.CommF_:InvokeServer("ProQuestProgress", "PlaceRelic")
         
         elseif Progress == 7 then 
-            SetTask("MainTask", "Saber Quest: Getting Saber")
+            SetTask("Start", "Saber Quest: Getting Saber")
             CombatController.Attack("Saber Expert")
             
         end
@@ -3273,7 +3273,7 @@ FunctionsHandler.SecondSeaPuzzle:RegisterMethod("Start", function()
         FunctionsHandler.SecondSeaPuzzle.Methods.Refresh:Call()
         return FunctionsHandler.SecondSeaPuzzle.Methods.Start:Call()
     elseif Progress == 1 then 
-        SetTask("MainTask", "Auto Second Sea - Talk To Detective")
+        SetTask("Start", "Auto Second Sea - Talk To Detective")
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
 
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "Detective")
@@ -3287,7 +3287,7 @@ FunctionsHandler.SecondSeaPuzzle:RegisterMethod("Start", function()
 
         task.wait(1)
         Remotes.CommF_:InvokeServer( "DressrosaQuestProgress", "UseKey")
-        SetTask("MainTask", "Auto Second Sea - Defeating Ice Admiral")
+        SetTask("Start", "Auto Second Sea - Defeating Ice Admiral")
         CombatController.Attack("Ice Admiral") 
         Remotes.CommF_:InvokeServer("TravelDressrosa")
     end 
@@ -3327,7 +3327,7 @@ FunctionsHandler.ColosseumPuzzle:RegisterMethod("Start", function()
         FunctionsHandler.ColosseumPuzzle.Methods.Refresh:Call()
         return FunctionsHandler.ColosseumPuzzle.Methods.Start:Call()
     elseif Progress == 1 then 
-        SetTask("MainTask", "Auto Bartilo Quest - Defeating 50x Swan Pirate")
+        SetTask("Start", "Auto Bartilo Quest - Defeating 50x Swan Pirate")
         local CurrentQuest, RawText = QuestManager:GetCurrentClaimQuest() 
         
         if CurrentQuest then 
@@ -3343,10 +3343,10 @@ FunctionsHandler.ColosseumPuzzle:RegisterMethod("Start", function()
         
         
     elseif Progress == 2 then 
-        SetTask("MainTask", "Auto Bartilo Quest - Defeating Jeremy")
+        SetTask("Start", "Auto Bartilo Quest - Defeating Jeremy")
         CombatController.Attack("Jeremy")
     elseif Progress == 3 then 
-        SetTask("MainTask", "Auto Bartilo Quest - Doing Puzzle")
+        SetTask("Start", "Auto Bartilo Quest - Doing Puzzle")
         if CaculateDistance(CFrame.new(
         -1837.46155, 44.2921753, 1656.1987, 
         0.999881566, -1.03885048e-22, -0.0153914848,
@@ -3417,7 +3417,7 @@ FunctionsHandler.EvoRace:RegisterMethod("Start", function()
         
             if Check2 and Check2.Transparency == 0 then 
             
-                SetTask("MainTask", "Auto Race V2 - Collecting Flower " .. i)
+                SetTask("Start", "Auto Race V2 - Collecting Flower " .. i)
                 while not ScriptStorage.Tools["Flower " .. i] do 
                     task.wait() 
                     TweenController.Create(Check2.CFrame + Vector3.new(0, math.random(-1,2), 0)) 
@@ -3427,12 +3427,12 @@ FunctionsHandler.EvoRace:RegisterMethod("Start", function()
     end 
     
     if not ScriptStorage.Tools["Flower 3"] then 
-        SetTask("MainTask", "Auto Race V2 - Collecting Flower " .. 3)
+        SetTask("Start", "Auto Race V2 - Collecting Flower " .. 3)
         CombatController.Attack("Swan Pirate")
         
     else 
         
-        SetTask("MainTask", "Auto Race V2 - Idling")
+        SetTask("Start", "Auto Race V2 - Idling")
         if LocalPlayer.Character.HumanoidRootPart.CFrame.Y < 50000 then 
             TweenController.Create(LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 50, 0)) 
         end 
@@ -3476,7 +3476,7 @@ FunctionsHandler.BossesTask:RegisterMethod("Start", function(Boss)
     return 
 end
     if Boss then
-        SetTask("MainTask", "Killing Boss: " .. Boss.Name)
+        SetTask("Start", "Killing Boss: " .. Boss.Name)
 
         CombatController.Attack(
             tostring(Boss),
@@ -3484,7 +3484,7 @@ end
             nil,
             function()
                 SpecialItems = nil
-                SetTask("MainTask", "Idle")
+                SetTask("Start", "Idle")
             end
         )
 
@@ -3528,14 +3528,14 @@ if _G.BuyingMelee then
     return 
 end
     if Boss then
-        SetTask("MainTask", "Killing Boss: " .. Boss.Name)
+        SetTask("Start", "Killing Boss: " .. Boss.Name)
 
         CombatController.Attack(
             tostring(Boss),
             nil,
             nil,
             function()
-                SetTask("MainTask", "Idle")
+                SetTask("Start", "Idle")
             end
         )
     end
@@ -3631,7 +3631,7 @@ FunctionsHandler.RaidController:RegisterMethod("Start", function()
     if not CurrentIsland then 
         
         
-        SetTask("MainTask", "Raid For Fragment..." .. FunctionsHandler.RaidController:Get("CurrentChip")) 
+        SetTask("Start", "Raid For Fragment..." .. FunctionsHandler.RaidController:Get("CurrentChip")) 
         
         if not ScriptStorage.Tools["Special Microchip"] then 
             local cRaidFruit = FunctionsHandler.RaidController.Methods.GetRaidableFruit:Call()  
@@ -3647,21 +3647,21 @@ FunctionsHandler.RaidController:RegisterMethod("Start", function()
         local chip = LocalPlayer.Backpack:FindFirstChild("Special Microchip")       
         fireclickdetector(workspace.Map[RootRaidIsland].RaidSummon2.Button.Main.ClickDetector) 
         local RaidStartSenque = os.time() 
-        SetTask("MainTask", "Waiting Raid Start") 
+        SetTask("Start", "Waiting Raid Start") 
         repeat task.wait() until os.time() - ( LastRaidAlert2 or 0 ) < 20 or os.time() - RaidStartSenque > 30 
         TweenController.Create(LocalPlayer.Character.HumanoidRootPart.CFrame)
         repeat task.wait() until os.time() - ( LastRaidAlert or 0 ) < 20  or os.time() - RaidStartSenque > 30 
         alert("God", "Tween Paused")
         task.wait(.5)
         if os.time() - RaidStartSenque > 30  then 
-            SetTask("MainTask", "Raid Not Starting...try again")
+            SetTask("Start", "Raid Not Starting...try again")
             Report("[ Raid Error ] Time Limit Reached")
         end 
         
         LastRaidAlert = 0 
     else 
         
-        SetTask("MainTask", "Raid (Killing Mob) " .. CurrentIsland.Name .. " / 5")
+        SetTask("Start", "Raid (Killing Mob) " .. CurrentIsland.Name .. " / 5")
         local Found = false 
         for _, Mon in GetMonAsSortedRange() do 
             
@@ -3719,7 +3719,7 @@ end
     local Fruit = FunctionsHandler.CollectDrops:Get("CurrentProgressLevel")
     FunctionsHandler.CollectDrops:Set("CurrentProgressLevel", nil) 
     if Fruit then 
-        SetTask("MainTask", "Collecting Fruit " .. tostring(Fruit)) 
+        SetTask("Start", "Collecting Fruit " .. tostring(Fruit)) 
         TweenController.Create(Fruit:GetModelCFrame()) 
     end 
 end)
@@ -4095,7 +4095,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Refresh", function()
     if not SoulGuitarProcess then  
       Remotes.CommF_:InvokeServer("gravestoneEvent", 2)
         if not CheckFullMoon() then 
-            SetTask("MainTask", "Hopping for full moon ( soul guitar )") 
+            SetTask("Start", "Hopping for full moon ( soul guitar )") 
             local Response = Services.HttpService:JSONDecode(game:HttpGet"http://api.visionx.x10.mx:20064/finder?type=BLOX_FRUITS&api_key=PLUTO_S5Z3UMjV3g") 
             
             for _, Server in Response.all_data do 
@@ -4138,10 +4138,10 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
         SoulGuitarProcess = Remotes.CommF_:InvokeServer("gravestoneEvent", 2, true)
     elseif State == 1 then 
         if SeaIndex ~= 2 then 
-            SetTask("MainTask", "Teleport to second sea to farm ectoplasm")
+            SetTask("Start", "Teleport to second sea to farm ectoplasm")
             return Remotes.CommF_:InvokeServer("TravelDressrosa")
         else 
-            SetTask("MainTask", "Farming ectoplasms for soul guitar")
+            SetTask("Start", "Farming ectoplasms for soul guitar")
             CombatController.Attack({"Ship Deckhand","Ship Engineer", "Ship Steward","Ship Officer"})
             return
         end 
@@ -4166,7 +4166,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
         end 
         
         if #Objects < 6 then 
-            SetTask('MainTask', "Soul Guitar task 1 / 5: waiting until entity spawn") 
+            SetTask('Start', "Soul Guitar task 1 / 5: waiting until entity spawn") 
             TweenController.Create(ScriptStorage.MobRegions["Living Zombie"][1] + Vector3.new(0,30,0))
             
         else 
@@ -4174,7 +4174,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
             local StartTime19 = os.time()
             for Idx, Object in Objects do 
                 while task.wait() and Object.Humanoid.Health > 7000 do
-                    SetTask('MainTask', "Soul Guitar task 1 / 5: Hit mob " .. Idx .. " / 6" ) 
+                    SetTask('Start', "Soul Guitar task 1 / 5: Hit mob " .. Idx .. " / 6" ) 
                     FunctionsHandler.LocalPlayerController.Methods.EquipTool:Call("Melee")
                     if os.time() - StartTime19 > 60 then 
                         ScriptStorage.Hop("So long nerds")
@@ -4184,7 +4184,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
                     AttackController:Attack() 
                 end 
             end
-            SetTask('MainTask', "Soul Guitar task 1 / 5: Attack") 
+            SetTask('Start', "Soul Guitar task 1 / 5: Attack") 
             while workspace.Enemies:FindFirstChild("Living Zombie") and task.wait() do 
                  if os.time() - StartTime19 > 60 then 
                         ScriptStorage.Hop("So long nerds")
@@ -4197,7 +4197,7 @@ FunctionsHandler.SoulGuitar:RegisterMethod("Start", function(State)
         local HauntedIsland = workspace.Map["Haunted Castle"] 
         while CaculateDistance(CFrame.new(-8800, 178, 6033)) > 10 do
             task.wait()
-            SetTask("MainTask", "Soul Guitar task 2 / 5: completing placards")
+            SetTask("Start", "Soul Guitar task 2 / 5: completing placards")
             TweenController.Create(CFrame.new(-8800, 178, 6033))
         end
         
@@ -4395,7 +4395,7 @@ FunctionsHandler.CursedDualKatana:RegisterMethod("Refresh", function()
                             " " .. tostring(Index)
                 )
                 Remotes.CommF_:InvokeServer("CDKQuest", "StartTrial", Index)
-                SetTask("MainTask", "Cursed Dual Katana - " .. tostring(ScrollSides[Index]) ..
+                SetTask("Start", "Cursed Dual Katana - " .. tostring(ScrollSides[Index]) ..
                             " " .. tostring(Index)
                 )
                 return false 
@@ -4751,7 +4751,7 @@ Hop = function(Reason, PlayerLimit)
                 
                 task.wait(1)
                 
-                SetTask("MainTask", "Hop Server - Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
+                SetTask("Start", "Hop Server - Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
                 alert("Hop Server", "Joining Server: " .. a .. " Player Count: " .. b.Count .. "/12")
                 
                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, a, game.Players.LocalPlayer)
@@ -4821,7 +4821,7 @@ end)
     end
     
     local LogCache = {}
-    SetTask("MainTask", "n/a")
+    SetTask("Start", "n/a")
     SetTask("SubTask", "n/a")
     ParsingTimes = 0
     function RefreshTasksData()
@@ -5036,7 +5036,7 @@ end)
         end ]]
     
         if Config.Configuration.HopWhenIdle and LastIdling and os.time() - LastIdling > 60 * 5 then
-            SetTask("MainTask", "Rejoinjng due idle in 10 min!")
+            SetTask("Start", "Rejoinjng due idle in 10 min!")
             task.wait(1)
             while task.wait() do
                 game:GetService("TeleportService"):Teleport(game.PlaceId)
